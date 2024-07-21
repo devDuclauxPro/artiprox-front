@@ -1,0 +1,8 @@
+/* Réinitialiser les styles par défaut pour une base cohérente */
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
