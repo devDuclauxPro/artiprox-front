@@ -6,7 +6,7 @@ import { FC } from "react";
 export const Devis: FC = () => {
   return (
     <Layout>
-      <Box pt={8}>
+      <Box pt={8} mb={5}>
         <Checkout />
       </Box>
     </Layout>
