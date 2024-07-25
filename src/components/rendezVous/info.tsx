@@ -1,10 +1,10 @@
 import { Box, Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { InfoProfilArtisan } from "components/generic/infoProfilArtisan";
 import photoDefaultArtisan from "images/autres/activite.png";
 import { FC } from "react";
 import { TInfoProps } from "types/types";
-import { colorGrisPale, colorVertNature } from "utils/color";
-import { InfoProfilArtisan } from "../generic/infoProfilArtisan";
+import { colorBlue, colorGrisPale } from "utils/color";
 
 export const Info: FC<TInfoProps> = ({ nomArtisan, photoArtisan }) => {
   return (
@@ -30,8 +30,8 @@ export const Info: FC<TInfoProps> = ({ nomArtisan, photoArtisan }) => {
         </Grid>
       </Grid>
       <InfoProfilArtisan />
-      <Typography textAlign="center" variant="button" color={colorVertNature}>
-        Demander un devis chez l'artisan
+      <Typography textAlign="center" variant="button" color={colorBlue}>
+        Prendre un rendez-vous chez l'artisan
       </Typography>
     </>
   );

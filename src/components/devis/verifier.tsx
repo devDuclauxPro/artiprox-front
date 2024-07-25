@@ -1,3 +1,5 @@
+import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -5,17 +7,14 @@ import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { StepperComponent } from "components/devis/stepperComponent";
-import { useState } from "react";
-import { getStepContent, steps } from "utils/devis";
+import { FC, useState } from "react";
+import { Link } from "react-router-dom";
+import { getStepContent, steps } from "./getStepContent";
 import { Info } from "./info";
 import { InfoMobile } from "./infoMobile";
+import { PasApas } from "./pasApas";
 
-import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
-import { BackHeader } from "components/devis/backHeader";
-
-export const Checkout = () => {
+export const Verifier: FC = () => {
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -45,9 +44,8 @@ export const Checkout = () => {
           gap: 4
         }}
       >
-        <BackHeader />
         <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1, width: "100%", maxWidth: 500 }}>
-          <Info totalPrice={activeStep >= 2 ? "$144.97" : "$134.98"} />
+          <Info nomArtisan={"Kpan Emmanuel grand"} />
         </Box>
       </Grid>
       <Grid
@@ -67,7 +65,7 @@ export const Checkout = () => {
           gap: { xs: 4, md: 8 }
         }}
       >
-        <StepperComponent activeStep={activeStep} />
+        <PasApas activeStep={activeStep} />
         <Card sx={{ display: { xs: "flex", md: "none" }, width: "100%" }}>
           <CardContent
             sx={{
@@ -80,11 +78,11 @@ export const Checkout = () => {
           >
             <div>
               <Typography variant="subtitle2" gutterBottom>
-                Selected products
+                Artisan sélectionné
               </Typography>
-              <Typography variant="body1">{activeStep >= 2 ? "$144.97" : "$134.98"}</Typography>
+              <Typography variant="body1">{"Kpan Emmanuel mobile"}</Typography>
             </div>
-            <InfoMobile totalPrice={activeStep >= 2 ? "$144.97" : "$134.98"} />
+            <InfoMobile nomArtisan={"Kpan Emmanuel mobile"} />
           </CardContent>
         </Card>
         <Box
@@ -98,17 +96,21 @@ export const Checkout = () => {
             gap: { xs: 5, md: "none" }
           }}
         >
-          <StepperComponent activeStep={activeStep} />
           {activeStep === steps.length ? (
-            <Stack spacing={2} useFlexGap>
+            <Stack spacing={2} useFlexGap py={5}>
               <Typography variant="h1">📦</Typography>
-              <Typography variant="h5">Thank you for your order!</Typography>
+              <Typography variant="h5">Nous vous remercions d'avoir demandé un devis !</Typography>
               <Typography variant="body1" color="text.secondary">
-                Your order number is<strong>&nbsp;#140396</strong>. We have emailed your order confirmation and will
-                update you once it is shipped.
+                Votre numéro de devis est le <strong>&nbsp;#140396</strong>. Nous avons le plaisir de vous transmettre
+                par email le fichier contenant le devis que vous avez sollicité.
               </Typography>
-              <Button variant="contained" sx={{ alignSelf: "start", width: { xs: "100%", sm: "auto" } }}>
-                Go to my orders
+              <Button
+                component={Link}
+                to="/trouver-un-artisan"
+                variant="contained"
+                sx={{ alignSelf: "start", width: { xs: "100%", sm: "auto" } }}
+              >
+                Trouver un autre artisan
               </Button>
             </Stack>
           ) : (
@@ -121,10 +123,7 @@ export const Checkout = () => {
                   justifyContent: activeStep !== 0 ? "space-between" : "flex-end",
                   alignItems: "end",
                   flexGrow: 1,
-                  gap: 1,
-                  pb: { xs: 12, sm: 0 },
-                  mt: { xs: 2, sm: 0 },
-                  mb: "60px"
+                  gap: 1
                 }}
               >
                 {activeStep !== 0 && (
@@ -134,7 +133,7 @@ export const Checkout = () => {
                     variant="text"
                     sx={{ display: { xs: "none", sm: "flex" } }}
                   >
-                    Previous
+                    Précédent
                   </Button>
                 )}
                 {activeStep !== 0 && (
@@ -145,7 +144,7 @@ export const Checkout = () => {
                     fullWidth
                     sx={{ display: { xs: "flex", sm: "none" } }}
                   >
-                    Previous
+                    Précédent
                   </Button>
                 )}
                 <Button
@@ -154,7 +153,7 @@ export const Checkout = () => {
                   onClick={handleNext}
                   sx={{ width: { xs: "100%", sm: "fit-content" } }}
                 >
-                  {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                  {activeStep === steps.length - 1 ? "Envoyé" : "Suivant"}
                 </Button>
               </Box>
             </>

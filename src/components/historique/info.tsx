@@ -1,16 +1,16 @@
 import { Box, Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import photoDefaultArtisan from "images/autres/activite.png";
+import { InfoProfil } from "components/utilisateur/infoProfil";
+import client from "images/autres/user.png";
 import { FC } from "react";
 import { TInfoProps } from "types/types";
-import { colorGrisPale, colorVertNature } from "utils/color";
-import { InfoProfilArtisan } from "../generic/infoProfilArtisan";
+import { colorBlue, colorGrisPale } from "utils/color";
 
 export const Info: FC<TInfoProps> = ({ nomArtisan, photoArtisan }) => {
   return (
     <>
       <Typography variant="subtitle2" color="text.secondary">
-        Artisan
+        Mon profil
       </Typography>
       <Typography variant="h5" gutterBottom>
         {nomArtisan}
@@ -25,13 +25,13 @@ export const Info: FC<TInfoProps> = ({ nomArtisan, photoArtisan }) => {
             component="img"
             sx={{ height: 150, width: 150 }}
             alt={nomArtisan}
-            src={photoArtisan ? photoArtisan : photoDefaultArtisan}
+            src={photoArtisan ? photoArtisan : client}
           />
         </Grid>
       </Grid>
-      <InfoProfilArtisan />
-      <Typography textAlign="center" variant="button" color={colorVertNature}>
-        Demander un devis chez l'artisan
+      <InfoProfil />
+      <Typography textAlign="center" variant="button" color={colorBlue}>
+        Mon historique
       </Typography>
     </>
   );

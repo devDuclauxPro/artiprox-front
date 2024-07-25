@@ -50,3 +50,12 @@ export type IButtonGeneric = {
   btnSize?: "small" | "medium" | "large";
   btnZooInOutCard?: string;
 };
+
+export type TInfoProps = {
+  nomArtisan: string;
+  photoArtisan?: string;
+};
+export type TInfoPropsClient = {
+  nomClient: string;
+  photoClient?: string;
+};

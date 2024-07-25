@@ -3,6 +3,7 @@ import WorkIcon from "@mui/icons-material/Work";
 import { Box, Button, Card, CardActions, CardContent, CardHeader, Container, Grid, Typography } from "@mui/material";
 import activite from "images/autres/activite.png";
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { colorGrisPale } from "utils/color";
 import { TextRating } from "./textRating";
 
@@ -51,16 +52,32 @@ export const CardTrouver: FC = () => {
                     disableRipple
                     fullWidth
                   >
-                    0707070707
+                    +2250707070707
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <Button variant="contained" color="warning" size="small" disableRipple fullWidth>
+                  <Button
+                    component={Link}
+                    to="/espace-membre/obtenir-un-rendez-vous"
+                    variant="contained"
+                    color="warning"
+                    size="small"
+                    disableRipple
+                    fullWidth
+                  >
                     Rendez-vous
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <Button variant="outlined" color="success" size="small" disableRipple fullWidth>
+                  <Button
+                    component={Link}
+                    to="/espace-membre/obtenir-un-devis"
+                    variant="outlined"
+                    color="success"
+                    size="small"
+                    disableRipple
+                    fullWidth
+                  >
                     Demander un devis
                   </Button>
                 </Grid>

@@ -11,22 +11,6 @@ export const ResultatArtisan = () => {
       <CardTrouver />
       <CardTrouver />
       <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
-      <CardTrouver />
     </>
   );
 };

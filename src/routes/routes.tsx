@@ -1,4 +1,5 @@
 import { App } from "App";
+import { OublierMotPasse } from "components/connexion/oublierMotPasse";
 import { Accueil } from "pages/accueil";
 import { Admin } from "pages/admin";
 import { Artisan } from "pages/artisan";
@@ -11,6 +12,7 @@ import { Inscription } from "pages/inscription";
 import { Private } from "pages/private";
 import { Public } from "pages/public";
 import { QuiSommesNous } from "pages/quiSommesNous";
+import { RendezVous } from "pages/rendezVous";
 import { Utilisateur } from "pages/utilisateur";
 import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 
@@ -25,6 +27,7 @@ const routes = createRoutesFromElements(
     <Route path="espace-membre" element={<Private />}>
       <Route index element={<Utilisateur />} />
       <Route path="obtenir-un-devis" element={<Devis />} />
+      <Route path="obtenir-un-rendez-vous" element={<RendezVous />} />
       <Route path="mon-historique" element={<Historique />} />
       <Route path="admin" element={<AuthAdmin />}>
         <Route index element={<Admin />} />
@@ -32,6 +35,7 @@ const routes = createRoutesFromElements(
     </Route>
     <Route path="connexion" element={<Connexion />} />
     <Route path="inscription" element={<Inscription />} />
+    <Route path="mot-passe-oublie" element={<OublierMotPasse />} />
     <Route path="*" element={<ErrorPage />} />
   </Route>
 );

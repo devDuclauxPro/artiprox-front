@@ -5,9 +5,7 @@ import { TMenuItem } from "types/types";
 export const menuList: TMenuItem[] = [
   { name: "Accueil", link: "/" },
   { name: "Trouver un artisan", link: "/trouver-un-artisan" },
-  { name: "Obtenir un devis", link: "/espace-membre/obtenir-un-devis" },
   { name: "Mon historique", link: "/espace-membre/mon-historique" },
-  { name: "Qui sommes-nous", link: "/qui-sommes-nous" },
   { name: "Se connecter", link: "/connexion" },
   { name: "S'inscrire", link: "/inscription" },
   { name: "Espace Membre", link: "/espace-membre" }
