@@ -63,3 +63,26 @@ export type TInfoPropsClient = {
   nomClient: string;
   photoClient?: string;
 };
+
+// types.ts
+export type TInfoItem = {
+  src: string;
+  alt: string;
+  title: string;
+  description: string;
+};
+
+export type TMilieuGauchePourquoiProps = {
+  title: string;
+  subtitle: string;
+  introduction: string;
+  accompaniment: string;
+  items: TInfoItem[];
+};
+
+export type TMilieuDroitPourquoiProps = {
+  items: { img: string; title: string }[];
+  cols: number;
+  gap: number;
+  width: string;
+};

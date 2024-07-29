@@ -1,78 +1,66 @@
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import iconeGratuite from "images/home/icone-gratuite.png";
-import iconeQualite from "images/home/icone-qualite.png";
-import iconeSimplicite from "images/home/icone-simplicite.png";
 import { FC } from "react";
 import { colorGris } from "utils/color";
 
-// Définition des données des icônes à afficher
-const items = [
-  {
-    src: iconeQualite,
-    alt: "Image qualité",
-    title: "Qualité",
-    description: "Artisans certifiés par un label qualité"
-  },
-  {
-    src: iconeGratuite,
-    alt: "Image gratuite",
-    title: "Gratuité",
-    description: "Devis et accompagnement intégralement gratuit"
-  },
-  {
-    src: iconeSimplicite,
-    alt: "Image simplicité",
-    title: "Simplicité",
-    description: "Mise en relation simple, rapide et sécurisée"
-  }
-];
+type IconItem = {
+  src: string;
+  alt: string;
+  title: string;
+  description: string;
+};
+
+type MilieuDescriptionAccueilProps = {
+  items: IconItem[];
+  backgroundColor?: string;
+  textColor?: string;
+};
+
+const iconStyle = {
+  height: 50,
+  width: 50,
+  display: "block",
+  margin: "0 auto" // Centrer l'image horizontalement
+};
+
+const titleStyle = {
+  mt: 2, // Marge supérieure pour espacer du contenu au-dessus
+  textAlign: "center"
+};
+
+const descriptionStyle = {
+  mt: 1, // Marge supérieure pour espacer du titre
+  textAlign: "center"
+};
 
 // Composant fonctionnel pour afficher les descriptions au milieu de la page d'accueil
-export const MilieuDescriptionAccueil: FC = () => {
+export const MilieuDescriptionAccueil: FC<MilieuDescriptionAccueilProps> = ({
+  items,
+  backgroundColor = colorGris,
+  textColor = "inherit"
+}) => {
   return (
     <Box
       display={{ xs: "none", md: "flex" }} // Masquer sur petits écrans
       justifyContent="center"
       alignItems="center"
       py={5}
-      bgcolor={colorGris} // Couleur de fond définie par colorGris
+      bgcolor={backgroundColor} // Couleur de fond personnalisable
     >
       <Box width="50vw">
-        {" "}
         {/* Largeur de 50% de la vue pour les grands écrans */}
         <Grid container spacing={2}>
           {items.map((item, index) => (
             <Grid item xs={12} md={4} key={index}>
               {/* Conteneur pour l'icône avec un alignement centré */}
-              <Box
-                component="img"
-                sx={{
-                  height: 50,
-                  width: 50,
-                  display: "block",
-                  margin: "0 auto" // Centrer l'image horizontalement
-                }}
-                alt={item.alt}
-                src={item.src}
-              />
+              <Box component="img" sx={iconStyle} alt={item.alt} src={item.src} />
               {/* Titre avec un texte centré */}
-              <Typography
-                variant="subtitle2"
-                component="p"
-                textAlign="center"
-                sx={{ mt: 2 }} // Marge supérieure pour espacer du contenu au-dessus
-              >
+              <Typography variant="subtitle2" component="p" sx={titleStyle} color={textColor}>
                 {item.title}
               </Typography>
               {/* Description avec un texte centré */}
-              <Typography
-                variant="body2"
-                component="p"
-                textAlign="center"
-                sx={{ mt: 1 }} // Marge supérieure pour espacer du titre
-              >
+              <Typography variant="body2" component="p" sx={descriptionStyle} color={textColor}>
                 {item.description}
               </Typography>
             </Grid>

@@ -23,7 +23,7 @@ export const BarreNavigation: FC = () => {
           variant="regular"
           sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}
         >
-          <Box sx={{ flexGrow: 1 }}>
+          <Box component={Link} to="/" sx={{ flexGrow: 1 }}>
             <img src={logo} style={logoStyle} alt="logo de l'entreprise 70" color="#fff" />
           </Box>
 

@@ -42,7 +42,7 @@ export const FormInscription: FC = () => {
             <FormLabel htmlFor="nom" required>
               Nom
             </FormLabel>
-            <OutlinedInput id="nom" name="nom" type="name" placeholder="Kouadio" autoComplete="nom" required />
+            <OutlinedInput id="nom" name="nom" type="text" placeholder="Kouadio" autoComplete="family-name" required />
           </FormGrid>
           <FormGrid item xs={12} md={6}>
             <FormLabel htmlFor="prenoms" required>
@@ -51,17 +51,16 @@ export const FormInscription: FC = () => {
             <OutlinedInput
               id="prenoms"
               name="prenoms"
-              type="last-name"
-              placeholder="Benjamain"
-              autoComplete="Prénoms"
+              type="text"
+              placeholder="Benjamin"
+              autoComplete="given-name"
               required
             />
           </FormGrid>
           <FormGrid item xs={12}>
-            <FormLabel htmlFor="country" required>
+            <FormLabel htmlFor="profil" required>
               Je suis un
             </FormLabel>
-
             <Autocomplete
               disablePortal
               id="profil"
@@ -78,8 +77,8 @@ export const FormInscription: FC = () => {
               id="description"
               name="description"
               type="text"
-              placeholder="Veuillez décrire votre activité "
-              autoComplete="given-description"
+              placeholder="Veuillez décrire votre activité"
+              autoComplete="description"
               required
               multiline
               rows={4} // Vous pouvez ajuster le nombre de lignes selon vos besoins
@@ -87,10 +86,9 @@ export const FormInscription: FC = () => {
             />
           </FormGrid>
           <FormGrid item xs={12} md={6}>
-            <FormLabel htmlFor="country" required>
+            <FormLabel htmlFor="pays" required>
               Pays
             </FormLabel>
-
             <Autocomplete
               disablePortal
               id="pays"
@@ -100,39 +98,41 @@ export const FormInscription: FC = () => {
             />
           </FormGrid>
           <FormGrid item xs={12} md={6}>
-            <FormLabel htmlFor="address1" required>
+            <FormLabel htmlFor="ville" required>
               Ville
             </FormLabel>
             <OutlinedInput
               id="ville"
               name="ville"
-              type="ville"
+              type="text"
               placeholder="Bouaké"
-              autoComplete="votre ville"
+              autoComplete="address-level2"
               required
             />
           </FormGrid>
           <FormGrid item xs={12}>
-            <FormLabel htmlFor="addresse">Addresse</FormLabel>
+            <FormLabel htmlFor="addresse" required>
+              Adresse
+            </FormLabel>
             <OutlinedInput
               id="addresse"
               name="addresse"
-              type="addresse"
-              placeholder="Commune, quatier, rue,etc"
-              autoComplete="votre addresse"
+              type="text"
+              placeholder="Commune, quartier, rue, etc."
+              autoComplete="address-line1"
               required
             />
           </FormGrid>
           <FormGrid item xs={12} sm={6}>
             <FormLabel htmlFor="telephone" required>
-              n° de mobile
+              Numéro de mobile
             </FormLabel>
             <OutlinedInput
               id="telephone"
               name="telephone"
-              type="telephone"
+              type="tel"
               placeholder="+2250707070707"
-              autoComplete="telephone"
+              autoComplete="tel"
               required
             />
           </FormGrid>
@@ -158,20 +158,20 @@ export const FormInscription: FC = () => {
               name="password"
               type="password"
               placeholder="**********"
-              autoComplete="password"
+              autoComplete="new-password"
               required
             />
           </FormGrid>
           <FormGrid item xs={12}>
             <FormLabel htmlFor="conf-password" required>
-              Répéter mot de passe
+              Répéter le mot de passe
             </FormLabel>
             <OutlinedInput
               id="conf-password"
               name="conf-password"
               type="password"
               placeholder="**********"
-              autoComplete="conf-password"
+              autoComplete="new-password"
               required
             />
           </FormGrid>

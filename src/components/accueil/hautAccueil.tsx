@@ -5,6 +5,34 @@ import { formAutocompleteStyle } from "styles/form";
 import { colorOrange, colorWhite } from "utils/color";
 import { metiers, villes } from "utils/recherche";
 
+type OptionType = { label: string };
+
+// Composant réutilisable pour le titre
+const Title: FC<{ text: string; color?: string }> = ({ text, color = colorWhite }) => (
+  <Typography
+    variant="h3"
+    component="p"
+    textAlign="center"
+    color={color}
+    sx={{ fontSize: { xs: "2rem", md: "3rem" }, userSelect: "none" }}
+  >
+    {text}
+  </Typography>
+);
+
+// Composant réutilisable pour le champ de formulaire
+const FormField: FC<{ id: string; label: string; options: OptionType[] }> = ({ id, label, options }) => (
+  <Autocomplete
+    disablePortal
+    id={id}
+    options={options}
+    getOptionLabel={(option) => option.label}
+    size="small"
+    sx={{ width: "100%" }}
+    renderInput={(params) => <TextField {...params} label={label} sx={formAutocompleteStyle} />}
+  />
+);
+
 // Composant fonctionnel pour la section d'accueil
 export const HautAccueil: FC = () => {
   return (
@@ -18,49 +46,17 @@ export const HautAccueil: FC = () => {
         backgroundSize: "cover",
         backgroundPosition: "center"
       }}
-      display={{ xs: "none", md: "flex" }} // Masquer sur les petits écrans
+      display={{ xs: "none", md: "flex" }}
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
     >
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        flexDirection="column"
-        mb={4} // Ajout d'une marge inférieure pour espacer du formulaire
-      >
-        <Typography
-          variant="h3"
-          component="p"
-          textAlign="center"
-          color={colorWhite}
-          sx={{ fontSize: { xs: "2rem", md: "3rem" }, userSelect: "none" }}
-        >
-          En Afrique,
-        </Typography>
-        <Typography
-          variant="h3"
-          component="p"
-          textAlign="center"
-          color={colorWhite}
-          sx={{ fontSize: { xs: "2rem", md: "3rem" }, userSelect: "none" }}
-        >
-          nous allons vous (re)donner envie
-        </Typography>
-        <Typography
-          variant="h3"
-          component="p"
-          textAlign="center"
-          color={colorOrange}
-          pb={3}
-          sx={{ fontSize: { xs: "2rem", md: "3rem" }, userSelect: "none" }}
-        >
-          de faire des travaux
-        </Typography>
+      <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" mb={4}>
+        <Title text="En Afrique," />
+        <Title text="nous allons vous (re)donner envie" />
+        <Title text="de faire des travaux" color={colorOrange} />
       </Box>
 
-      {/* Conteneur du formulaire avec une largeur de 50% pour les grands écrans  */}
       <Box width="50vw">
         <form>
           <Grid container spacing={2}>
@@ -70,28 +66,10 @@ export const HautAccueil: FC = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Autocomplete
-                disablePortal
-                id="metier-box"
-                options={metiers}
-                size="small"
-                sx={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Sélectionner un métier" sx={formAutocompleteStyle} />
-                )}
-              />
+              <FormField id="metier-box" label="Sélectionner un métier" options={metiers} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <Autocomplete
-                disablePortal
-                id="ville-box"
-                options={villes}
-                size="small"
-                sx={{ width: "100%" }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Sélectionner une ville" sx={formAutocompleteStyle} />
-                )}
-              />
+              <FormField id="ville-box" label="Sélectionner une ville" options={villes} />
             </Grid>
             <Grid item xs={12}>
               <Button variant="contained" size="small" color="warning" fullWidth disableRipple>

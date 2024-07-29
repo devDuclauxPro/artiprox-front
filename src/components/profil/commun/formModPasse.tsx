@@ -1,8 +1,7 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Avatar, Box, Button, Container, Typography } from "@mui/material";
+import { Avatar, Box, Button, Container, TextField, Typography } from "@mui/material";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/system";
 import { FC } from "react";
 import { colorBlue, colorVertNature } from "utils/color";
@@ -41,26 +40,30 @@ export const FormModPasse: FC = () => {
             <FormLabel htmlFor="ancienPassword" required>
               Ancien mot de passe
             </FormLabel>
-            <OutlinedInput
+            <TextField
               id="ancienPassword"
               name="ancienPassword"
               type="password"
               placeholder="**********"
-              autoComplete="password"
+              autoComplete="current-password"
               required
+              fullWidth
+              variant="outlined"
             />
           </FormGrid>
           <FormGrid item xs={12}>
             <FormLabel htmlFor="nouveauPassword" required>
               Nouveau mot de passe
             </FormLabel>
-            <OutlinedInput
+            <TextField
               id="nouveauPassword"
               name="nouveauPassword"
               type="password"
               placeholder="**********"
-              autoComplete="nouveauPassword"
+              autoComplete="new-password"
               required
+              fullWidth
+              variant="outlined"
             />
           </FormGrid>
           <FormGrid item xs={12}>

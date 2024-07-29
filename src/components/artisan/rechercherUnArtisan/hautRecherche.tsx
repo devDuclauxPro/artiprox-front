@@ -3,22 +3,25 @@ import { FC } from "react";
 import { colorBlue, colorGris2 } from "utils/color";
 import { metiers, villes } from "utils/recherche";
 
+// Composant HautRecherche pour la barre de recherche en haut de la page
 export const HautRecherche: FC = () => {
+  // Fonction pour gérer la soumission du formulaire
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // Ajoutez ici la logique de recherche
+  };
+
   return (
-    // Section principale avec une marge en haut et une hauteur minimale de 80vh
     <Box component="section" mt={8}>
-      {/* Conteneur avec un fond gris et un padding vertical */}
       <Box bgcolor={colorGris2} py={8}>
         <Container maxWidth="lg">
-          {/* Formulaire de recherche */}
-          <form>
+          <form onSubmit={handleSubmit}>
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} md={3}>
                 <Typography color={colorBlue} variant="h6" textAlign={{ xs: "left", sm: "center", md: "right" }}>
                   Trouver un artisan
                 </Typography>
               </Grid>
-              {/* Champ Autocomplete pour sélectionner un métier */}
               <Grid item xs={12} sm={6} md={3}>
                 <Autocomplete
                   disablePortal
@@ -27,9 +30,9 @@ export const HautRecherche: FC = () => {
                   size="small"
                   fullWidth
                   renderInput={(params) => <TextField {...params} label="Sélectionner un métier" />}
+                  aria-label="Sélectionner un métier"
                 />
               </Grid>
-              {/* Champ Autocomplete pour sélectionner une ville */}
               <Grid item xs={12} sm={6} md={3}>
                 <Autocomplete
                   disablePortal
@@ -38,11 +41,11 @@ export const HautRecherche: FC = () => {
                   size="small"
                   fullWidth
                   renderInput={(params) => <TextField {...params} label="Sélectionner une ville" />}
+                  aria-label="Sélectionner une ville"
                 />
               </Grid>
-              {/* Bouton de recherche */}
               <Grid item xs={12} md={3} display="flex" justifyContent={{ xs: "center", md: "left" }}>
-                <Button variant="contained" size="small" fullWidth color="success" disableRipple>
+                <Button type="submit" variant="contained" size="small" fullWidth color="success" disableRipple>
                   Trouver !
                 </Button>
               </Grid>

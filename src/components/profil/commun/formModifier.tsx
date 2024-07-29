@@ -2,7 +2,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Autocomplete, Avatar, Box, Button, Container, TextField, Typography } from "@mui/material";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/system";
 import { FC } from "react";
 import { colorBlue, colorVertNature } from "utils/color";
@@ -42,26 +41,36 @@ export const FormModifier: FC = () => {
             <FormLabel htmlFor="nom" required>
               Nom
             </FormLabel>
-            <OutlinedInput id="nom" name="nom" type="name" placeholder="Kouadio" autoComplete="nom" required />
+            <TextField
+              id="nom"
+              name="nom"
+              type="text"
+              placeholder="Kouadio"
+              autoComplete="nom"
+              required
+              fullWidth
+              variant="outlined"
+            />
           </FormGrid>
           <FormGrid item xs={12} md={6}>
             <FormLabel htmlFor="prenoms" required>
               Prénoms
             </FormLabel>
-            <OutlinedInput
+            <TextField
               id="prenoms"
               name="prenoms"
-              type="last-name"
-              placeholder="Benjamain"
-              autoComplete="Prénoms"
+              type="text"
+              placeholder="Benjamin"
+              autoComplete="prenoms"
               required
+              fullWidth
+              variant="outlined"
             />
           </FormGrid>
           <FormGrid item xs={12} md={6}>
-            <FormLabel htmlFor="country" required>
+            <FormLabel htmlFor="pays" required>
               Pays
             </FormLabel>
-
             <Autocomplete
               disablePortal
               id="pays"
@@ -71,40 +80,48 @@ export const FormModifier: FC = () => {
             />
           </FormGrid>
           <FormGrid item xs={12} md={6}>
-            <FormLabel htmlFor="address1" required>
+            <FormLabel htmlFor="ville" required>
               Ville
             </FormLabel>
-            <OutlinedInput
+            <TextField
               id="ville"
               name="ville"
-              type="ville"
+              type="text"
               placeholder="Bouaké"
-              autoComplete="votre ville"
+              autoComplete="ville"
               required
+              fullWidth
+              variant="outlined"
             />
           </FormGrid>
           <FormGrid item xs={12}>
-            <FormLabel htmlFor="addresse">Addresse</FormLabel>
-            <OutlinedInput
+            <FormLabel htmlFor="addresse" required>
+              Adresse
+            </FormLabel>
+            <TextField
               id="addresse"
               name="addresse"
-              type="addresse"
-              placeholder="Commune, quatier, rue,etc"
-              autoComplete="votre addresse"
+              type="text"
+              placeholder="Commune, quartier, rue, etc."
+              autoComplete="addresse"
               required
+              fullWidth
+              variant="outlined"
             />
           </FormGrid>
           <FormGrid item xs={12}>
             <FormLabel htmlFor="telephone" required>
-              n° de mobile
+              N° de mobile
             </FormLabel>
-            <OutlinedInput
+            <TextField
               id="telephone"
               name="telephone"
-              type="telephone"
+              type="tel"
               placeholder="+2250707070707"
               autoComplete="telephone"
               required
+              fullWidth
+              variant="outlined"
             />
           </FormGrid>
           <FormGrid item xs={12}>
@@ -115,12 +132,13 @@ export const FormModifier: FC = () => {
               id="description"
               name="description"
               type="text"
-              placeholder="Veuillez décrire votre activité "
-              autoComplete="given-description"
+              placeholder="Veuillez décrire votre activité"
+              autoComplete="description"
               required
               multiline
-              rows={4} // Vous pouvez ajuster le nombre de lignes selon vos besoins
-              variant="outlined" // Utilise l'outlined variant pour avoir le même style que OutlinedInput
+              rows={4}
+              fullWidth
+              variant="outlined"
             />
           </FormGrid>
           <FormGrid item xs={12}>

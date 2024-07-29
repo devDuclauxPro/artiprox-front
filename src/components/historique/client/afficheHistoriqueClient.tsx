@@ -1,8 +1,4 @@
-import { Divider } from "@mui/material";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import { TextRating } from "components/artisan/rechercherUnArtisan/textRating";
 import { FC } from "react";
 import { colorBleuFonce, colorBlue } from "utils/color";
@@ -13,7 +9,7 @@ const historiques = [
     dateRDV: "01/01/2024",
     nomArtisan: "Mr Kouadio Ali",
     adresseClient: "Rue Washington, Cocody, Abidjan, Côte d'Ivoire",
-    paymentClient: "Payement Orange Money",
+    paymentClient: "Paiement Orange Money",
     evaluationArtisan: "3/5",
     descriptionTacheClient: "Réparation de mon robinet"
   },
@@ -22,7 +18,7 @@ const historiques = [
     dateRDV: "01/01/2024",
     nomArtisan: "Mr Kouadio Ali",
     adresseClient: "Rue Washington, Cocody, Abidjan, Côte d'Ivoire",
-    paymentClient: "Payement Orange Money",
+    paymentClient: "Paiement Orange Money",
     evaluationArtisan: "2/5",
     descriptionTacheClient: "Réparation de mon robinet"
   }
@@ -37,7 +33,7 @@ export const AfficheHistoriqueClient: FC = () => {
       <Stack spacing={2} useFlexGap>
         {historiques.map((historique) => (
           <Box key={historique.nRDV}>
-            <Stack direction="column" spacing={1} useFlexGap sx={{ width: "100%", mb: 1 }}>
+            <Stack direction="column" spacing={1} useFlexGap sx={{ width: "100%", mb: 2 }}>
               <Grid container>
                 <Grid item xs={12}>
                   <Typography variant="h6" component="p" gutterBottom color={colorBleuFonce}>
@@ -52,22 +48,22 @@ export const AfficheHistoriqueClient: FC = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <Typography gutterBottom color="text.secondary" component="span">
-                    addresse client :
+                    Adresse du client :
                   </Typography>
                   <Typography gutterBottom>{historique.adresseClient}</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Typography gutterBottom color="text.secondary" component="span">
-                    Mode de payement :
+                    Mode de paiement :
                   </Typography>
                   <Typography gutterBottom>{historique.paymentClient}</Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <Typography gutterBottom color="text.secondary" component="span">
-                    Evaluation de l'artisan :
+                    Évaluation de l'artisan :
                   </Typography>
                   <Typography gutterBottom>
-                    <TextRating valeur={parseInt(historique.evaluationArtisan)} />
+                    <TextRating valeur={parseInt(historique.evaluationArtisan.split("/")[0])} />
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -77,7 +73,7 @@ export const AfficheHistoriqueClient: FC = () => {
                   <Typography gutterBottom>{historique.descriptionTacheClient}</Typography>
                 </Grid>
               </Grid>
-              <Divider variant="fullWidth" />
+              <Divider variant="fullWidth" sx={{ mt: 2 }} />
             </Stack>
           </Box>
         ))}

@@ -1,7 +1,4 @@
-import { Autocomplete, TextField } from "@mui/material";
-import FormLabel from "@mui/material/FormLabel";
-import Grid from "@mui/material/Grid";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import { Autocomplete, FormLabel, Grid, OutlinedInput, TextField } from "@mui/material";
 import { styled } from "@mui/system";
 import { FC } from "react";
 import { payment } from "utils/recherche";
@@ -18,7 +15,14 @@ export const FormAdresse: FC = () => {
         <FormLabel htmlFor="date-rendez-vous" required>
           Date de rendez-vous
         </FormLabel>
-        <OutlinedInput id="date-rendez-vous" name="date-rendez-vous" type="date" autoComplete="bday" required />
+        <OutlinedInput
+          id="date-rendez-vous"
+          name="date-rendez-vous"
+          type="date"
+          autoComplete="bday"
+          required
+          inputProps={{ "aria-label": "Date de rendez-vous" }}
+        />
       </FormGrid>
       <FormGrid item xs={12} sm={6}>
         <FormLabel htmlFor="telephone" required>
@@ -31,10 +35,11 @@ export const FormAdresse: FC = () => {
           placeholder="+2250707070707"
           autoComplete="tel"
           required
+          inputProps={{ "aria-label": "Numéro de mobile" }}
         />
       </FormGrid>
       <FormGrid item xs={12}>
-        <FormLabel htmlFor="addresse">Addresse</FormLabel>
+        <FormLabel htmlFor="adresse">Addresse</FormLabel>
         <OutlinedInput
           id="adresse"
           name="adresse"
@@ -42,11 +47,12 @@ export const FormAdresse: FC = () => {
           placeholder="Pays, ville, commune, quartier, rue, etc."
           autoComplete="street-address"
           required
+          inputProps={{ "aria-label": "Adresse" }}
         />
       </FormGrid>
       <FormGrid item xs={12}>
         <FormLabel htmlFor="payment" required>
-          Mode de payment
+          Mode de paiement
         </FormLabel>
         <Autocomplete
           disablePortal
@@ -54,12 +60,13 @@ export const FormAdresse: FC = () => {
           options={payment}
           size="small"
           fullWidth
-          renderInput={(params) => <TextField {...params} placeholder="Sélectionner un mode de payment" />}
+          renderInput={(params) => <TextField {...params} placeholder="Sélectionner un mode de paiement" />}
+          getOptionLabel={(option) => option.label || ""}
         />
       </FormGrid>
       <FormGrid item xs={12}>
         <FormLabel htmlFor="description" required>
-          Decrire la tâche
+          Décrire la tâche
         </FormLabel>
         <TextField
           id="description"
@@ -71,6 +78,7 @@ export const FormAdresse: FC = () => {
           multiline
           rows={4}
           variant="outlined"
+          inputProps={{ "aria-label": "Description de la tâche" }}
         />
       </FormGrid>
     </Grid>

@@ -14,6 +14,19 @@ import { FormModPasse } from "./formModPasse";
 import { Info } from "./info";
 import { InfoMobile } from "./infoMobile";
 
+const cardStyles = {
+  display: { xs: "flex", md: "none" },
+  width: "100%"
+};
+
+const cardContentStyles = {
+  display: "flex",
+  width: "100%",
+  alignItems: "center",
+  justifyContent: "space-between",
+  ":last-child": { pb: 2 }
+};
+
 export const AfficherProfilCommun: FC = () => {
   return (
     <Box minHeight="80vh">
@@ -56,16 +69,8 @@ export const AfficherProfilCommun: FC = () => {
             gap: { xs: 4, md: 8 }
           }}
         >
-          <Card sx={{ display: { xs: "flex", md: "none" }, width: "100%" }}>
-            <CardContent
-              sx={{
-                display: "flex",
-                width: "100%",
-                alignItems: "center",
-                justifyContent: "space-between",
-                ":last-child": { pb: 2 }
-              }}
-            >
+          <Card sx={cardStyles}>
+            <CardContent sx={cardContentStyles}>
               <Typography variant="body1">{"Kpan Emmanuel mobile"}</Typography>
               <InfoMobile nomUser={"Kpan Emmanuel mobile"} />
             </CardContent>

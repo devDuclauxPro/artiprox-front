@@ -10,19 +10,21 @@ export const ImageSwiper: FC<TImageSwiperProps> = ({ listImage }) => {
   return (
     <Swiper
       modules={[Autoplay, Navigation, Pagination]} // Modules Swiper utilisés
-      spaceBetween={2}
+      spaceBetween={10} // Espacement entre les diapositives
       loop={true}
       autoplay={{ delay: 5000 }} // Défilement automatique avec délai de 5s
       navigation={true}
+      pagination={{ clickable: true }} // Pagination cliquable pour améliorer la navigation
       breakpoints={listBreakPoint} // Points de rupture pour la réactivité
     >
-      {listImage.map((list, id) => (
+      {listImage.map((image, id) => (
         <SwiperSlide key={id}>
           <Box display="flex" justifyContent="center" alignItems="center">
-            <img
-              style={{ objectFit: "contain", width: 250, height: 320 }}
-              src={list.name}
-              alt={`Images ${id}`}
+            <Box
+              component="img"
+              style={{ objectFit: "contain", width: "100%", height: "auto" }} // Largeur dynamique pour une meilleure adaptabilité
+              src={image.name}
+              alt={`Image ${id + 1}`} // Texte alternatif amélioré
               loading="lazy"
             />
           </Box>

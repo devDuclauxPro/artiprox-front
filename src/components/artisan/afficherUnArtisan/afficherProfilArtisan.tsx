@@ -1,3 +1,4 @@
+// AfficherProfilArtisan.tsx
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -6,7 +7,12 @@ import { InfoMobile } from "components/generic/infoMobile";
 import { FC } from "react";
 import { CardUnArtisan } from "./cardUnArtisan";
 
-export const AfficherProfilArtisan: FC = () => {
+interface AfficherProfilArtisanProps {
+  nomUser: string;
+  description: string;
+}
+
+export const AfficherProfilArtisan: FC<AfficherProfilArtisanProps> = ({ nomUser, description }) => {
   return (
     <Box minHeight="80vh">
       <Grid container>
@@ -29,10 +35,7 @@ export const AfficherProfilArtisan: FC = () => {
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1, width: "100%", maxWidth: 500 }}>
-            <Info
-              nomUser={"Kpan Emmanuel grand"}
-              description="Consultez les informations détaillées de votre artisan"
-            />
+            <Info nomUser={nomUser} description={description} />
           </Box>
         </Grid>
         <Grid
@@ -53,10 +56,7 @@ export const AfficherProfilArtisan: FC = () => {
             mt: 5
           }}
         >
-          <InfoMobile
-            nomUser={"Kpan Emmanuel mobile"}
-            description="Consultez les informations détaillées de votre artisan"
-          />
+          <InfoMobile nomUser={nomUser} description={description} />
           <Box
             sx={{
               display: "flex",

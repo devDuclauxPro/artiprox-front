@@ -4,37 +4,44 @@ import { BtnGeneric } from "components/generic/btnGeneric";
 import { FC } from "react";
 import { colorGris } from "utils/color";
 import { listImage } from "utils/listImage";
-import { ImageSwiper } from "./imageSwiper";
+import { ImageSwiper } from "../../animations/imageSwiper";
+
+// Styles extraits pour réutilisation
+const sectionStyle = {
+  backgroundColor: colorGris,
+  paddingY: 4
+};
+
+const titleStyle = {
+  textAlign: "center" as const,
+  marginBottom: 2
+};
+
+const descriptionStyle = {
+  textAlign: "center" as const,
+  marginBottom: 4
+};
+
+const buttonContainerStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  marginTop: 4
+};
 
 // Composant pour afficher une section dédiée à la présentation des artisans
 export const MilieuNosArtisan: FC = () => {
   return (
-    <Box bgcolor={colorGris} py={4}>
-      {" "}
-      {/* Augmenté le padding vertical pour améliorer l'espacement */}
+    <Box sx={sectionStyle}>
       <Container maxWidth="lg">
-        {/* Titre de la section */}
-        <Typography
-          variant="h4"
-          component="h2" // Utilisation de <h2> pour le titre de la section (plus sémantique)
-          textAlign="center"
-          gutterBottom // Ajout d'un espace en bas du titre
-        >
+        <Typography variant="h4" component="h2" sx={titleStyle} gutterBottom>
           Nos artisans
         </Typography>
-        {/* Description sous le titre */}
-        <Typography
-          variant="body1"
-          component="p"
-          textAlign="center"
-          sx={{ mb: 4 }} // Marge inférieure pour espacer de la section suivante
-        >
+        <Typography variant="body1" component="p" sx={descriptionStyle}>
           Découvrez une sélection d'artisans de votre région.
         </Typography>
-        {/* Composant pour afficher les images avec un slider */}
         <ImageSwiper listImage={listImage} />
-        {/* Bouton centré pour action */}
-        <Box display="flex" justifyContent="center" alignItems="center" mt={4}>
+        <Box sx={buttonContainerStyle}>
           <BtnGeneric
             btnText="Trouver un artisan"
             btnLink="trouver-un-artisan"

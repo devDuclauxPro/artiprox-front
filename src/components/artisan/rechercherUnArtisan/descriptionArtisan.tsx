@@ -2,6 +2,7 @@ import { Box, Container, Typography } from "@mui/material";
 import { FC } from "react";
 import { colorBlack, colorBleuFonce } from "utils/color";
 
+// Composant DescriptionArtisan affichant des informations sur les résultats de recherche
 export const DescriptionArtisan: FC = () => {
   return (
     <Container maxWidth="lg">
@@ -10,6 +11,7 @@ export const DescriptionArtisan: FC = () => {
           variant="h5"
           component="p"
           sx={{ fontSize: { xs: ".9rem", sm: "1.2rem", md: "1.5rem" }, fontWeight: 300 }}
+          aria-label="Titre de la recherche"
         >
           Résultat de votre recherche :
         </Typography>
@@ -25,7 +27,12 @@ export const DescriptionArtisan: FC = () => {
         </Typography>
         <Typography variant="body1" component="p" sx={{ fontSize: { xs: ".8rem", sm: "1.3rem" }, fontWeight: 300 }}>
           Professionnels disponibles :
-          <Typography variant="h6" component="span" color={colorBlack}>
+          <Typography
+            variant="h6"
+            component="span"
+            color={colorBlack}
+            sx={{ ml: 0.5 }} // Espacement entre le texte et le nombre
+          >
             28
           </Typography>
         </Typography>

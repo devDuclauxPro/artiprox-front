@@ -1,8 +1,5 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Avatar, Box, Button, Container, Typography } from "@mui/material";
-import FormLabel from "@mui/material/FormLabel";
-import Grid from "@mui/material/Grid";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import { Avatar, Box, Button, Container, FormControl, FormLabel, Grid, OutlinedInput, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { Layout } from "layouts/layout";
 import { FC } from "react";
@@ -34,33 +31,32 @@ export const OublierMotPasse: FC = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h5" component="h1" textAlign="center" color={colorBlue}>
-              REINITIALISER LE MOT DE PASSE
+              Réinitialiser le mot de passe
             </Typography>
           </Grid>
         </Grid>
         <Box component="form" py={3}>
           <Grid container spacing={3}>
             <FormGrid item xs={12}>
-              <FormLabel htmlFor="email" required>
-                Email
-              </FormLabel>
-              <OutlinedInput
-                id="email"
-                name="email"
-                type="email"
-                placeholder="Votre adresse e-mail"
-                autoComplete="email"
-                required
-              />
+              <FormControl fullWidth required>
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <OutlinedInput
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="Votre adresse e-mail"
+                  autoComplete="email"
+                />
+              </FormControl>
             </FormGrid>
             <FormGrid item xs={12}>
-              <Button variant="contained" color="success" disableRipple>
+              <Button variant="contained" color="success" disableRipple fullWidth>
                 Valider
               </Button>
             </FormGrid>
           </Grid>
         </Box>
-        <Grid container>
+        <Grid container justifyContent="center">
           <Grid item>
             <Link to="/inscription" style={{ textDecoration: "none" }}>
               Vous n'avez pas de compte ? S'inscrire

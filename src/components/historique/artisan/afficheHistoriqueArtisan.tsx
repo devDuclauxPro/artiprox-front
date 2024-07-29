@@ -1,8 +1,4 @@
-import { Divider } from "@mui/material";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import { FC } from "react";
 import { colorBleuFonce, colorBlue } from "utils/color";
 
@@ -13,7 +9,7 @@ const historiques = [
     nomClient: "Mr Kouadio Ali",
     adresseClient: "Rue Washington, Cocody, Abidjan, Côte d'Ivoire",
     paymentClient: "Payement Orange Money",
-    devis: "Devis étabi",
+    devis: "Devis établi",
     descriptionTacheClient: "Réparation de mon robinet"
   },
   {
@@ -22,63 +18,60 @@ const historiques = [
     nomClient: "Mr Kouadio Ali",
     adresseClient: "Rue Washington, Cocody, Abidjan, Côte d'Ivoire",
     paymentClient: "Payement Orange Money",
-    Devis: "Pas de devis demandé",
+    devis: "Pas de devis demandé",
     descriptionTacheClient: "Réparation de mon robinet"
   }
 ];
 
-export const AfficheHistoriqueArtisan: FC = () => {
-  return (
-    <>
-      <Typography gutterBottom variant="h5" component="h1" color={colorBlue}>
-        Mon historique
-      </Typography>
-      <Stack spacing={2} useFlexGap>
-        {historiques.map((historique) => (
-          <Box key={historique.nRDV}>
-            <Stack direction="column" spacing={1} useFlexGap sx={{ width: "100%", mb: 1 }}>
-              <Grid container>
-                <Grid item xs={12}>
-                  <Typography variant="h6" component="p" gutterBottom color={colorBleuFonce}>
-                    {historique.nRDV} - {historique.dateRDV}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography gutterBottom color="text.secondary" component="span">
-                    Nom du client :
-                  </Typography>
-                  <Typography gutterBottom>{historique.nomClient}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography gutterBottom color="text.secondary" component="span">
-                    Addresse du client :
-                  </Typography>
-                  <Typography gutterBottom>{historique.adresseClient}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography gutterBottom color="text.secondary" component="span">
-                    Mode de payement du client :
-                  </Typography>
-                  <Typography gutterBottom>{historique.paymentClient}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography gutterBottom color="text.secondary" component="span">
-                    Devis du client :
-                  </Typography>
-                  <Typography gutterBottom>{historique.devis}</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography gutterBottom color="text.secondary" component="span">
-                    Description de la tâche du client :
-                  </Typography>
-                  <Typography gutterBottom>{historique.descriptionTacheClient}</Typography>
-                </Grid>
-              </Grid>
-              <Divider variant="fullWidth" />
-            </Stack>
-          </Box>
-        ))}
-      </Stack>
-    </>
-  );
-};
+const HistoriqueItem: FC<{ historique: (typeof historiques)[0] }> = ({ historique }) => (
+  <Box key={historique.nRDV}>
+    <Stack direction="column" spacing={1} useFlexGap sx={{ width: "100%", mb: 2 }}>
+      <Grid container>
+        <Grid item xs={12}>
+          <Typography variant="h6" component="p" color={colorBleuFonce}>
+            {historique.nRDV} - {historique.dateRDV}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography gutterBottom color="text.secondary">
+            Nom du client : {historique.nomClient}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography gutterBottom color="text.secondary">
+            Adresse du client : {historique.adresseClient}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography gutterBottom color="text.secondary">
+            Mode de paiement du client : {historique.paymentClient}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography gutterBottom color="text.secondary">
+            Devis du client : {historique.devis}
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography gutterBottom color="text.secondary">
+            Description de la tâche du client : {historique.descriptionTacheClient}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Divider variant="fullWidth" />
+    </Stack>
+  </Box>
+);
+
+export const AfficheHistoriqueArtisan: FC = () => (
+  <>
+    <Typography gutterBottom variant="h5" color={colorBlue}>
+      Mon historique
+    </Typography>
+    <Stack spacing={2} useFlexGap>
+      {historiques.map((historique) => (
+        <HistoriqueItem historique={historique} key={historique.nRDV} />
+      ))}
+    </Stack>
+  </>
+);
