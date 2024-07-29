@@ -1,7 +1,7 @@
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
-import { steps } from "./getStepContent";
+import { steps } from "utils/useStep";
 
 type TStepperComponentProps = {
   activeStep: number;

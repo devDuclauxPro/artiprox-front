@@ -1,5 +1,5 @@
-import { HautRecherche } from "components/artisan/hautRecherche";
-import { ResultatArtisan } from "components/artisan/resultatArtisan";
+import { HautRecherche } from "components/artisan/rechercherUnArtisan/hautRecherche";
+import { ResultatArtisan } from "components/artisan/rechercherUnArtisan/resultatArtisan";
 import { Layout } from "layouts/layout";
 import { FC } from "react";
 

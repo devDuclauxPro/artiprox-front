@@ -1,29 +1,15 @@
-import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { FC, useState } from "react";
-import { Link } from "react-router-dom";
-import { getStepContent, steps } from "./getStepContent";
-import { Info } from "./info";
-import { InfoMobile } from "./infoMobile";
-import { PasApas } from "./pasApas";
+import { Box, Grid } from "@mui/material";
+import { PasApas } from "components/devisRdvCommun/pasApas";
+import { StepNavigation } from "components/devisRdvCommun/stepNavigation";
+import { Info } from "components/generic/info";
+import { InfoMobile } from "components/generic/infoMobile";
+import { FC } from "react";
+import { steps, useStep } from "../../utils/useStep";
+import { FinalStep } from "../devisRdvCommun/finalStep";
+import { getStepContent } from "./getStepContent";
 
 export const Verifier: FC = () => {
-  const [activeStep, setActiveStep] = useState(0);
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep(activeStep - 1);
-  };
+  const { activeStep, handleNext, handleBack } = useStep();
 
   return (
     <Grid container>
@@ -44,9 +30,7 @@ export const Verifier: FC = () => {
           gap: 4
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1, width: "100%", maxWidth: 500 }}>
-          <Info nomArtisan={"Kpan Emmanuel grand"} />
-        </Box>
+        <Info nomUser="Kpan Emmanuel grand" description="Demandez un devis à l'artisan" />
       </Grid>
       <Grid
         item
@@ -66,25 +50,7 @@ export const Verifier: FC = () => {
         }}
       >
         <PasApas activeStep={activeStep} />
-        <Card sx={{ display: { xs: "flex", md: "none" }, width: "100%" }}>
-          <CardContent
-            sx={{
-              display: "flex",
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "space-between",
-              ":last-child": { pb: 2 }
-            }}
-          >
-            <div>
-              <Typography variant="subtitle2" gutterBottom>
-                Artisan sélectionné
-              </Typography>
-              <Typography variant="body1">{"Kpan Emmanuel mobile"}</Typography>
-            </div>
-            <InfoMobile nomArtisan={"Kpan Emmanuel mobile"} />
-          </CardContent>
-        </Card>
+        <InfoMobile nomUser="Kpan Emmanuel mobile" description="Demandez un devis à l'artisan" />
         <Box
           sx={{
             display: "flex",
@@ -97,65 +63,16 @@ export const Verifier: FC = () => {
           }}
         >
           {activeStep === steps.length ? (
-            <Stack spacing={2} useFlexGap py={5}>
-              <Typography variant="h1">📦</Typography>
-              <Typography variant="h5">Nous vous remercions d'avoir demandé un devis !</Typography>
-              <Typography variant="body1" color="text.secondary">
-                Votre numéro de devis est le <strong>&nbsp;#140396</strong>. Nous avons le plaisir de vous transmettre
-                par email le fichier contenant le devis que vous avez sollicité.
-              </Typography>
-              <Button
-                component={Link}
-                to="/trouver-un-artisan"
-                variant="contained"
-                sx={{ alignSelf: "start", width: { xs: "100%", sm: "auto" } }}
-              >
-                Trouver un autre artisan
-              </Button>
-            </Stack>
+            <FinalStep />
           ) : (
             <>
               {getStepContent(activeStep)}
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: { xs: "column-reverse", sm: "row" },
-                  justifyContent: activeStep !== 0 ? "space-between" : "flex-end",
-                  alignItems: "end",
-                  flexGrow: 1,
-                  gap: 1
-                }}
-              >
-                {activeStep !== 0 && (
-                  <Button
-                    startIcon={<ChevronLeftRoundedIcon />}
-                    onClick={handleBack}
-                    variant="text"
-                    sx={{ display: { xs: "none", sm: "flex" } }}
-                  >
-                    Précédent
-                  </Button>
-                )}
-                {activeStep !== 0 && (
-                  <Button
-                    startIcon={<ChevronLeftRoundedIcon />}
-                    onClick={handleBack}
-                    variant="outlined"
-                    fullWidth
-                    sx={{ display: { xs: "flex", sm: "none" } }}
-                  >
-                    Précédent
-                  </Button>
-                )}
-                <Button
-                  variant="contained"
-                  endIcon={<ChevronRightRoundedIcon />}
-                  onClick={handleNext}
-                  sx={{ width: { xs: "100%", sm: "fit-content" } }}
-                >
-                  {activeStep === steps.length - 1 ? "Envoyé" : "Suivant"}
-                </Button>
-              </Box>
+              <StepNavigation
+                activeStep={activeStep}
+                stepsLength={steps.length}
+                handleNext={handleNext}
+                handleBack={handleBack}
+              />
             </>
           )}
         </Box>

@@ -1,7 +1,5 @@
-import { FormAdresse } from "./formAdresse";
-import { Revoir } from "./revoir";
-
-export const steps = ["Information", "Récapitulatif"];
+import { Revoir } from "components/devisRdvCommun/revoir";
+import { FormAdresse } from "../devis/formAdresse";
 
 export const getStepContent = (step: number) => {
   switch (step) {

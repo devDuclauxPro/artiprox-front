@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { Verifier } from "components/utilisateur/verifier";
+import { AfficherProfilCommun } from "components/profil/commun/afficherProfilCommun";
 import { Layout } from "layouts/layout";
 import { FC } from "react";
 
@@ -7,7 +7,7 @@ export const Utilisateur: FC = () => {
   return (
     <Layout>
       <Box pt={8} mb={5}>
-        <Verifier />
+        <AfficherProfilCommun />
       </Box>
     </Layout>
   );

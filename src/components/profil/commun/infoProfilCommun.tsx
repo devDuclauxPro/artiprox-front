@@ -2,11 +2,11 @@ import { Box, Typography } from "@mui/material";
 import { FC } from "react";
 import { colorBleuFonce } from "utils/color";
 
-export const InfoProfil: FC = () => {
+export const InfoProfilCommun: FC = () => {
   return (
-    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap={1} mb={2}>
+    <Box width="100%" display="flex" flexDirection="column" justifyContent="center" alignItems="center" gap={1} mb={2}>
       <Typography gutterBottom variant="body2" color={colorBleuFonce}>
-        devExemple@gmail.com
+        devCommun@gmail.com
       </Typography>
       <Typography variant="body2" color={colorBleuFonce}>
         +2250707070707

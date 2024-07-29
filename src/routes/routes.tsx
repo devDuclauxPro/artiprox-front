@@ -5,9 +5,9 @@ import { Admin } from "pages/admin";
 import { Artisan } from "pages/artisan";
 import { AuthAdmin } from "pages/authAdmin";
 import { Connexion } from "pages/connexion";
+import { DetailArtisan } from "pages/detailArtisan";
 import { Devis } from "pages/devis";
 import { ErrorPage } from "pages/errorPage";
-import { Historique } from "pages/historique";
 import { Inscription } from "pages/inscription";
 import { Private } from "pages/private";
 import { Public } from "pages/public";
@@ -22,13 +22,13 @@ const routes = createRoutesFromElements(
     <Route path="/" element={<Public />}>
       <Route index element={<Accueil />} />
       <Route path="trouver-un-artisan" element={<Artisan />} />
+      <Route path="trouver-un-artisan/:id" element={<DetailArtisan />} />
       <Route path="qui-sommes-nous" element={<QuiSommesNous />} />
     </Route>
     <Route path="espace-membre" element={<Private />}>
       <Route index element={<Utilisateur />} />
       <Route path="obtenir-un-devis" element={<Devis />} />
       <Route path="obtenir-un-rendez-vous" element={<RendezVous />} />
-      <Route path="mon-historique" element={<Historique />} />
       <Route path="admin" element={<AuthAdmin />}>
         <Route index element={<Admin />} />
       </Route>

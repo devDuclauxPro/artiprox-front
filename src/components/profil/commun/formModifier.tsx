@@ -108,6 +108,22 @@ export const FormModifier: FC = () => {
             />
           </FormGrid>
           <FormGrid item xs={12}>
+            <FormLabel htmlFor="description" required>
+              Veuillez décrire votre activité
+            </FormLabel>
+            <TextField
+              id="description"
+              name="description"
+              type="text"
+              placeholder="Veuillez décrire votre activité "
+              autoComplete="given-description"
+              required
+              multiline
+              rows={4} // Vous pouvez ajuster le nombre de lignes selon vos besoins
+              variant="outlined" // Utilise l'outlined variant pour avoir le même style que OutlinedInput
+            />
+          </FormGrid>
+          <FormGrid item xs={12}>
             <Button variant="contained" color="success" disableRipple>
               Modifier
             </Button>

@@ -31,7 +31,7 @@ export const FormModPasse: FC = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" component="h1" textAlign="center" color={colorBlue}>
-            Modifier son mot de passe
+            Modifier mon mot de passe
           </Typography>
         </Grid>
       </Grid>

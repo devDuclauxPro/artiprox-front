@@ -1,19 +1,19 @@
 import { Box, Button, Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import client from "images/autres/user.png";
+import userPhoto from "images/autres/user.png";
 import { FC } from "react";
-import { TInfoProps } from "types/types";
+import { TInfoUserCommun } from "types/types";
 import { colorGrisPale } from "utils/color";
-import { InfoProfil } from "./infoProfil";
+import { InfoProfilCommun } from "./infoProfilCommun";
 
-export const Info: FC<TInfoProps> = ({ nomArtisan, photoArtisan }) => {
+export const Info: FC<TInfoUserCommun> = ({ nomUser, photoUser }) => {
   return (
     <>
       <Typography variant="subtitle2" color="text.secondary">
         Mon profil
       </Typography>
       <Typography variant="h5" gutterBottom>
-        {nomArtisan}
+        {nomUser}
       </Typography>
       <Grid container spacing={2} my={2}>
         <Grid
@@ -21,20 +21,20 @@ export const Info: FC<TInfoProps> = ({ nomArtisan, photoArtisan }) => {
           xs={12}
           sx={{ bgcolor: colorGrisPale, display: "flex", alignItems: "center", justifyContent: "center" }}
         >
-          <Box
-            component="img"
-            sx={{ height: 150, width: 150 }}
-            alt={nomArtisan}
-            src={photoArtisan ? photoArtisan : client}
-          />
+          <Box component="img" sx={{ height: 150, width: 150 }} alt={nomUser} src={photoUser ? photoUser : userPhoto} />
         </Grid>
       </Grid>
-      <InfoProfil />
+      <InfoProfilCommun />
       <Box display="flex" flexDirection="column" justifyContent="center" gap={1}>
         <Button variant="contained" color="success">
-          Modifier son profil
+          Modifier mon profil
         </Button>
-        <Button variant="contained">Modifier son mot de passe</Button>
+        <Button variant="contained">Modifier mon mot de passe</Button>
+        <Button variant="contained">Mon historique</Button>
+        <Button variant="contained">Ajouter des articles</Button>
+        <Button variant="contained" color="error">
+          Se déconnecter
+        </Button>
       </Box>
     </>
   );

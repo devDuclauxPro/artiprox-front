@@ -1,16 +1,12 @@
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { Info } from "components/generic/info";
+import { InfoMobile } from "components/generic/infoMobile";
 import { FC } from "react";
-import { FormModifier } from "./formModifier";
-import { FormModPasse } from "./formModPasse";
-import { Info } from "./info";
-import { InfoMobile } from "./infoMobile";
+import { CardUnArtisan } from "./cardUnArtisan";
 
-export const Verifier: FC = () => {
+export const AfficherProfilArtisan: FC = () => {
   return (
     <Box minHeight="80vh">
       <Grid container>
@@ -28,11 +24,15 @@ export const Verifier: FC = () => {
             alignItems: "start",
             pt: 4,
             px: 10,
-            gap: 4
+            gap: 4,
+            mt: 5
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1, width: "100%", maxWidth: 500 }}>
-            <Info nomArtisan={"Kpan Emmanuel grand"} />
+            <Info
+              nomUser={"Kpan Emmanuel grand"}
+              description="Consultez les informations détaillées de votre artisan"
+            />
           </Box>
         </Grid>
         <Grid
@@ -49,41 +49,25 @@ export const Verifier: FC = () => {
             alignItems: "start",
             pt: { xs: 2, sm: 4 },
             px: { xs: 2, sm: 10 },
-            gap: { xs: 4, md: 8 }
+            gap: { xs: 4, md: 8 },
+            mt: 5
           }}
         >
-          <Card sx={{ display: { xs: "flex", md: "none" }, width: "100%" }}>
-            <CardContent
-              sx={{
-                display: "flex",
-                width: "100%",
-                alignItems: "center",
-                justifyContent: "space-between",
-                ":last-child": { pb: 2 }
-              }}
-            >
-              <div>
-                <Typography variant="subtitle2" gutterBottom>
-                  Artisan sélectionné
-                </Typography>
-                <Typography variant="body1">{"Kpan Emmanuel mobile"}</Typography>
-              </div>
-              <InfoMobile nomArtisan={"Kpan Emmanuel mobile"} />
-            </CardContent>
-          </Card>
+          <InfoMobile
+            nomUser={"Kpan Emmanuel mobile"}
+            description="Consultez les informations détaillées de votre artisan"
+          />
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
               flexGrow: 1,
               width: "100%",
-              maxWidth: { sm: "100%", md: 600 },
               gap: { xs: 5, md: "none" }
             }}
           >
             <Stack spacing={2} useFlexGap>
-              <FormModifier />
-              <FormModPasse />
+              <CardUnArtisan />
             </Stack>
           </Box>
         </Grid>

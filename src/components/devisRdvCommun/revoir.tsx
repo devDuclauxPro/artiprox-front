@@ -4,6 +4,7 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { FC } from "react";
+import { colorBleuFonce } from "utils/color";
 
 const artisan = [
   {
@@ -23,6 +24,9 @@ export const Revoir: FC = () => {
             Détails du client
           </Typography>
           <Typography gutterBottom>Kpan Emmanuel Ange</Typography>
+          <Typography variant="h6" color={colorBleuFonce}>
+            01/01/2024 (Date du RDV)
+          </Typography>
           <Typography color="text.secondary" gutterBottom>
             +2250707070707
           </Typography>

@@ -6,10 +6,10 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { FC, useState } from "react";
-import { TInfoProps } from "types/types";
+import { TInfoUserCommun } from "types/types";
 import { Info } from "./info";
 
-export const InfoMobile: FC<TInfoProps> = ({ nomArtisan, photoArtisan }) => {
+export const InfoMobile: FC<TInfoUserCommun> = ({ nomUser, photoUser }) => {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -21,7 +21,7 @@ export const InfoMobile: FC<TInfoProps> = ({ nomArtisan, photoArtisan }) => {
       <IconButton onClick={toggleDrawer(false)} sx={{ position: "absolute", right: 8, top: 8 }}>
         <CloseIcon />
       </IconButton>
-      <Info nomArtisan={nomArtisan} photoArtisan={photoArtisan} />
+      <Info nomUser={nomUser} photoUser={photoUser} />
     </Box>
   );
 

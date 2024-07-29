@@ -35,7 +35,7 @@ export const HautAccueil: FC = () => {
           component="p"
           textAlign="center"
           color={colorWhite}
-          sx={{ fontSize: { xs: "2rem", md: "3rem" } }}
+          sx={{ fontSize: { xs: "2rem", md: "3rem" }, userSelect: "none" }}
         >
           En Afrique,
         </Typography>
@@ -44,7 +44,7 @@ export const HautAccueil: FC = () => {
           component="p"
           textAlign="center"
           color={colorWhite}
-          sx={{ fontSize: { xs: "2rem", md: "3rem" } }}
+          sx={{ fontSize: { xs: "2rem", md: "3rem" }, userSelect: "none" }}
         >
           nous allons vous (re)donner envie
         </Typography>
@@ -54,7 +54,7 @@ export const HautAccueil: FC = () => {
           textAlign="center"
           color={colorOrange}
           pb={3}
-          sx={{ fontSize: { xs: "2rem", md: "3rem" } }}
+          sx={{ fontSize: { xs: "2rem", md: "3rem" }, userSelect: "none" }}
         >
           de faire des travaux
         </Typography>

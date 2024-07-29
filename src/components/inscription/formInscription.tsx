@@ -70,6 +70,22 @@ export const FormInscription: FC = () => {
               renderInput={(params) => <TextField required {...params} placeholder="Sélectionner votre profil" />}
             />
           </FormGrid>
+          <FormGrid item xs={12}>
+            <FormLabel htmlFor="description" required>
+              Veuillez décrire votre activité
+            </FormLabel>
+            <TextField
+              id="description"
+              name="description"
+              type="text"
+              placeholder="Veuillez décrire votre activité "
+              autoComplete="given-description"
+              required
+              multiline
+              rows={4} // Vous pouvez ajuster le nombre de lignes selon vos besoins
+              variant="outlined" // Utilise l'outlined variant pour avoir le même style que OutlinedInput
+            />
+          </FormGrid>
           <FormGrid item xs={12} md={6}>
             <FormLabel htmlFor="country" required>
               Pays

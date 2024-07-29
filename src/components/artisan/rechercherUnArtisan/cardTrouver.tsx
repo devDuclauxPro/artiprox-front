@@ -21,7 +21,13 @@ export const CardTrouver: FC = () => {
         </Grid>
         <Grid item xs={12} md={9}>
           <Card>
-            <CardHeader title={<Typography variant="h6">PULS GROUPE RENOVATION</Typography>} />
+            <CardHeader
+              title={
+                <Typography variant="h6" component={Link} to="/trouver-un-artisan/1">
+                  PULS GROUPE RENOVATION
+                </Typography>
+              }
+            />
             <CardContent sx={{ bgcolor: colorGrisPale }}>
               <Box display="flex" alignItems="center">
                 <WorkIcon color="warning" sx={{ mr: 1 }} />
