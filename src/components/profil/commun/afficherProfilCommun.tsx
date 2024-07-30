@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import { AfficheHistoriqueArtisan } from "components/historique/artisan/afficheHistoriqueArtisan";
 import { AfficheHistoriqueClient } from "components/historique/client/afficheHistoriqueClient";
 import { FC } from "react";
+import { ListUser } from "../admin/listUser";
 import { AfficherArticle } from "../artisan/afficherArticle";
 import { FormArticle } from "../artisan/formArticle";
 import { FormModifier } from "./formModifier";
@@ -81,17 +82,22 @@ export const AfficherProfilCommun: FC = () => {
               flexDirection: "column",
               flexGrow: 1,
               width: "100%",
-              maxWidth: { sm: "100%", md: 600 },
               gap: { xs: 5, md: "none" }
             }}
           >
             <Stack spacing={2} useFlexGap>
-              <FormModifier />
-              <FormModPasse />
-              <AfficheHistoriqueArtisan />
-              <AfficheHistoriqueClient />
-              <FormArticle />
-              <AfficherArticle />
+              {false ? (
+                <>
+                  <FormModifier />
+                  <FormModPasse />
+                  <AfficheHistoriqueArtisan />
+                  <AfficheHistoriqueClient />
+                  <FormArticle />
+                  <AfficherArticle />
+                </>
+              ) : (
+                <ListUser />
+              )}
             </Stack>
           </Box>
         </Grid>

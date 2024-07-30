@@ -32,6 +32,7 @@ export const Info: FC<TInfoUserCommun> = ({ nomUser, photoUser }) => {
         <Button variant="contained">Modifier mon mot de passe</Button>
         <Button variant="contained">Mon historique</Button>
         <Button variant="contained">Ajouter des articles</Button>
+        <Button variant="contained">Voir les utilisateurs</Button>
         <Button variant="contained" color="error">
           Se déconnecter
         </Button>

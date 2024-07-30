@@ -2,13 +2,21 @@ import WifiCalling3Icon from "@mui/icons-material/WifiCalling3";
 import WorkIcon from "@mui/icons-material/Work";
 import { Box, Button, Card, CardActions, CardContent, CardHeader, Container, Grid, Typography } from "@mui/material";
 import { ImageSwiper } from "animations/imageSwiper";
-import { FC } from "react";
+import { FC, SyntheticEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import { colorGrisPale } from "utils/color";
 import { listImage } from "utils/listImage";
 import { TextRating } from "../rechercherUnArtisan/textRating";
 
 export const CardUnArtisan: FC = () => {
+  const [value, setValue] = useState<number>(1);
+
+  const handleChange = (event: SyntheticEvent, newValue: number | null) => {
+    if (newValue !== null) {
+      setValue(newValue);
+    }
+  };
+
   return (
     <Container maxWidth="lg" sx={{ my: 2, py: 3 }}>
       <Grid container columnSpacing={2}>
@@ -36,12 +44,12 @@ export const CardUnArtisan: FC = () => {
                   lg={3}
                   sx={{ display: { xs: "flex", lg: "block" }, justifyContent: "center", alignItems: "center" }}
                 >
-                  <TextRating valeur={2} />
+                  <TextRating valeur={value} handleChange={handleChange} />
                 </Grid>
                 <Grid item xs={12} lg={3}>
                   <Button
                     component="a"
-                    href="tel:0707070707"
+                    href="https://wa.me/1234567890"
                     variant="contained"
                     color="primary"
                     startIcon={<WifiCalling3Icon />}

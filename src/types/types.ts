@@ -86,3 +86,12 @@ export type TMilieuDroitPourquoiProps = {
   gap: number;
   width: string;
 };
+
+export type TRowData = {
+  id: number;
+  fullName: string;
+  email: string;
+  contact: string;
+  interne: string;
+  message: string;
+};

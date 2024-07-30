@@ -67,7 +67,8 @@ export const CardTrouver: FC<TCardTrouver> = ({ titre, description, numero, nota
                 <Grid item xs={12} md={4} lg={3}>
                   <Button
                     component="a"
-                    href={`tel:${numero}`}
+                    href={`https://wa.me/${numero}`}
+                    target="_blank"
                     variant="contained"
                     color="primary"
                     startIcon={<WifiCalling3Icon />}
