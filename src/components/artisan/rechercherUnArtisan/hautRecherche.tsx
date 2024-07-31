@@ -1,21 +1,32 @@
 import { Autocomplete, Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
 import { FC } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { colorBlue, colorGris2 } from "utils/color";
 import { metiers, villes } from "utils/recherche";
 
+type Inputs = {
+  metier: string;
+  ville: string;
+};
+
 // Composant HautRecherche pour la barre de recherche en haut de la page
 export const HautRecherche: FC = () => {
-  // Fonction pour gérer la soumission du formulaire
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // Ajoutez ici la logique de recherche
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+    console.log(errors);
   };
 
   return (
     <Box component="section" mt={8}>
       <Box bgcolor={colorGris2} py={8}>
         <Container maxWidth="lg">
-          <form onSubmit={handleSubmit}>
+          <Box component="form" onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={12} md={3}>
                 <Typography color={colorBlue} variant="h6" textAlign={{ xs: "left", sm: "center", md: "right" }}>
@@ -29,7 +40,9 @@ export const HautRecherche: FC = () => {
                   options={metiers}
                   size="small"
                   fullWidth
-                  renderInput={(params) => <TextField {...params} label="Sélectionner un métier" />}
+                  renderInput={(params) => (
+                    <TextField {...register("metier")} {...params} label="Sélectionner un métier" />
+                  )}
                   aria-label="Sélectionner un métier"
                 />
               </Grid>
@@ -40,7 +53,9 @@ export const HautRecherche: FC = () => {
                   options={villes}
                   size="small"
                   fullWidth
-                  renderInput={(params) => <TextField {...params} label="Sélectionner une ville" />}
+                  renderInput={(params) => (
+                    <TextField {...register("ville")} {...params} label="Sélectionner une ville" />
+                  )}
                   aria-label="Sélectionner une ville"
                 />
               </Grid>
@@ -50,7 +65,7 @@ export const HautRecherche: FC = () => {
                 </Button>
               </Grid>
             </Grid>
-          </form>
+          </Box>
         </Container>
       </Box>
     </Box>

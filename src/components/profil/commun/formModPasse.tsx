@@ -1,17 +1,38 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Avatar, Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Avatar, Box, Button, Container, FormControl, TextField, Typography } from "@mui/material";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
 import { FC } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { colorBlue, colorVertNature } from "utils/color";
+import { schemaModifPass } from "utils/yupValidation";
 
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
   flexDirection: "column"
 }));
 
+type Inputs = {
+  ancienPassword: string;
+  nouveauPassword: string;
+};
+
 export const FormModPasse: FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<Inputs>({
+    resolver: yupResolver(schemaModifPass)
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+    console.log(errors);
+  };
+
   return (
     <Container maxWidth="md">
       <Grid container spacing={2}>
@@ -34,40 +55,42 @@ export const FormModPasse: FC = () => {
           </Typography>
         </Grid>
       </Grid>
-      <Box component="form" py={3}>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)} py={3}>
         <Grid container spacing={3}>
           <FormGrid item xs={12}>
-            <FormLabel htmlFor="ancienPassword" required>
-              Ancien mot de passe
-            </FormLabel>
-            <TextField
-              id="ancienPassword"
-              name="ancienPassword"
-              type="password"
-              placeholder="**********"
-              autoComplete="current-password"
-              required
-              fullWidth
-              variant="outlined"
-            />
+            <FormControl fullWidth required>
+              <FormLabel htmlFor="ancienPassword">Ancien mot de passe</FormLabel>
+              <TextField
+                {...register("ancienPassword")}
+                id="ancienPassword"
+                name="ancienPassword"
+                type="password"
+                placeholder="**********"
+                autoComplete="current-password"
+                required
+                error={!!errors.ancienPassword}
+                helperText={errors.ancienPassword?.message}
+              />
+            </FormControl>
           </FormGrid>
           <FormGrid item xs={12}>
-            <FormLabel htmlFor="nouveauPassword" required>
-              Nouveau mot de passe
-            </FormLabel>
-            <TextField
-              id="nouveauPassword"
-              name="nouveauPassword"
-              type="password"
-              placeholder="**********"
-              autoComplete="new-password"
-              required
-              fullWidth
-              variant="outlined"
-            />
+            <FormControl fullWidth required>
+              <FormLabel htmlFor="nouveauPassword">Nouveau mot de passe</FormLabel>
+              <TextField
+                {...register("nouveauPassword")}
+                id="nouveauPassword"
+                name="nouveauPassword"
+                type="password"
+                placeholder="**********"
+                autoComplete="new-password"
+                required
+                error={!!errors.nouveauPassword}
+                helperText={errors.nouveauPassword?.message}
+              />
+            </FormControl>
           </FormGrid>
           <FormGrid item xs={12}>
-            <Button variant="contained" color="success" disableRipple>
+            <Button type="submit" variant="contained" color="success" disableRipple>
               Modifier
             </Button>
           </FormGrid>

@@ -15,3 +15,4 @@ export const colorOrange = "#ff6900"; // Orange vif
 export const colorVertNature = "#4caf50"; // Vert nature
 export const colorOrangeChaleureux = "#ff8c00"; // Orange chaleureux
 export const colorBleuFonce = "#005b7f"; // Bleu foncé
+export const colorRougeVif = "#dc143c"; // Rouge vif

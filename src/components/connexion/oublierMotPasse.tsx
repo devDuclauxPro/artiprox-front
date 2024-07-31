@@ -1,17 +1,38 @@
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Avatar, Box, Button, Container, FormControl, FormLabel, Grid, OutlinedInput, Typography } from "@mui/material";
+import { Avatar, Box, Button, Container, FormControl, FormLabel, Grid, TextField, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { Layout } from "layouts/layout";
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { colorBlue, colorVertNature } from "utils/color";
 
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { schemaOublierPass } from "utils/yupValidation";
+
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
   flexDirection: "column"
 }));
 
+type Inputs = {
+  email: string;
+};
+
 export const OublierMotPasse: FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<Inputs>({
+    resolver: yupResolver(schemaOublierPass)
+  });
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+    console.log(errors);
+  };
+
   return (
     <Layout>
       <Container maxWidth="md" sx={{ mt: 10, minHeight: "80vh" }}>
@@ -35,12 +56,13 @@ export const OublierMotPasse: FC = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Box component="form" py={3}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} py={3}>
           <Grid container spacing={3}>
             <FormGrid item xs={12}>
               <FormControl fullWidth required>
                 <FormLabel htmlFor="email">Email</FormLabel>
-                <OutlinedInput
+                <TextField
+                  {...register("email")}
                   id="email"
                   name="email"
                   type="email"
@@ -50,7 +72,7 @@ export const OublierMotPasse: FC = () => {
               </FormControl>
             </FormGrid>
             <FormGrid item xs={12}>
-              <Button variant="contained" color="success" disableRipple fullWidth>
+              <Button type="submit" variant="contained" color="success" disableRipple fullWidth>
                 Valider
               </Button>
             </FormGrid>

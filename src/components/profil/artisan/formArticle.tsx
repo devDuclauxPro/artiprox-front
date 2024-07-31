@@ -1,10 +1,10 @@
 import ArticleIcon from "@mui/icons-material/Article";
-import { Avatar, Box, Button, Container, Typography } from "@mui/material";
+import { Avatar, Box, Button, Container, FormControl, TextField, Typography } from "@mui/material";
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/system";
 import { FC } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { colorBlue, colorVertNature } from "utils/color";
 
 const FormGrid = styled(Grid)(() => ({
@@ -12,7 +12,23 @@ const FormGrid = styled(Grid)(() => ({
   flexDirection: "column"
 }));
 
+type Inputs = {
+  titreArticle: string;
+  photoArticle: string;
+};
+
 export const FormArticle: FC = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+    console.log(errors);
+  };
+
   return (
     <Container maxWidth="md">
       <Grid container spacing={2}>
@@ -35,30 +51,43 @@ export const FormArticle: FC = () => {
           </Typography>
         </Grid>
       </Grid>
-      <Box component="form" py={3}>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)} py={3}>
         <Grid container spacing={3}>
           <FormGrid item xs={12} md={6}>
-            <FormLabel htmlFor="photoArticle" required>
-              Ajouter une photo de l'article
-            </FormLabel>
-            <OutlinedInput id="photoArticle" name="photoArticle" type="file" autoComplete="photo article" required />
+            <FormControl fullWidth required>
+              <FormLabel htmlFor="photoArticle" required>
+                Ajouter une photo de l'article
+              </FormLabel>
+              <TextField
+                {...register("photoArticle")}
+                id="photoArticle"
+                name="photoArticle"
+                type="file"
+                autoComplete="photo article"
+                required
+                error={!!errors.photoArticle}
+                helperText={errors.photoArticle?.message}
+              />
+            </FormControl>
           </FormGrid>
           <FormGrid item xs={12} md={6}>
-            <FormLabel htmlFor="titreArticle" required>
-              Titre à la photo
-            </FormLabel>
-            <OutlinedInput
-              id="titreArticle"
-              name="titreArticle"
-              type="text"
-              placeholder="Ajouter un titre à la photo de l'article"
-              autoComplete="titre photo article"
-              required
-            />
+            <FormControl fullWidth required>
+              <FormLabel htmlFor="titreArticle">Titre à la photo</FormLabel>
+              <TextField
+                {...register("titreArticle")}
+                id="titreArticle"
+                name="titreArticle"
+                type="text"
+                placeholder="Ajouter un titre à la photo de l'article"
+                autoComplete="titre photo article"
+                required
+                error={!!errors.titreArticle}
+                helperText={errors.titreArticle?.message}
+              />
+            </FormControl>
           </FormGrid>
-
           <FormGrid item xs={12}>
-            <Button variant="contained" color="success" disableRipple>
+            <Button type="submit" variant="contained" color="success" disableRipple>
               Modifier
             </Button>
           </FormGrid>

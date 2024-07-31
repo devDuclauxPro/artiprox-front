@@ -86,7 +86,7 @@ export const AfficherProfilCommun: FC = () => {
             }}
           >
             <Stack spacing={2} useFlexGap>
-              {false ? (
+              {true ? (
                 <>
                   <FormModifier />
                   <FormModPasse />
