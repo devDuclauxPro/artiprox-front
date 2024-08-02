@@ -2,11 +2,22 @@ import { Box, Button, Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import userPhoto from "images/autres/user.png";
 import { FC } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { deconnexion } from "reducerToolkitStore/features/user";
 import { TInfoUserCommun } from "types/types";
 import { colorGrisPale } from "utils/color";
 import { InfoProfilCommun } from "./infoProfilCommun";
 
 export const Info: FC<TInfoUserCommun> = ({ nomUser, photoUser }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleDeconnexion = () => {
+    dispatch(deconnexion());
+    navigate("/connexion");
+  };
+
   return (
     <>
       <Typography variant="subtitle2" color="text.secondary">
@@ -33,7 +44,7 @@ export const Info: FC<TInfoUserCommun> = ({ nomUser, photoUser }) => {
         <Button variant="contained">Mon historique</Button>
         <Button variant="contained">Ajouter des articles</Button>
         <Button variant="contained">Voir les utilisateurs</Button>
-        <Button variant="contained" color="error">
+        <Button variant="contained" color="error" onClick={handleDeconnexion}>
           Se déconnecter
         </Button>
       </Box>

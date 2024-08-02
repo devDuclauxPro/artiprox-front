@@ -1,44 +1,77 @@
 import { App } from "App";
 import { OublierMotPasse } from "components/connexion/oublierMotPasse";
 import { Accueil } from "pages/accueil";
-import { Admin } from "pages/admin";
 import { Artisan } from "pages/artisan";
-import { AuthAdmin } from "pages/authAdmin";
 import { Connexion } from "pages/connexion";
 import { DetailArtisan } from "pages/detailArtisan";
 import { Devis } from "pages/devis";
 import { ErrorPage } from "pages/errorPage";
 import { Inscription } from "pages/inscription";
-import { Private } from "pages/private";
-import { Public } from "pages/public";
-import { QuiSommesNous } from "pages/quiSommesNous";
+import { PrivateRoute } from "pages/privateRoute";
+import { PublicRoute } from "pages/publicRoute";
 import { RendezVous } from "pages/rendezVous";
 import { Utilisateur } from "pages/utilisateur";
-import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom"; // Utilisation d'un index.js dans le dossier components
 
-// Création des éléments de route
-const routes = createRoutesFromElements(
-  <Route path="/" element={<App />}>
-    <Route path="/" element={<Public />}>
-      <Route index element={<Accueil />} />
-      <Route path="trouver-un-artisan" element={<Artisan />} />
-      <Route path="trouver-un-artisan/:id" element={<DetailArtisan />} />
-      <Route path="qui-sommes-nous" element={<QuiSommesNous />} />
-    </Route>
-    <Route path="espace-membre" element={<Private />}>
-      <Route index element={<Utilisateur />} />
-      <Route path="obtenir-un-devis" element={<Devis />} />
-      <Route path="obtenir-un-rendez-vous" element={<RendezVous />} />
-      <Route path="admin" element={<AuthAdmin />}>
-        <Route index element={<Admin />} />
-      </Route>
-    </Route>
-    <Route path="connexion" element={<Connexion />} />
-    <Route path="inscription" element={<Inscription />} />
-    <Route path="mot-passe-oublie" element={<OublierMotPasse />} />
-    <Route path="*" element={<ErrorPage />} />
-  </Route>
-);
+// Définir les chemins
+const paths = {
+  home: "",
+  quiSommesNous: "qui-sommes-nous",
+  trouverArtisan: "trouver-un-artisan",
+  detailArtisan: "trouver-un-artisan/:id",
+  connexion: "connexion",
+  inscription: "inscription",
+  oublierMotPasse: "mot-passe-oublie",
+  espaceMembre: "espace-membre",
+  profil: "profil",
+  devis: "obtenir-un-devis",
+  rendezVous: "obtenir-un-rendez-vous",
+  admin: "admin"
+};
 
-// Création du routeur
-export const router = createBrowserRouter(routes);
+// Définir les routes publiques accessibles à tous les utilisateurs
+const routesForPublic = [
+  { path: paths.home, element: <Accueil /> },
+  { path: paths.trouverArtisan, element: <Artisan /> },
+  { path: paths.detailArtisan, element: <DetailArtisan /> },
+  { path: paths.connexion, element: <Connexion /> },
+  { path: paths.inscription, element: <Inscription /> },
+  { path: paths.oublierMotPasse, element: <OublierMotPasse /> }
+];
+
+// Définir les routes accessibles uniquement aux utilisateurs authentifiés
+const routesForAuthenticatedOnly = [
+  {
+    path: paths.espaceMembre,
+    element: <PrivateRoute />,
+    children: [
+      { path: paths.home, element: <Accueil /> },
+      { path: paths.trouverArtisan, element: <Artisan /> },
+      { path: paths.detailArtisan, element: <DetailArtisan /> },
+      { path: paths.profil, element: <Utilisateur /> },
+      { path: paths.devis, element: <Devis /> },
+      { path: paths.rendezVous, element: <RendezVous /> }
+    ]
+  }
+];
+
+// Définir les routes accessibles uniquement aux utilisateurs non authentifiés
+const routesForNotAuthenticatedOnly = [{ path: paths.home, element: <Accueil /> }];
+
+// Combiner et inclure conditionnellement les routes en fonction du statut d'authentification
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: paths.home,
+        element: <PublicRoute />,
+        children: [...routesForPublic]
+      },
+      ...routesForAuthenticatedOnly,
+      { path: "*", element: <ErrorPage /> }
+    ]
+  },
+  ...routesForNotAuthenticatedOnly
+]);

@@ -3,7 +3,9 @@ import WorkIcon from "@mui/icons-material/Work";
 import { Box, Button, Card, CardActions, CardContent, CardHeader, Container, Grid, Typography } from "@mui/material";
 import activite from "images/autres/activite.png";
 import { FC } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { RootState } from "reducerToolkitStore/store/store";
 import { colorGrisPale } from "utils/color";
 import { TextRating } from "./textRating";
 
@@ -16,6 +18,7 @@ type TCardTrouver = {
 
 // Composant pour afficher une carte d'un artisan avec informations et actions
 export const CardTrouver: FC<TCardTrouver> = ({ titre, description, numero, notation }) => {
+  const user = useSelector((state: RootState) => state.user.user);
   return (
     <Container maxWidth="lg" sx={{ mb: 2, py: 3 }}>
       <Grid container>
@@ -41,7 +44,7 @@ export const CardTrouver: FC<TCardTrouver> = ({ titre, description, numero, nota
                 <Typography
                   variant="h6"
                   component={Link}
-                  to="/trouver-un-artisan/1"
+                  to="/espace-membre/trouver-un-artisan/1"
                   sx={{ textDecoration: "none", color: "inherit" }} // Styles pour le lien
                 >
                   {titre}
@@ -64,21 +67,23 @@ export const CardTrouver: FC<TCardTrouver> = ({ titre, description, numero, nota
                 >
                   <TextRating valeur={notation} />
                 </Grid>
-                <Grid item xs={12} md={4} lg={3}>
-                  <Button
-                    component="a"
-                    href={`https://wa.me/${numero}`}
-                    target="_blank"
-                    variant="contained"
-                    color="primary"
-                    startIcon={<WifiCalling3Icon />}
-                    size="small"
-                    disableRipple
-                    fullWidth
-                  >
-                    {numero}
-                  </Button>
-                </Grid>
+                {user?.role_id && (
+                  <Grid item xs={12} md={4} lg={3}>
+                    <Button
+                      component="a"
+                      href={`https://wa.me/${numero}`}
+                      target="_blank"
+                      variant="contained"
+                      color="primary"
+                      startIcon={<WifiCalling3Icon />}
+                      size="small"
+                      disableRipple
+                      fullWidth
+                    >
+                      {numero}
+                    </Button>
+                  </Grid>
+                )}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <Button
                     component={Link}

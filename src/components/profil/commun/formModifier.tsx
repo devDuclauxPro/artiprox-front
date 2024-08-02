@@ -9,6 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { colorBlue, colorVertNature } from "utils/color";
 import { pays } from "utils/recherche";
 import { schemaModifInfo } from "utils/yupValidation";
+import { Maybe } from "yup";
 
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
@@ -18,11 +19,11 @@ const FormGrid = styled(Grid)(() => ({
 type Inputs = {
   nom: string;
   prenoms: string;
-  description: string;
+  description?: Maybe<string | undefined>;
   pays: string;
   ville: string;
   adresse: string;
-  telephone: string;
+  numero_telephone: string;
 };
 
 export const FormModifier: FC = () => {
@@ -69,7 +70,6 @@ export const FormModifier: FC = () => {
               <TextField
                 {...register("nom")}
                 id="nom"
-                name="nom"
                 type="text"
                 placeholder="Ex: Kpan"
                 autoComplete="family-name"
@@ -85,7 +85,6 @@ export const FormModifier: FC = () => {
               <TextField
                 {...register("prenoms")}
                 id="prenoms"
-                name="prenoms"
                 type="text"
                 placeholder="Ex: Benjamin Emmanuel"
                 autoComplete="given-name"
@@ -122,7 +121,6 @@ export const FormModifier: FC = () => {
               <TextField
                 {...register("ville")}
                 id="ville"
-                name="ville"
                 type="text"
                 placeholder="Ex: Abidjan"
                 autoComplete="address-level2"
@@ -138,7 +136,6 @@ export const FormModifier: FC = () => {
               <TextField
                 {...register("adresse")}
                 id="adresse"
-                name="adresse"
                 type="text"
                 placeholder="Ex: Cocody, Hotel du golf"
                 autoComplete="address-line"
@@ -150,27 +147,25 @@ export const FormModifier: FC = () => {
           </FormGrid>
           <FormGrid item xs={12}>
             <FormControl fullWidth required>
-              <FormLabel htmlFor="telephone">Numéro de mobile</FormLabel>
+              <FormLabel htmlFor="numero_telephone">Numéro de mobile</FormLabel>
               <TextField
-                {...register("telephone")}
-                id="telephone"
-                name="telephone"
+                {...register("numero_telephone")}
+                id="numero_telephone"
                 type="tel"
                 placeholder="Ex: +2250707070707"
                 autoComplete="tel"
-                error={!!errors.telephone}
-                helperText={errors.telephone?.message}
+                error={!!errors.numero_telephone}
+                helperText={errors.numero_telephone?.message}
                 required
               />
             </FormControl>
           </FormGrid>
           <FormGrid item xs={12}>
-            <FormControl fullWidth required>
+            <FormControl fullWidth>
               <FormLabel htmlFor="description">Veuillez décrire votre activité</FormLabel>
               <TextField
                 {...register("description")}
                 id="description"
-                name="description"
                 type="text"
                 placeholder="Veuillez décrire votre activité"
                 autoComplete="description"
@@ -179,7 +174,6 @@ export const FormModifier: FC = () => {
                 variant="outlined"
                 error={!!errors.description}
                 helperText={errors.description?.message}
-                required
               />
             </FormControl>
           </FormGrid>

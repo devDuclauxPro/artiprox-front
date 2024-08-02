@@ -63,7 +63,6 @@ export const FormModPasse: FC = () => {
               <TextField
                 {...register("ancienPassword")}
                 id="ancienPassword"
-                name="ancienPassword"
                 type="password"
                 placeholder="**********"
                 autoComplete="current-password"
@@ -79,7 +78,6 @@ export const FormModPasse: FC = () => {
               <TextField
                 {...register("nouveauPassword")}
                 id="nouveauPassword"
-                name="nouveauPassword"
                 type="password"
                 placeholder="**********"
                 autoComplete="new-password"

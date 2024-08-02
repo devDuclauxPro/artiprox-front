@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import { AfficheHistoriqueArtisan } from "components/historique/artisan/afficheHistoriqueArtisan";
 import { AfficheHistoriqueClient } from "components/historique/client/afficheHistoriqueClient";
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "reducerToolkitStore/store/store";
 import { ListUser } from "../admin/listUser";
 import { AfficherArticle } from "../artisan/afficherArticle";
 import { FormArticle } from "../artisan/formArticle";
@@ -29,6 +31,8 @@ const cardContentStyles = {
 };
 
 export const AfficherProfilCommun: FC = () => {
+  const user = useSelector((state: RootState) => state.user.user);
+
   return (
     <Box minHeight="80vh">
       <Grid container>
@@ -86,17 +90,20 @@ export const AfficherProfilCommun: FC = () => {
             }}
           >
             <Stack spacing={2} useFlexGap>
-              {true ? (
+              {user?.role_id && (
                 <>
                   <FormModifier />
                   <FormModPasse />
+                </>
+              )}
+              {user?.role_id === 1 && <ListUser />}
+              {user?.role_id === 2 && <AfficheHistoriqueClient />}
+              {user?.role_id === 3 && (
+                <>
                   <AfficheHistoriqueArtisan />
-                  <AfficheHistoriqueClient />
                   <FormArticle />
                   <AfficherArticle />
                 </>
-              ) : (
-                <ListUser />
               )}
             </Stack>
           </Box>

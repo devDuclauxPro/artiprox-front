@@ -2,12 +2,16 @@ import { TMenuItem } from "types/types";
 
 // Tableau des menus de l'application
 // Chaque objet dans le tableau représente un élément de menu avec un nom et un lien associé
+export const menuListPrive: TMenuItem[] = [
+  { name: "Accueil", link: "/espace-membre" },
+  { name: "Trouver un artisan", link: "/espace-membre/trouver-un-artisan" },
+  { name: "Espace Membre", link: "/espace-membre/profil" }
+];
 export const menuList: TMenuItem[] = [
   { name: "Accueil", link: "/" },
   { name: "Trouver un artisan", link: "/trouver-un-artisan" },
   { name: "Se connecter", link: "/connexion" },
-  { name: "S'inscrire", link: "/inscription" },
-  { name: "Espace Membre", link: "/espace-membre" }
+  { name: "S'inscrire", link: "/inscription" }
 ];
 
 // Tableau des images pour le composant "Milieu Droit Pourquoi"

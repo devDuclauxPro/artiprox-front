@@ -3,13 +3,16 @@ import WorkIcon from "@mui/icons-material/Work";
 import { Box, Button, Card, CardActions, CardContent, CardHeader, Container, Grid, Typography } from "@mui/material";
 import { ImageSwiper } from "animations/imageSwiper";
 import { FC, SyntheticEvent, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { RootState } from "reducerToolkitStore/store/store";
 import { colorGrisPale } from "utils/color";
 import { listImage } from "utils/listImage";
 import { TextRating } from "../rechercherUnArtisan/textRating";
 
 export const CardUnArtisan: FC = () => {
   const [value, setValue] = useState<number>(1);
+  const user = useSelector((state: RootState) => state.user.user);
 
   const handleChange = (event: SyntheticEvent, newValue: number | null) => {
     if (newValue !== null) {
@@ -46,21 +49,24 @@ export const CardUnArtisan: FC = () => {
                 >
                   <TextRating valeur={value} handleChange={handleChange} />
                 </Grid>
-                <Grid item xs={12} lg={3}>
-                  <Button
-                    component="a"
-                    href="https://wa.me/1234567890"
-                    variant="contained"
-                    color="primary"
-                    startIcon={<WifiCalling3Icon />}
-                    size="small"
-                    disableRipple
-                    fullWidth
-                    aria-label="Appeler l'artisan"
-                  >
-                    +2250707070707
-                  </Button>
-                </Grid>
+                {user?.role_id && (
+                  <Grid item xs={12} lg={3}>
+                    <Button
+                      component="a"
+                      href="https://wa.me/1234567890"
+                      variant="contained"
+                      color="primary"
+                      startIcon={<WifiCalling3Icon />}
+                      size="small"
+                      disableRipple
+                      fullWidth
+                      aria-label="Appeler l'artisan"
+                    >
+                      +2250707070707
+                    </Button>
+                  </Grid>
+                )}
+
                 <Grid item xs={12} md={6} lg={3}>
                   <Button
                     component={Link}
