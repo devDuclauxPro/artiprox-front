@@ -31,7 +31,10 @@ const cardContentStyles = {
 };
 
 export const AfficherProfilCommun: FC = () => {
-  const user = useSelector((state: RootState) => state.user.user);
+  const { user } = useSelector((state: RootState) => state.user);
+  const { visibleHistorique, visiblePassModif, visibleProfilModif, visibleUser, visibleArticle } = useSelector(
+    (state: RootState) => state.visible
+  );
 
   return (
     <Box minHeight="80vh">
@@ -54,7 +57,7 @@ export const AfficherProfilCommun: FC = () => {
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1, width: "100%", maxWidth: 500 }}>
-            <Info nomUser={"Kpan Emmanuel grand"} />
+            <Info nom={user?.nom as string} prenoms={user?.prenoms as string} />
           </Box>
         </Grid>
         <Grid
@@ -76,8 +79,10 @@ export const AfficherProfilCommun: FC = () => {
         >
           <Card sx={cardStyles}>
             <CardContent sx={cardContentStyles}>
-              <Typography variant="body1">{"Kpan Emmanuel mobile"}</Typography>
-              <InfoMobile nomUser={"Kpan Emmanuel mobile"} />
+              <Typography variant="body1">
+                {user?.nom} {user?.prenoms}
+              </Typography>
+              <InfoMobile nom={user?.nom as string} prenoms={user?.prenoms as string} />
             </CardContent>
           </Card>
           <Box
@@ -92,17 +97,17 @@ export const AfficherProfilCommun: FC = () => {
             <Stack spacing={2} useFlexGap>
               {user?.role_id && (
                 <>
-                  <FormModifier />
-                  <FormModPasse />
+                  {visibleProfilModif && <FormModifier />}
+                  {visiblePassModif && <FormModPasse />}
                 </>
               )}
-              {user?.role_id === 1 && <ListUser />}
-              {user?.role_id === 2 && <AfficheHistoriqueClient />}
+              {user?.role_id === 1 && visibleUser && <ListUser />}
+              {user?.role_id === 2 && visibleHistorique && <AfficheHistoriqueClient />}
               {user?.role_id === 3 && (
                 <>
-                  <AfficheHistoriqueArtisan />
-                  <FormArticle />
-                  <AfficherArticle />
+                  {visibleHistorique && <AfficheHistoriqueArtisan />}
+                  {visibleArticle && <FormArticle />}
+                  {visibleArticle && <AfficherArticle />}
                 </>
               )}
             </Stack>

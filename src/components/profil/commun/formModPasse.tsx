@@ -4,9 +4,14 @@ import { Avatar, Box, Button, Container, FormControl, TextField, Typography } fr
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
+import axios from "axios";
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import { RootState } from "reducerToolkitStore/store/store";
 import { colorBlue, colorVertNature } from "utils/color";
+import { apiUrl } from "utils/config";
 import { schemaModifPass } from "utils/yupValidation";
 
 const FormGrid = styled(Grid)(() => ({
@@ -20,6 +25,7 @@ type Inputs = {
 };
 
 export const FormModPasse: FC = () => {
+  const { token } = useSelector((state: RootState) => state.user);
   const {
     register,
     handleSubmit,
@@ -28,9 +34,29 @@ export const FormModPasse: FC = () => {
     resolver: yupResolver(schemaModifPass)
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-    console.log(errors);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (!apiUrl) {
+      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+      return;
+    }
+
+    try {
+      await axios.put(`${apiUrl}/password/update`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+      toast.success("Modification réussie !");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage =
+          error.response?.data?.message || error.response?.data?.errors?.["password"] || "Une erreur est survenue.";
+        toast.error(`${errorMessage}`);
+      } else {
+        toast.error("Une erreur inconnue est survenue.");
+      }
+    }
   };
 
   return (
@@ -94,6 +120,7 @@ export const FormModPasse: FC = () => {
           </FormGrid>
         </Grid>
       </Box>
+      <ToastContainer />
     </Container>
   );
 };

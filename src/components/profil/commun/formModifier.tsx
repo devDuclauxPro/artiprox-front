@@ -4,12 +4,16 @@ import { Autocomplete, Avatar, Box, Button, Container, FormControl, TextField, T
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
-import { FC } from "react";
+import axios from "axios";
+import { FC, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import { RootState } from "reducerToolkitStore/store/store";
 import { colorBlue, colorVertNature } from "utils/color";
-import { pays } from "utils/recherche";
+import { apiUrl } from "utils/config";
+import { metiers, pays, sexe, villes } from "utils/recherche";
 import { schemaModifInfo } from "utils/yupValidation";
-import { Maybe } from "yup";
 
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
@@ -19,25 +23,65 @@ const FormGrid = styled(Grid)(() => ({
 type Inputs = {
   nom: string;
   prenoms: string;
-  description?: Maybe<string | undefined>;
+  sexe: string;
+  description?: string;
+  metier?: string;
   pays: string;
   ville: string;
   adresse: string;
   numero_telephone: string;
 };
 
+type Option = {
+  label: string;
+};
+
 export const FormModifier: FC = () => {
+  const { user, token } = useSelector((state: RootState) => state.user);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm<Inputs>({
     resolver: yupResolver(schemaModifInfo)
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-    console.log(errors);
+  useEffect(() => {
+    if (user) {
+      setValue("nom", user.nom);
+      setValue("prenoms", user.prenoms);
+      setValue("sexe", user.sexe as string);
+      setValue("description", user.description || "");
+      setValue("pays", user.pays);
+      setValue("ville", user.ville);
+      setValue("adresse", user.adresse);
+      setValue("numero_telephone", user.numero_telephone);
+    }
+  }, [user, setValue]);
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    if (!apiUrl) {
+      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+      return;
+    }
+
+    try {
+      await axios.put(`${apiUrl}/update`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+      toast.success("Modification réussie !");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || "Une erreur est survenue.";
+        toast.error(`${errorMessage}`);
+      } else {
+        toast.error("Une erreur inconnue est survenue.");
+      }
+    }
   };
 
   return (
@@ -94,6 +138,72 @@ export const FormModifier: FC = () => {
               />
             </FormControl>
           </FormGrid>
+          <FormGrid item xs={12}>
+            <FormControl fullWidth required>
+              <FormLabel htmlFor="sexe">Choisir son sexe</FormLabel>
+              <Autocomplete
+                disablePortal
+                id="sexe"
+                options={sexe}
+                getOptionLabel={(option: Option) => option.label}
+                defaultValue={sexe.find((s) => s.label === user?.sexe) || null}
+                fullWidth
+                renderInput={(params) => (
+                  <TextField
+                    {...register("sexe")}
+                    {...params}
+                    placeholder="Ex: Masculin"
+                    error={!!errors.sexe}
+                    helperText={errors.sexe?.message}
+                    required
+                  />
+                )}
+              />
+            </FormControl>
+          </FormGrid>
+          {user?.role_id === 3 && (
+            <>
+              <FormGrid item xs={12} md={6}>
+                <FormControl fullWidth>
+                  <FormLabel htmlFor="metier">Métier</FormLabel>
+                  <Autocomplete
+                    disablePortal
+                    id="metier"
+                    options={metiers}
+                    getOptionLabel={(option: Option) => option.label}
+                    defaultValue={sexe.find((s) => s.label === user?.metier) || null}
+                    fullWidth
+                    renderInput={(params) => (
+                      <TextField
+                        {...register("metier")}
+                        {...params}
+                        placeholder="Ex: Métier"
+                        error={!!errors.metier}
+                        helperText={errors.metier?.message}
+                      />
+                    )}
+                  />
+                </FormControl>
+              </FormGrid>
+              <FormGrid item xs={12} md={6}>
+                <FormControl fullWidth>
+                  <FormLabel htmlFor="description">Veuillez décrire votre activité</FormLabel>
+                  <TextField
+                    {...register("description")}
+                    id="description"
+                    type="text"
+                    placeholder="Veuillez décrire votre activité"
+                    autoComplete="description"
+                    multiline
+                    rows={4}
+                    variant="outlined"
+                    error={!!errors.description}
+                    helperText={errors.description?.message}
+                  />
+                </FormControl>
+              </FormGrid>
+            </>
+          )}
           <FormGrid item xs={12} md={6}>
             <FormControl fullWidth required>
               <FormLabel htmlFor="pays">Pays</FormLabel>
@@ -101,12 +211,14 @@ export const FormModifier: FC = () => {
                 disablePortal
                 id="pays"
                 options={pays}
+                getOptionLabel={(option: Option) => option.label}
+                defaultValue={pays.find((s) => s.label === user?.pays) || null}
                 fullWidth
                 renderInput={(params) => (
                   <TextField
                     {...register("pays")}
                     {...params}
-                    placeholder="Ex: Côte d(Ivoire"
+                    placeholder="Ex: Côte d'Ivoire"
                     error={!!errors.pays}
                     helperText={errors.pays?.message}
                     required
@@ -118,15 +230,24 @@ export const FormModifier: FC = () => {
           <FormGrid item xs={12} md={6}>
             <FormControl fullWidth required>
               <FormLabel htmlFor="ville">Ville</FormLabel>
-              <TextField
-                {...register("ville")}
+              <Autocomplete
+                disablePortal
                 id="ville"
-                type="text"
-                placeholder="Ex: Abidjan"
-                autoComplete="address-level2"
-                error={!!errors.ville}
-                helperText={errors.ville?.message}
-                required
+                options={villes}
+                getOptionLabel={(option: Option) => option.label}
+                defaultValue={villes.find((s) => s.label === user?.ville) || null}
+                fullWidth
+                renderInput={(params) => (
+                  <TextField
+                    {...register("ville")}
+                    {...params}
+                    placeholder="Ex: Abidjan"
+                    autoComplete="address-level"
+                    error={!!errors.ville}
+                    helperText={errors.ville?.message}
+                    required
+                  />
+                )}
               />
             </FormControl>
           </FormGrid>
@@ -161,29 +282,13 @@ export const FormModifier: FC = () => {
             </FormControl>
           </FormGrid>
           <FormGrid item xs={12}>
-            <FormControl fullWidth>
-              <FormLabel htmlFor="description">Veuillez décrire votre activité</FormLabel>
-              <TextField
-                {...register("description")}
-                id="description"
-                type="text"
-                placeholder="Veuillez décrire votre activité"
-                autoComplete="description"
-                multiline
-                rows={4}
-                variant="outlined"
-                error={!!errors.description}
-                helperText={errors.description?.message}
-              />
-            </FormControl>
-          </FormGrid>
-          <FormGrid item xs={12}>
-            <Button variant="contained" color="success" disableRipple>
+            <Button type="submit" variant="contained" color="success" disableRipple>
               Modifier
             </Button>
           </FormGrid>
         </Grid>
       </Box>
+      <ToastContainer />
     </Container>
   );
 };

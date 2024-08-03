@@ -12,7 +12,7 @@ export const MilieuPourquoiAccueil: FC = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <MilieuGauchePourquoi
-            title="ArtiProx :"
+            title="Arti-prox :"
             subtitle="Pourquoi faire appel à nous ?"
             introduction="Nous savons qu'il n'est pas toujours simple de trouver le bon artisan. Partant de ce constat, nous avons créé en 2024 un service de mise en relation. Depuis, nous l'améliorons sans cesse grâce à vos retours. Déjà porteurs de plus de 100 projets, notre objectif se résume simplement : vous assurer la bonne rencontre."
             accompaniment="Pour le permettre, nous offrons un accompagnement de tous les instants et leur assurons une meilleure visibilité."

@@ -21,7 +21,7 @@ export const Accueil: FC = () => {
       <MilieuDescriptionPetitEcran
         logoSrc={logo}
         altText="logo du site"
-        description="ArtiProx | les artisans près de chez moi"
+        description="Arti-prox | les artisans près de chez moi"
         textColor={colorBleuFonce}
         backgroundColor="#f0f0f0" // Couleur de fond personnalisée
       />

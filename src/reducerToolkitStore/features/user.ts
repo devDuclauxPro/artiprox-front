@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Maybe } from "yup";
 
 interface User {
   id: string;
@@ -7,8 +6,9 @@ interface User {
   role_id: 1 | 2 | 3; //"Admin" | "Client" | "Artisan";
   nom: string;
   prenoms: string;
-  metier?: Maybe<string | undefined>;
-  description?: Maybe<string | undefined>;
+  sexe?: string;
+  metier?: string;
+  description?: string;
   pays: string;
   ville: string;
   adresse: string;

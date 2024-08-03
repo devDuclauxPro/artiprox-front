@@ -164,4 +164,9 @@ export const pays = [
   { label: "Zimbabwe" }
 ];
 
-export const profil = [{ label: "Artisan" }, { label: "Client" }];
+export const profil = [
+  { id: "2", label: "Client" },
+  { id: "3", label: "Artisan" }
+];
+
+export const sexe = [{ label: "Masculin" }, { label: "Feminin" }];

@@ -1,12 +1,15 @@
 import { AfficherProfilArtisan } from "components/artisan/afficherUnArtisan/afficherProfilArtisan";
 import { FC } from "react";
-
-// Exemple de données artisan pour démonstration
-const artisanData = {
-  nomUser: "Kpan Emmanuel",
-  description: "Consultez les informations détaillées de votre artisan"
-};
+import { useSelector } from "react-redux";
+import { RootState } from "reducerToolkitStore/store/store";
 
 export const AffichierUnArtisan: FC = () => {
-  return <AfficherProfilArtisan nomUser={artisanData.nomUser} description={artisanData.description} />;
+  const { user } = useSelector((state: RootState) => state.user);
+  return (
+    <AfficherProfilArtisan
+      nom={user?.nom as string}
+      prenoms={user?.prenoms as string}
+      description={`Consultez les informations détaillées de ${user?.nom} ${user?.prenoms}`}
+    />
+  );
 };

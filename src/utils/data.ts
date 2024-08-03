@@ -46,6 +46,6 @@ export const itemsLeft = [
     alt: "Image relation client",
     title: "Relation client",
     description:
-      "Un artisan d'ArtiProx n'a jamais reçu une plainte d'un particulier et vous garantit un délai de réponse sous 48h."
+      "Un artisan d'Arti-prox n'a jamais reçu une plainte d'un particulier et vous garantit un délai de réponse sous 48h."
   }
 ];

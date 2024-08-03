@@ -16,7 +16,7 @@ export const FooterCopyRight: FC = () => {
         component="p"
         color={colorWhite} // Couleur du texte
       >
-        &copy; 2024 ArtiProx. Tous droits réservés.
+        &copy; 2024 Arti-prox. Tous droits réservés.
       </Typography>
     </Box>
   );

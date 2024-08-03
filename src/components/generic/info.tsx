@@ -12,14 +12,14 @@ type TInfoDescription = {
 };
 type TInfoGeneric = TInfoUserCommun & TInfoDescription;
 
-export const Info: FC<TInfoGeneric> = ({ nomUser, photoUser, description, colorDescroption }) => {
+export const Info: FC<TInfoGeneric> = ({ nom, prenoms, photoUser, description, colorDescroption }) => {
   return (
     <>
       <Typography variant="subtitle2" color="text.secondary">
         Mon profil
       </Typography>
       <Typography variant="h5" gutterBottom>
-        {nomUser}
+        {nom} {prenoms}
       </Typography>
       <Grid container spacing={2} my={2}>
         <Grid
@@ -27,7 +27,7 @@ export const Info: FC<TInfoGeneric> = ({ nomUser, photoUser, description, colorD
           xs={12}
           sx={{ bgcolor: colorGrisPale, display: "flex", alignItems: "center", justifyContent: "center" }}
         >
-          <Box component="img" sx={{ height: 150, width: 150 }} alt={nomUser} src={photoUser ? photoUser : userPhoto} />
+          <Box component="img" sx={{ height: 150, width: 150 }} alt={nom} src={photoUser ? photoUser : userPhoto} />
         </Grid>
       </Grid>
       <InfoProfilCommun />

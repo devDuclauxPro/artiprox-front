@@ -1,8 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "reducerToolkitStore/store/store";
 import { colorBleuFonce } from "utils/color";
 
 export const InfoProfilCommun: FC = () => {
+  const user = useSelector((state: RootState) => state.user.user);
   return (
     <Box
       width="100%"
@@ -15,16 +18,19 @@ export const InfoProfilCommun: FC = () => {
       textAlign="center" // Ajouté pour centrer le texte
     >
       <Typography gutterBottom variant="body2" color={colorBleuFonce}>
-        devCommun@gmail.com
-      </Typography>
-      <Typography variant="body2" color={colorBleuFonce}>
-        +2250707070707
-      </Typography>
-      <Typography variant="body2" color={colorBleuFonce}>
-        Côte d'Ivoire
+        {user?.sexe || "Le sexe n'a pas encore été renseigné"}
       </Typography>
       <Typography gutterBottom variant="body2" color={colorBleuFonce}>
-        Abidjan, Cocody, Riviera golf
+        {user?.email || "L'email' n'a pas encore été renseigné"}
+      </Typography>
+      <Typography variant="body2" color={colorBleuFonce}>
+        {user?.numero_telephone || "Le n° tel n'a pas encore été renseigné"}
+      </Typography>
+      <Typography variant="body2" color={colorBleuFonce}>
+        {user?.pays || "Le pays n'a pas encore été renseigné"}
+      </Typography>
+      <Typography gutterBottom variant="body2" color={colorBleuFonce}>
+        {user?.adresse || "L'adresse n'a pas encore été renseignée"}
       </Typography>
       <Typography variant="body2" color={colorBleuFonce}>
         3 rendez-vous

@@ -4,13 +4,15 @@ import { StepNavigation } from "components/devisRdvCommun/stepNavigation";
 import { Info } from "components/generic/info";
 import { InfoMobile } from "components/generic/infoMobile";
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "reducerToolkitStore/store/store";
 import { steps, useStep } from "../../utils/useStep";
 import { FinalStep } from "../devisRdvCommun/finalStep";
 import { getStepContent } from "./getStepContent";
 
 export const Verifier: FC = () => {
   const { activeStep, handleNext, handleBack } = useStep();
-
+  const user = useSelector((state: RootState) => state.user.user);
   return (
     <Grid container>
       <Grid
@@ -30,7 +32,7 @@ export const Verifier: FC = () => {
           gap: 4
         }}
       >
-        <Info nomUser="Kpan Emmanuel grand" description="Demandez un devis à l'artisan" />
+        <Info nom={user?.nom as string} prenoms={user?.prenoms as string} description="Demandez un devis à l'artisan" />
       </Grid>
       <Grid
         item
@@ -50,7 +52,11 @@ export const Verifier: FC = () => {
         }}
       >
         <PasApas activeStep={activeStep} />
-        <InfoMobile nomUser="Kpan Emmanuel mobile" description="Demandez un devis à l'artisan" />
+        <InfoMobile
+          nom={user?.prenoms as string}
+          prenoms={user?.prenoms as string}
+          description="Demandez un devis à l'artisan"
+        />
         <Box
           sx={{
             display: "flex",

@@ -8,11 +8,12 @@ import { FC } from "react";
 import { CardUnArtisan } from "./cardUnArtisan";
 
 interface AfficherProfilArtisanProps {
-  nomUser: string;
+  nom: string;
+  prenoms: string;
   description: string;
 }
 
-export const AfficherProfilArtisan: FC<AfficherProfilArtisanProps> = ({ nomUser, description }) => {
+export const AfficherProfilArtisan: FC<AfficherProfilArtisanProps> = ({ nom, prenoms, description }) => {
   return (
     <Box minHeight="80vh">
       <Grid container>
@@ -35,7 +36,7 @@ export const AfficherProfilArtisan: FC<AfficherProfilArtisanProps> = ({ nomUser,
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "column", flexGrow: 1, width: "100%", maxWidth: 500 }}>
-            <Info nomUser={nomUser} description={description} />
+            <Info nom={nom} prenoms={prenoms} description={description} />
           </Box>
         </Grid>
         <Grid
@@ -56,7 +57,7 @@ export const AfficherProfilArtisan: FC<AfficherProfilArtisanProps> = ({ nomUser,
             mt: 5
           }}
         >
-          <InfoMobile nomUser={nomUser} description={description} />
+          <InfoMobile nom={nom} prenoms={prenoms} description={description} />
           <Box
             sx={{
               display: "flex",

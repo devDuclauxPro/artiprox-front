@@ -31,12 +31,31 @@ const telephoneValidation = yup
 
 const emailValidation = yup.string().required("L'email est obligatoire").email("Format d'email invalide");
 
+export const imageValidation = yup.object().shape({
+  nom_article: yup.string().optional(),
+  images_article: yup
+    .mixed<FileList>() // Changed to FileList
+    .required("L'image est obligatoire")
+    .test("fileType", "Le fichier doit être une image", (value) => {
+      if (!value || value.length === 0) return false;
+      const file = value[0];
+      return ["image/jpeg", "image/jpg", "image/png", "image/gif"].includes(file.type);
+    })
+    .test("fileSize", "La taille du fichier doit être inférieure à 2 Mo", (value) => {
+      if (!value || value.length === 0) return false;
+      const file = value[0];
+      return file.size <= 2000000; // 2 Mo
+    }),
+  prix_article: yup.string().optional()
+});
+
 export const schemaInscription = yup.object().shape({
   nom: nameValidation,
   prenoms: prenomsValidation,
-  role: yup.string().required("Le choix du profil est obligatoire"),
-  metier: yup.string().notRequired(), // Changement ici
-  description: yup.string().notRequired(), // Changement ici
+  role_id: yup.string().required("Le choix du profil est obligatoire"),
+  sexe: yup.string().required("Le choix du du sexe est obligatoire"), // Changement ici
+  metier: yup.string().optional(), // Changement ici
+  description: yup.string().optional(), // Changement ici
   pays: yup.string().required("Le pays est obligatoire"),
   ville: yup.string().required("La ville est obligatoire"),
   adresse: adresseValidation,
@@ -61,7 +80,9 @@ export const schemaOublierPass = yup.object().shape({
 export const schemaModifInfo = yup.object().shape({
   nom: nameValidation,
   prenoms: prenomsValidation,
-  description: yup.string().notRequired(),
+  sexe: yup.string().required("Le sexe est obligatoire"),
+  metier: yup.string().optional(),
+  description: yup.string().optional(),
   pays: yup.string().required("Le pays est obligatoire"),
   ville: yup.string().required("La ville est obligatoire"),
   adresse: adresseValidation,

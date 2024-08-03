@@ -56,7 +56,8 @@ export type TInfoProps = {
   photoArtisan?: string;
 };
 export type TInfoUserCommun = {
-  nomUser: string;
+  nom: string;
+  prenoms: string;
   photoUser?: string;
 };
 export type TInfoPropsClient = {

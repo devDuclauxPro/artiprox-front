@@ -18,7 +18,7 @@ type TInfoDescription = {
 };
 type TInfoGeneric = TInfoUserCommun & TInfoDescription;
 
-export const InfoMobile: FC<TInfoGeneric> = ({ nomUser, photoUser, description, colorDescroption }) => {
+export const InfoMobile: FC<TInfoGeneric> = ({ nom, prenoms, photoUser, description, colorDescroption }) => {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -30,7 +30,13 @@ export const InfoMobile: FC<TInfoGeneric> = ({ nomUser, photoUser, description, 
       <IconButton onClick={toggleDrawer(false)} sx={{ position: "absolute", right: 8, top: 8 }}>
         <CloseIcon />
       </IconButton>
-      <Info nomUser={nomUser} photoUser={photoUser} description={description} colorDescroption={colorDescroption} />
+      <Info
+        nom={nom}
+        prenoms={prenoms}
+        photoUser={photoUser}
+        description={description}
+        colorDescroption={colorDescroption}
+      />
     </Box>
   );
 

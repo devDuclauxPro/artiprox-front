@@ -9,7 +9,7 @@ import { FC, useState } from "react";
 import { TInfoUserCommun } from "types/types";
 import { Info } from "./info";
 
-export const InfoMobile: FC<TInfoUserCommun> = ({ nomUser, photoUser }) => {
+export const InfoMobile: FC<TInfoUserCommun> = ({ nom, prenoms, photoUser }) => {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -21,7 +21,7 @@ export const InfoMobile: FC<TInfoUserCommun> = ({ nomUser, photoUser }) => {
       <IconButton onClick={toggleDrawer(false)} sx={{ position: "absolute", right: 8, top: 8 }}>
         <CloseIcon />
       </IconButton>
-      <Info nomUser={nomUser} photoUser={photoUser} />
+      <Info nom={nom} prenoms={prenoms} photoUser={photoUser} />
     </Box>
   );
 
