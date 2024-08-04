@@ -2,8 +2,9 @@ import { Box, Grid, Typography } from "@mui/material";
 import { LoadingIndicator } from "animations/threeDots";
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
+import { allUsers } from "reducerToolkitStore/features/user";
 import { RootState } from "reducerToolkitStore/store/store";
 import { colorBlack, colorBlue } from "utils/color";
 import { apiUrl } from "utils/config";
@@ -34,8 +35,8 @@ export const ListUser: FC = () => {
     { id: 3, value: 100, label: "Bongouanou" }
   ];
 
-  const { token } = useSelector((state: RootState) => state.user);
-  const [data, setData] = useState<RowData[]>([]);
+  const { token, users } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -49,7 +50,11 @@ export const ListUser: FC = () => {
           }
         });
 
-        setData(response.data.users); // Assure-toi que 'users' est bien la clé correcte
+        dispatch(
+          allUsers({
+            users: response.data.users
+          })
+        ); // Assure-toi que 'users' est bien la clé correcte
         console.log(response.data);
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -68,7 +73,7 @@ export const ListUser: FC = () => {
     return () => {
       console.log("Composant démonté");
     };
-  }, [token]);
+  }, [token, dispatch]);
 
   return (
     <Box width="100%">
@@ -88,7 +93,7 @@ export const ListUser: FC = () => {
         ) : (
           <>
             <Grid item xs={12}>
-              <ListTable rows={data} />
+              <ListTable rows={users as RowData[]} />
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h6" component="p" textAlign="center" py={2}>

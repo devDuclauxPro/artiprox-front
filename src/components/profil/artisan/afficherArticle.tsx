@@ -7,9 +7,11 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { LoadingIndicator } from "animations/threeDots";
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { allArticles } from "reducerToolkitStore/features/articles";
+
 import { RootState } from "reducerToolkitStore/store/store";
 import { colorBlue } from "utils/color";
 import { apiUrl } from "utils/config";
@@ -20,25 +22,11 @@ function srcset(image: string, width: number, height: number, rows = 1, cols = 1
   };
 }
 
-interface IArticle {
-  id: number;
-  nom_article: string;
-  type_article: string;
-  prix_article: string;
-  images_article: string;
-  date_creation: string;
-  date_modification: string;
-  user_id: number;
-  category_id: number;
-  artisan_id: number;
-  created_at: string;
-  updated_at: string;
-}
-
 export const AfficherArticle: FC = () => {
   const { token } = useSelector((state: RootState) => state.user);
-  const [data, setData] = useState<IArticle[]>([]);
+  const { articles } = useSelector((state: RootState) => state.articles);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setLoading(true);
@@ -51,12 +39,11 @@ export const AfficherArticle: FC = () => {
           }
         });
 
-        setData(response.data.articles.data);
-        console.log(response.data.articles.data);
+        dispatch(allArticles({ articles: response.data.articles.data }));
       } catch (error) {
         if (axios.isAxiosError(error)) {
           console.error("Erreur Axios:", error.response?.data?.error || error.message);
-          toast.error("Les informations fournies sont incorrectes. Veuillez les vérifier, puis réessayer");
+          toast.error("Les informations fournies sont incorrectes. Veuillez les vérifier, puis réessayer.");
         } else {
           toast.error(`Erreur inconnue: ${error}`);
           console.error("Erreur inconnue:", error);
@@ -70,25 +57,38 @@ export const AfficherArticle: FC = () => {
     return () => {
       console.log("Composant démonté");
     };
-  }, [token]);
+  }, [token, dispatch]);
 
   const handleDelete = async (id: number) => {
+    if (!apiUrl) {
+      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+      return;
+    }
+
     try {
-      const response = await axios.delete(`${apiUrl}/articles/${id}`, {
+      await axios.delete(`${apiUrl}/articles/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
         }
       });
 
-      setData(response.data.articles.data);
+      const response = await axios.get(`${apiUrl}/articles`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+
+      dispatch(allArticles({ articles: response.data.articles.data }));
+
+      toast.success("Suppression réussie !");
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error("Erreur Axios:", error.response?.data?.error || error.message);
-        toast.error("Les informations fournies sont incorrectes. Veuillez les vérifier, puis réessayer");
+        const errorMessage = error.response?.data?.message || "Une erreur est survenue.";
+        toast.error(`${errorMessage}`);
       } else {
-        toast.error(`Erreur inconnue: ${error}`);
-        console.error("Erreur inconnue:", error);
+        toast.error("Une erreur inconnue est survenue.");
       }
     }
   };
@@ -112,107 +112,40 @@ export const AfficherArticle: FC = () => {
           rowHeight={200}
           gap={1}
         >
-          {data.map((item) => {
-            return (
-              <ImageListItem key={item.id}>
-                <img {...srcset(item.images_article, 250, 200)} alt={item.nom_article} loading="lazy" />
-                <ImageListItemBar
-                  sx={{
-                    background:
-                      "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)"
-                  }}
-                  title={
-                    <>
-                      <Typography variant="caption" component="p">
-                        {item.nom_article}{" "}
-                      </Typography>
-                      <Typography variant="caption" component="p">
-                        Prix: {item.prix_article}F
-                      </Typography>
-                    </>
-                  }
-                  position="top"
-                  actionIcon={
-                    <IconButton
-                      sx={{ color: "white" }}
-                      aria-label={`star ${item.nom_article}`}
-                      onClick={() => handleDelete(item.id)}
-                    >
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  }
-                  actionPosition="left"
-                />
-              </ImageListItem>
-            );
-          })}
+          {articles?.map((item) => (
+            <ImageListItem key={item.id}>
+              <img {...srcset(item.images_article, 250, 200)} alt={item.nom_article} loading="lazy" />
+              <ImageListItemBar
+                sx={{
+                  background: "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)"
+                }}
+                title={
+                  <>
+                    <Typography variant="caption" component="p">
+                      {item.nom_article}
+                    </Typography>
+                    <Typography variant="caption" component="p">
+                      Prix: {item.prix_article}F
+                    </Typography>
+                  </>
+                }
+                position="top"
+                actionIcon={
+                  <IconButton
+                    sx={{ color: "white" }}
+                    aria-label={`supprimer ${item.nom_article}`}
+                    onClick={() => handleDelete(item.id)}
+                  >
+                    <DeleteOutlineIcon />
+                  </IconButton>
+                }
+                actionPosition="left"
+              />
+            </ImageListItem>
+          ))}
           <ToastContainer />
         </ImageList>
       )}
-      ;
     </>
   );
 };
-
-// const itemData = [
-//   {
-//     img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-//     title: "Breakfast",
-//     author: "@bkristastucchio"
-//   },
-//   {
-//     img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-//     title: "Burger",
-//     author: "@rollelflex_graphy726"
-//   },
-//   {
-//     img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-//     title: "Camera",
-//     author: "@helloimnik"
-//   },
-//   {
-//     img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-//     title: "Coffee",
-//     author: "@nolanissac"
-//   },
-//   {
-//     img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-//     title: "Hats",
-//     author: "@hjrc33"
-//   },
-//   {
-//     img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-//     title: "Honey",
-//     author: "@arwinneil"
-//   },
-//   {
-//     img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-//     title: "Basketball",
-//     author: "@tjdragotta"
-//   },
-//   {
-//     img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-//     title: "Fern",
-//     author: "@katie_wasserman"
-//   },
-//   {
-//     img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-//     title: "Mushrooms",
-//     author: "@silverdalex"
-//   },
-//   {
-//     img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-//     title: "Tomato basil",
-//     author: "@shelleypauls"
-//   },
-//   {
-//     img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-//     title: "Sea star",
-//     author: "@peterlaster"
-//   },
-//   {
-//     img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-//     title: "Bike",
-//     author: "@southside_customs"
-//   }
-// ];

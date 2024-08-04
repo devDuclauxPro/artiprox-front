@@ -46,23 +46,18 @@ export const FormConnexion: FC = () => {
         return;
       }
       const response = await axios.post(`${apiUrl}/login`, data);
-      console.log(response.data);
-      if (response.status === 200) {
-        dispatch(
-          connexion({
-            user: response.data.user_info,
-            token: response.data.access_token
-          })
-        );
-        toast.success("Connexion réussie !");
-        navigate("/");
-      }
+      dispatch(
+        connexion({
+          user: response.data.user_info,
+          token: response.data.access_token
+        })
+      );
+      toast.success("Connexion réussie !");
+      navigate("/");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Erreur Axios:", error.response?.data?.error);
-        toast.error(
-          `Les informations de connexion fournies sont incorrectes. Veuillez vérifier votre email et votre mot de passe, puis réessayer`
-        );
+        toast.error(error.message);
       } else {
         toast.error(`Erreur inconnue: ${error}`);
         console.error("Erreur inconnue:", error);

@@ -10,6 +10,7 @@ import { colorGrisPale } from "utils/color";
 import { TextRating } from "./textRating";
 
 type TCardTrouver = {
+  id: string;
   titre: string;
   description: string;
   numero: string;
@@ -17,8 +18,8 @@ type TCardTrouver = {
 };
 
 // Composant pour afficher une carte d'un artisan avec informations et actions
-export const CardTrouver: FC<TCardTrouver> = ({ titre, description, numero, notation }) => {
-  const user = useSelector((state: RootState) => state.user.user);
+export const CardTrouver: FC<TCardTrouver> = ({ id, titre, description, numero, notation }) => {
+  const { user } = useSelector((state: RootState) => state.user);
   return (
     <Container maxWidth="lg" sx={{ mb: 2, py: 3 }}>
       <Grid container>
@@ -44,7 +45,7 @@ export const CardTrouver: FC<TCardTrouver> = ({ titre, description, numero, nota
                 <Typography
                   variant="h6"
                   component={Link}
-                  to="/espace-membre/trouver-un-artisan/1"
+                  to={`/espace-membre/trouver-un-artisan/${id}`} // Corrigé pour utiliser une template string correctement
                   sx={{ textDecoration: "none", color: "inherit" }} // Styles pour le lien
                 >
                   {titre}

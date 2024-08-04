@@ -1,9 +1,12 @@
 import { Box, Container, Typography } from "@mui/material";
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "reducerToolkitStore/store/store";
 import { colorBlack, colorBleuFonce } from "utils/color";
 
 // Composant DescriptionArtisan affichant des informations sur les résultats de recherche
 export const DescriptionArtisan: FC = () => {
+  const { resultatArtisans, rechercheArtisan } = useSelector((state: RootState) => state.trouverArtisan);
   return (
     <Container maxWidth="lg">
       <Box component="section" py={5}>
@@ -23,7 +26,9 @@ export const DescriptionArtisan: FC = () => {
           color={colorBleuFonce}
           sx={{ fontSize: { xs: "1rem", sm: "1.5rem", md: "2rem" }, fontWeight: 800 }}
         >
-          Rénovation d'appartement / de maison à Abidjan (Abobo)
+          {rechercheArtisan?.metier || rechercheArtisan?.ville
+            ? `${rechercheArtisan?.metier} à ${rechercheArtisan?.ville}`
+            : "Recherche par défaut"}
         </Typography>
         <Typography variant="body1" component="p" sx={{ fontSize: { xs: ".8rem", sm: "1.3rem" }, fontWeight: 300 }}>
           Professionnels disponibles :
@@ -33,7 +38,7 @@ export const DescriptionArtisan: FC = () => {
             color={colorBlack}
             sx={{ ml: 0.5 }} // Espacement entre le texte et le nombre
           >
-            28
+            {resultatArtisans?.length}
           </Typography>
         </Typography>
       </Box>

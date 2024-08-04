@@ -7,8 +7,9 @@ import { styled } from "@mui/system";
 import axios from "axios";
 import { FC, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
+import { connexion } from "reducerToolkitStore/features/user";
 import { RootState } from "reducerToolkitStore/store/store";
 import { colorBlue, colorVertNature } from "utils/color";
 import { apiUrl } from "utils/config";
@@ -46,6 +47,7 @@ export const FormModifier: FC = () => {
   } = useForm<Inputs>({
     resolver: yupResolver(schemaModifInfo)
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (user) {
@@ -67,12 +69,19 @@ export const FormModifier: FC = () => {
     }
 
     try {
-      await axios.put(`${apiUrl}/update`, data, {
+      const response = await axios.put(`${apiUrl}/users/update`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
         }
       });
+      dispatch(
+        connexion({
+          user: response.data.data,
+          token: token
+        })
+      );
+
       toast.success("Modification réussie !");
     } catch (error) {
       if (axios.isAxiosError(error)) {

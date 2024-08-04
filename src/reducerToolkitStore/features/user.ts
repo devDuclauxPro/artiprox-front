@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RowData } from "components/profil/admin/tableListUser";
 
 interface User {
   id: string;
@@ -19,13 +20,15 @@ interface User {
 }
 
 interface UserState {
-  user: User | null;
-  token: string | null;
+  user?: User | null;
+  token?: string | null;
+  users?: RowData[];
 }
 
 const initialState: UserState = {
   user: null,
-  token: null
+  token: null,
+  users: []
 };
 
 export const userSlice = createSlice({
@@ -38,9 +41,11 @@ export const userSlice = createSlice({
       state.user = user;
       state.token = token;
     },
+    allUsers(state, action: PayloadAction<UserState>) {
+      state.users = action.payload.users;
+    },
 
     deconnexion(state) {
-      // localStorage.removeItem("user");
       localStorage.clear();
       state.user = null;
       state.token = null;
@@ -48,5 +53,5 @@ export const userSlice = createSlice({
   }
 });
 
-export const { connexion, deconnexion } = userSlice.actions;
+export const { connexion, deconnexion, allUsers } = userSlice.actions;
 export default userSlice.reducer;

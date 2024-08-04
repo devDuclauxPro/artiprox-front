@@ -56,9 +56,7 @@ export const FormArticle: FC = () => {
         prix_article: data.prix_article,
         type_article: "artisanal",
         images_article: data.images_article[0].name,
-        category_id: "1",
-        user_id: "1",
-        artisan_id: "1"
+        category_id: 0
       };
 
       const response = await axios.post(`${apiUrl}/articles/create`, newData, {

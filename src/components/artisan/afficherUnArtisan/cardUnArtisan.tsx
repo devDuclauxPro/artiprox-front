@@ -2,21 +2,80 @@ import WifiCalling3Icon from "@mui/icons-material/WifiCalling3";
 import WorkIcon from "@mui/icons-material/Work";
 import { Box, Button, Card, CardActions, CardContent, CardHeader, Container, Grid, Typography } from "@mui/material";
 import { ImageSwiper } from "animations/imageSwiper";
-import { FC, SyntheticEvent, useState } from "react";
+import axios from "axios";
+import { FC, SyntheticEvent, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { RootState } from "reducerToolkitStore/store/store";
 import { colorGrisPale } from "utils/color";
+import { apiUrl } from "utils/config";
 import { listImage } from "utils/listImage";
 import { TextRating } from "../rechercherUnArtisan/textRating";
 
 export const CardUnArtisan: FC = () => {
   const [value, setValue] = useState<number>(1);
-  const user = useSelector((state: RootState) => state.user.user);
+  const { user, token } = useSelector((state: RootState) => state.user);
+  const { id } = useParams();
 
-  const handleChange = (event: SyntheticEvent, newValue: number | null) => {
+  const fetchData = useCallback(async () => {
+    if (!apiUrl) {
+      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+      return;
+    }
+    try {
+      await axios.get(`${apiUrl}/notations`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Erreur Axios:", error.response?.data?.error || error.message);
+      } else {
+        console.error("Erreur inconnue:", error);
+      }
+    }
+  }, [token]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, id]);
+
+  const handleChange = async (event: SyntheticEvent, newValue: number | null) => {
     if (newValue !== null) {
       setValue(newValue);
+    }
+    try {
+      if (!apiUrl) {
+        toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+        return;
+      }
+
+      const response = await axios.post(
+        `${apiUrl}/notations/create`,
+        {
+          note: newValue,
+          artisan_id: id,
+          client_id: user?.id
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Erreur Axios:", error.response?.data?.error);
+        toast.error(error.response?.data?.error || "Erreur lors de la recherche.");
+      } else {
+        console.error("Erreur inconnue:", error);
+        toast.error("Erreur inconnue lors de la recherche.");
+      }
     }
   };
 
