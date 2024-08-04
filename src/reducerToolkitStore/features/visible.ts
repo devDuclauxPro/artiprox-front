@@ -6,6 +6,8 @@ interface IVisible {
   visibleHistorique?: boolean;
   visibleUser?: boolean;
   visibleArticle?: boolean;
+  visibleCategorie?: boolean;
+  visibleRole?: boolean;
 }
 
 const initialState: IVisible = {
@@ -13,7 +15,9 @@ const initialState: IVisible = {
   visiblePassModif: false,
   visibleHistorique: false,
   visibleUser: false,
-  visibleArticle: false
+  visibleArticle: false,
+  visibleCategorie: false,
+  visibleRole: false
 };
 
 export const visibleSlice = createSlice({
@@ -34,10 +38,23 @@ export const visibleSlice = createSlice({
     },
     setArticleVisible(state, action: PayloadAction<IVisible>) {
       state.visibleArticle = action.payload.visibleArticle;
+    },
+    setArticleCategorie(state, action: PayloadAction<IVisible>) {
+      state.visibleCategorie = action.payload.visibleCategorie;
+    },
+    setRoleVisible(state, action: PayloadAction<IVisible>) {
+      state.visibleRole = action.payload.visibleRole;
     }
   }
 });
 
-export const { setProfilModVisible, setHistVisible, setPassModVisible, setUserVisible, setArticleVisible } =
-  visibleSlice.actions;
+export const {
+  setProfilModVisible,
+  setHistVisible,
+  setPassModVisible,
+  setUserVisible,
+  setArticleVisible,
+  setArticleCategorie,
+  setRoleVisible
+} = visibleSlice.actions;
 export default visibleSlice.reducer;

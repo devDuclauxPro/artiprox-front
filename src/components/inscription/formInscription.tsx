@@ -14,13 +14,13 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import axios from "axios";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { colorBlue, colorVertNature } from "utils/color";
 import { apiUrl } from "utils/config";
-import { pays, sexe, villes } from "utils/recherche";
+import { metiers, pays, sexe, villes } from "utils/recherche";
 import { schemaInscription } from "utils/yupValidation";
 
 const FormGrid = styled(Grid)(() => ({
@@ -61,11 +61,11 @@ export const FormInscription: FC = () => {
     setValue,
     formState: { errors }
   } = useForm<Inputs>({ resolver: yupResolver(schemaInscription) });
+  const [showArtisanField, setShowArtisanField] = useState(false);
 
   const handleProfilChange = (event: React.ChangeEvent<{}>, value: ProfilOption | null) => {
-    if (value) {
-      setValue("role_id", value.id);
-    }
+    setShowArtisanField(value?.label === "Artisan");
+    setValue("role_id", value?.id || "");
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -78,28 +78,61 @@ export const FormInscription: FC = () => {
       console.log(response.data);
       toast.success("Inscription réussie !");
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const errorMessage =
-          error.response?.data?.message || error.response?.data?.errors?.email || "Une erreur est survenue.";
-        toast.error(`${errorMessage}`);
-      } else {
-        toast.error("Une erreur inconnue est survenue.");
-      }
+      const errorMessage = axios.isAxiosError(error)
+        ? error.response?.data?.errors?.email[0] || error.response?.data?.message || "Une erreur est survenue."
+        : "Une erreur inconnue est survenue.";
+      toast.error(errorMessage);
     }
   };
+
+  const renderTextField = (
+    id: keyof Inputs,
+    label: string,
+    type: string = "text",
+    autoComplete?: string,
+    required: boolean = true
+  ) => (
+    <FormControl fullWidth required={required}>
+      <FormLabel htmlFor={id}>{label}</FormLabel>
+      <TextField
+        {...register(id)}
+        id={id}
+        type={type}
+        autoComplete={autoComplete}
+        error={!!errors[id]}
+        helperText={(errors as any)[id]?.message}
+        placeholder={`Ex: ${label}`}
+        required={required}
+      />
+    </FormControl>
+  );
+
+  const renderAutocomplete = (id: keyof Inputs, label: string, options: any[]) => (
+    <FormControl fullWidth required>
+      <FormLabel htmlFor={id}>{label}</FormLabel>
+      <Autocomplete
+        disablePortal
+        id={id}
+        options={options}
+        fullWidth
+        renderInput={(params) => (
+          <TextField
+            {...register(id)}
+            {...params}
+            placeholder={`Ex: ${label}`}
+            error={!!errors[id]}
+            helperText={(errors as any)[id]?.message}
+            required
+          />
+        )}
+      />
+    </FormControl>
+  );
 
   return (
     <Container maxWidth="md" sx={{ mt: 10 }}>
       <Grid container spacing={2}>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-        >
+        <Grid item xs={12} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <Avatar sx={{ m: 1, bgcolor: colorVertNature }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -113,55 +146,13 @@ export const FormInscription: FC = () => {
       <Box component="form" onSubmit={handleSubmit(onSubmit)} py={3}>
         <Grid container spacing={3}>
           <FormGrid item xs={12} md={6}>
-            <FormControl fullWidth required>
-              <FormLabel htmlFor="nom">Nom</FormLabel>
-              <TextField
-                {...register("nom")}
-                id="nom"
-                type="text"
-                placeholder="Ex: Kpan"
-                autoComplete="family-name"
-                error={!!errors.nom}
-                helperText={errors.nom?.message}
-                required
-              />
-            </FormControl>
+            {renderTextField("nom", "Nom")}
           </FormGrid>
           <FormGrid item xs={12} md={6}>
-            <FormControl fullWidth required>
-              <FormLabel htmlFor="prenoms">Prénoms</FormLabel>
-              <TextField
-                {...register("prenoms")}
-                id="prenoms"
-                type="text"
-                placeholder="Ex: Benjamin Emmanuel"
-                autoComplete="given-name"
-                error={!!errors.prenoms}
-                helperText={errors.prenoms?.message}
-                required
-              />
-            </FormControl>
+            {renderTextField("prenoms", "Prénoms")}
           </FormGrid>
           <FormGrid item xs={12} md={6}>
-            <FormControl fullWidth required>
-              <FormLabel htmlFor="sexe">Choisir mon sexe</FormLabel>
-              <Autocomplete
-                disablePortal
-                id="sexe"
-                options={sexe}
-                fullWidth
-                renderInput={(params) => (
-                  <TextField
-                    {...register("sexe")}
-                    {...params}
-                    placeholder="Ex: Masculin"
-                    error={!!errors.sexe}
-                    helperText={errors.sexe?.message}
-                    required
-                  />
-                )}
-              />
-            </FormControl>
+            {renderAutocomplete("sexe", "Choisir mon sexe", sexe)}
           </FormGrid>
           <FormGrid item xs={12} md={6}>
             <FormControl fullWidth required>
@@ -172,7 +163,7 @@ export const FormInscription: FC = () => {
                 options={profilOptions}
                 fullWidth
                 onChange={handleProfilChange}
-                isOptionEqualToValue={(option, value) => option === value}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -186,123 +177,36 @@ export const FormInscription: FC = () => {
               />
             </FormControl>
           </FormGrid>
+          {showArtisanField && (
+            <>
+              <FormGrid item xs={12} md={6}>
+                {renderAutocomplete("metier", "Metier", metiers)}
+              </FormGrid>
+              <FormGrid item xs={12} md={6}>
+                {renderTextField("description", "Description")}
+              </FormGrid>
+            </>
+          )}
           <FormGrid item xs={12} md={6}>
-            <FormControl fullWidth required>
-              <FormLabel htmlFor="pays">Pays</FormLabel>
-              <Autocomplete
-                disablePortal
-                id="pays"
-                options={pays}
-                fullWidth
-                renderInput={(params) => (
-                  <TextField
-                    {...register("pays")}
-                    {...params}
-                    placeholder="Ex: Côte d'Ivoire"
-                    error={!!errors.pays}
-                    helperText={errors.pays?.message}
-                    required
-                  />
-                )}
-              />
-            </FormControl>
+            {renderAutocomplete("pays", "Pays", pays)}
           </FormGrid>
           <FormGrid item xs={12} md={6}>
-            <FormControl fullWidth required>
-              <FormLabel htmlFor="ville">Ville</FormLabel>
-              <Autocomplete
-                disablePortal
-                id="ville"
-                options={villes}
-                fullWidth
-                renderInput={(params) => (
-                  <TextField
-                    {...register("ville")}
-                    {...params}
-                    placeholder="Ex: Abidjan"
-                    autoComplete="address-level"
-                    error={!!errors.ville}
-                    helperText={errors.ville?.message}
-                    required
-                  />
-                )}
-              />
-            </FormControl>
+            {renderAutocomplete("ville", "Ville", villes)}
           </FormGrid>
           <FormGrid item xs={12}>
-            <FormControl fullWidth required>
-              <FormLabel htmlFor="adresse">Adresse</FormLabel>
-              <TextField
-                {...register("adresse")}
-                id="adresse"
-                type="text"
-                placeholder="Ex: Cocody, Hotel du golf"
-                autoComplete="address-line"
-                error={!!errors.adresse}
-                helperText={errors.adresse?.message}
-                required
-              />
-            </FormControl>
+            {renderTextField("adresse", "Adresse")}
           </FormGrid>
           <FormGrid item xs={12} sm={6}>
-            <FormControl fullWidth required>
-              <FormLabel htmlFor="numero_telephone">Numéro de mobile</FormLabel>
-              <TextField
-                {...register("numero_telephone")}
-                id="numero_telephone"
-                type="tel"
-                placeholder="Ex: +225 0101010101"
-                autoComplete="tel"
-                error={!!errors.numero_telephone}
-                helperText={errors.numero_telephone?.message}
-                required
-              />
-            </FormControl>
+            {renderTextField("numero_telephone", "Numéro de mobile", "tel", "tel")}
           </FormGrid>
           <FormGrid item xs={12} sm={6}>
-            <FormControl fullWidth required>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <TextField
-                {...register("email")}
-                id="email"
-                type="email"
-                placeholder="Ex: email@example.com"
-                autoComplete="email"
-                error={!!errors.email}
-                helperText={errors.email?.message}
-                required
-              />
-            </FormControl>
+            {renderTextField("email", "Email", "email", "email")}
           </FormGrid>
           <FormGrid item xs={12}>
-            <FormControl fullWidth required>
-              <FormLabel htmlFor="password">Mot de passe</FormLabel>
-              <TextField
-                {...register("password")}
-                id="password"
-                type="password"
-                placeholder="**********"
-                autoComplete="new-password"
-                error={!!errors.password}
-                helperText={errors.password?.message}
-                required
-              />
-            </FormControl>
+            {renderTextField("password", "Mot de passe", "password", "new-password")}
           </FormGrid>
           <FormGrid item xs={12}>
-            <FormControl fullWidth required>
-              <FormLabel htmlFor="confPassword">Répéter le mot de passe</FormLabel>
-              <TextField
-                {...register("confPassword")}
-                id="confPassword"
-                type="password"
-                placeholder="**********"
-                autoComplete="new-password"
-                error={!!errors.confPassword}
-                helperText={errors.confPassword?.message}
-                required
-              />
-            </FormControl>
+            {renderTextField("confPassword", "Répéter le mot de passe", "password", "new-password")}
           </FormGrid>
           <FormGrid item xs={12}>
             <Button type="submit" variant="contained" color="success" disableRipple>

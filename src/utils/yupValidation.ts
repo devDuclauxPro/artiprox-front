@@ -46,16 +46,17 @@ export const imageValidation = yup.object().shape({
       const file = value[0];
       return file.size <= 2000000; // 2 Mo
     }),
-  prix_article: yup.string().optional()
+  prix_article: yup.string().optional(),
+  nom_categorie: yup.string().optional()
 });
 
 export const schemaInscription = yup.object().shape({
   nom: nameValidation,
   prenoms: prenomsValidation,
   role_id: yup.string().required("Le choix du profil est obligatoire"),
-  sexe: yup.string().required("Le choix du du sexe est obligatoire"), // Changement ici
-  metier: yup.string().optional(), // Changement ici
-  description: yup.string().optional(), // Changement ici
+  sexe: yup.string().required("Le choix du du sexe est obligatoire"),
+  metier: yup.string().optional(),
+  description: yup.string().optional(),
   pays: yup.string().required("Le pays est obligatoire"),
   ville: yup.string().required("La ville est obligatoire"),
   adresse: adresseValidation,
@@ -92,4 +93,11 @@ export const schemaModifInfo = yup.object().shape({
 export const schemaModifPass = yup.object().shape({
   ancienPassword: passwordValidation,
   nouveauPassword: passwordValidation
+});
+
+export const categorieValidation = yup.object().shape({
+  nom_categorie: yup.string().required("Le nom de la categorie est obligatoire")
+});
+export const roleValidation = yup.object().shape({
+  nom_role: yup.string().required("Le nom du rôle est obligatoire")
 });

@@ -55,6 +55,7 @@ export const FormModifier: FC = () => {
       setValue("prenoms", user.prenoms);
       setValue("sexe", user.sexe as string);
       setValue("description", user.description || "");
+      setValue("metier", user.metier || "");
       setValue("pays", user.pays);
       setValue("ville", user.ville);
       setValue("adresse", user.adresse);
@@ -77,7 +78,7 @@ export const FormModifier: FC = () => {
       });
       dispatch(
         connexion({
-          user: response.data.data,
+          user: response.data.data[0],
           token: token
         })
       );
@@ -180,7 +181,7 @@ export const FormModifier: FC = () => {
                     id="metier"
                     options={metiers}
                     getOptionLabel={(option: Option) => option.label}
-                    defaultValue={sexe.find((s) => s.label === user?.metier) || null}
+                    defaultValue={metiers.find((s) => s.label === user?.metier) || null}
                     fullWidth
                     renderInput={(params) => (
                       <TextField
@@ -200,7 +201,6 @@ export const FormModifier: FC = () => {
                   <TextField
                     {...register("description")}
                     id="description"
-                    type="text"
                     placeholder="Veuillez décrire votre activité"
                     autoComplete="description"
                     multiline
@@ -266,7 +266,6 @@ export const FormModifier: FC = () => {
               <TextField
                 {...register("adresse")}
                 id="adresse"
-                type="text"
                 placeholder="Ex: Cocody, Hotel du golf"
                 autoComplete="address-line"
                 error={!!errors.adresse}

@@ -46,6 +46,7 @@ export const FormConnexion: FC = () => {
         return;
       }
       const response = await axios.post(`${apiUrl}/login`, data);
+      console.log(response);
       dispatch(
         connexion({
           user: response.data.user_info,
@@ -57,7 +58,7 @@ export const FormConnexion: FC = () => {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Erreur Axios:", error.response?.data?.error);
-        toast.error(error.message);
+        toast.error("L'adresse e-mail ou le mot de passe est incorrect");
       } else {
         toast.error(`Erreur inconnue: ${error}`);
         console.error("Erreur inconnue:", error);

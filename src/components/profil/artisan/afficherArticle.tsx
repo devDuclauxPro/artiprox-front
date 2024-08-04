@@ -114,7 +114,11 @@ export const AfficherArticle: FC = () => {
         >
           {articles?.map((item) => (
             <ImageListItem key={item.id}>
-              <img {...srcset(item.images_article, 250, 200)} alt={item.nom_article} loading="lazy" />
+              <img
+                {...srcset(`http://127.0.0.1:8000/images/articles/${item.images_article}`, 250, 200)}
+                alt={item.nom_article}
+                loading="lazy"
+              />
               <ImageListItemBar
                 sx={{
                   background: "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)"

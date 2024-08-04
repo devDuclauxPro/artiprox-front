@@ -54,8 +54,7 @@ export const ListUser: FC = () => {
           allUsers({
             users: response.data.users
           })
-        ); // Assure-toi que 'users' est bien la clé correcte
-        console.log(response.data);
+        );
       } catch (error) {
         if (axios.isAxiosError(error)) {
           console.error("Erreur Axios:", error.response?.data?.error || error.message);

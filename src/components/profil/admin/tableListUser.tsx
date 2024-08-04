@@ -15,7 +15,7 @@ export interface RowData {
   id: number;
   nom?: string;
   prenoms?: string;
-  role_id?: string;
+  role_id?: number;
   pays?: string;
   ville?: string;
   adresse?: string;
@@ -28,7 +28,11 @@ export const ListTable: FC<{ rows: RowData[] }> = ({ rows }) => {
     { field: "id", headerName: "ID", width: 70 },
     { field: "nom", headerName: "Nom", width: 130 },
     { field: "prenoms", headerName: "Prénoms", width: 130 },
-    { field: "role_id", headerName: "Profil", width: 130 },
+    {
+      field: "role_id",
+      headerName: "Profil",
+      width: 130
+    },
     { field: "pays", headerName: "Pays", width: 160 },
     { field: "ville", headerName: "Ville", width: 160 },
     { field: "adresse", headerName: "Adresse", width: 160 },

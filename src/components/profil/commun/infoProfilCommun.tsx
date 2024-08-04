@@ -17,6 +17,11 @@ export const InfoProfilCommun: FC = () => {
       mb={2}
       textAlign="center" // Ajouté pour centrer le texte
     >
+      {user?.role_id === 3 && (
+        <Typography gutterBottom variant="body2" color={colorBleuFonce}>
+          {user?.metier || "Le metier n'a pas encore été renseigné"}
+        </Typography>
+      )}
       <Typography gutterBottom variant="body2" color={colorBleuFonce}>
         {user?.sexe || "Le sexe n'a pas encore été renseigné"}
       </Typography>
@@ -28,6 +33,9 @@ export const InfoProfilCommun: FC = () => {
       </Typography>
       <Typography variant="body2" color={colorBleuFonce}>
         {user?.pays || "Le pays n'a pas encore été renseigné"}
+      </Typography>
+      <Typography variant="body2" color={colorBleuFonce}>
+        {user?.ville || "La ville n'a pas encore été renseignée"}
       </Typography>
       <Typography gutterBottom variant="body2" color={colorBleuFonce}>
         {user?.adresse || "L'adresse n'a pas encore été renseignée"}

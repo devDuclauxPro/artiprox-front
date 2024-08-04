@@ -13,10 +13,54 @@ import { apiUrl } from "utils/config";
 import { listImage } from "utils/listImage";
 import { TextRating } from "../rechercherUnArtisan/textRating";
 
+interface IArtisanProfil {
+  adresse: string;
+  description: string;
+  email: string;
+  id: number;
+  id_artisan: number;
+  metier: string;
+  nom: string;
+  numero_telephone: string;
+  pays: string;
+  prenoms: string;
+  role_id: number;
+  sexe: string;
+  user_id: number;
+  ville: string;
+}
+
 export const CardUnArtisan: FC = () => {
   const [value, setValue] = useState<number>(1);
   const { user, token } = useSelector((state: RootState) => state.user);
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
+  const [data, setData] = useState<IArtisanProfil | undefined>();
+
+  const fetchDataArtisan = useCallback(async () => {
+    if (!apiUrl) {
+      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `${apiUrl}/artisans/show`,
+        { artisan_id: id },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      setData(response.data.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Erreur Axios:", error.response?.data?.error || error.message);
+      } else {
+        console.error("Erreur inconnue:", error);
+      }
+    }
+  }, [id, token]);
 
   const fetchData = useCallback(async () => {
     if (!apiUrl) {
@@ -40,8 +84,9 @@ export const CardUnArtisan: FC = () => {
   }, [token]);
 
   useEffect(() => {
+    fetchDataArtisan();
     fetchData();
-  }, [fetchData, id]);
+  }, [fetchData, fetchDataArtisan]);
 
   const handleChange = async (event: SyntheticEvent, newValue: number | null) => {
     if (newValue !== null) {
@@ -56,14 +101,14 @@ export const CardUnArtisan: FC = () => {
       const response = await axios.post(
         `${apiUrl}/notations/create`,
         {
-          note: newValue,
-          artisan_id: id,
-          client_id: user?.id
+          note: newValue?.toString(),
+          artisan_id: id?.toString(),
+          client_id: user?.id.toString()
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
+            "Content-Type": "multipart/form-data"
           }
         }
       );
@@ -85,15 +130,18 @@ export const CardUnArtisan: FC = () => {
         <Grid item xs={12}>
           <Card>
             <CardHeader
-              title={<Typography variant="h6">PULS GROUPE RENOVATION</Typography>}
+              title={
+                <Typography variant="h6">
+                  {data?.nom} {data?.prenoms}
+                </Typography>
+              }
               sx={{ bgcolor: colorGrisPale }} // Optionnel : ajouter une couleur de fond
             />
             <CardContent sx={{ bgcolor: colorGrisPale }}>
               <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
                 <WorkIcon color="warning" sx={{ mr: 1 }} />
                 <Typography variant="body2" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                  Autres activités : Rénovation plomberie complète ou partielle, Cloisons, Autres activités : Rénovation
-                  plomberie complète ou partielle, Cloisons, Autres activités
+                  Activités : {data?.description}
                 </Typography>
               </Box>
               <ImageSwiper listImage={listImage} />
@@ -112,7 +160,7 @@ export const CardUnArtisan: FC = () => {
                   <Grid item xs={12} lg={3}>
                     <Button
                       component="a"
-                      href="https://wa.me/1234567890"
+                      href={`https://wa.me/${data?.numero_telephone}`}
                       variant="contained"
                       color="primary"
                       startIcon={<WifiCalling3Icon />}
@@ -121,7 +169,7 @@ export const CardUnArtisan: FC = () => {
                       fullWidth
                       aria-label="Appeler l'artisan"
                     >
-                      +2250707070707
+                      {data?.numero_telephone}
                     </Button>
                   </Grid>
                 )}

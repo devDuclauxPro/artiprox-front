@@ -9,9 +9,10 @@ import { AfficheHistoriqueClient } from "components/historique/client/afficheHis
 import { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "reducerToolkitStore/store/store";
+import { FormRole } from "../admin/formRole";
 import { ListUser } from "../admin/listUser";
-import { AfficherArticle } from "../artisan/afficherArticle";
 import { FormArticle } from "../artisan/formArticle";
+import { FormCategorie } from "../artisan/formCategorie";
 import { FormModifier } from "./formModifier";
 import { FormModPasse } from "./formModPasse";
 import { Info } from "./info";
@@ -32,9 +33,15 @@ const cardContentStyles = {
 
 export const AfficherProfilCommun: FC = () => {
   const { user } = useSelector((state: RootState) => state.user);
-  const { visibleHistorique, visiblePassModif, visibleProfilModif, visibleUser, visibleArticle } = useSelector(
-    (state: RootState) => state.visible
-  );
+  const {
+    visibleHistorique,
+    visiblePassModif,
+    visibleProfilModif,
+    visibleUser,
+    visibleArticle,
+    visibleCategorie,
+    visibleRole
+  } = useSelector((state: RootState) => state.visible);
 
   return (
     <Box minHeight="80vh">
@@ -101,13 +108,18 @@ export const AfficherProfilCommun: FC = () => {
                   {visiblePassModif && <FormModPasse />}
                 </>
               )}
-              {user?.role_id === 1 && visibleUser && <ListUser />}
+              {user?.role_id === 1 && (
+                <>
+                  {visibleUser && <ListUser />}
+                  {visibleRole && <FormRole />}
+                </>
+              )}
               {user?.role_id === 2 && visibleHistorique && <AfficheHistoriqueClient />}
               {user?.role_id === 3 && (
                 <>
                   {visibleHistorique && <AfficheHistoriqueArtisan />}
                   {visibleArticle && <FormArticle />}
-                  {visibleArticle && <AfficherArticle />}
+                  {visibleCategorie && <FormCategorie />}
                 </>
               )}
             </Stack>

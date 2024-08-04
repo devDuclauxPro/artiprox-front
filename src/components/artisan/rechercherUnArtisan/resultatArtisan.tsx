@@ -11,7 +11,7 @@ export const ResultatArtisan = () => {
         <CardTrouver
           key={artisan.id}
           id={artisan.id}
-          titre={artisan.nom}
+          titre={`${artisan.nom} ${artisan.prenoms}`}
           description={artisan.description as string}
           numero={artisan.numero_telephone}
           notation={artisan.notation}

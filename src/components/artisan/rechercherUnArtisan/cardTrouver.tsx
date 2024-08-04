@@ -55,7 +55,7 @@ export const CardTrouver: FC<TCardTrouver> = ({ id, titre, description, numero, 
             <CardContent sx={{ bgcolor: colorGrisPale }}>
               <Box display="flex" alignItems="center">
                 <WorkIcon color="warning" sx={{ mr: 1 }} />
-                <Typography variant="body2">{description}</Typography>
+                <Typography variant="body2">Activités : {description}</Typography>
               </Box>
             </CardContent>
             <CardActions>
