@@ -4,9 +4,7 @@ import PhotoCameraFrontIcon from "@mui/icons-material/PhotoCameraFront";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import { TListItemSocialNet } from "types/types";
 
-// Fonction qui retourne une liste d'objets contenant les icônes de réseaux sociaux et leurs liens
 export const MenuIconGeneric = (): TListItemSocialNet[] => {
-  // Liste des réseaux sociaux avec leurs icônes et liens associés
   const listFollowing: TListItemSocialNet[] = [
     { linkTo: "https://youtube.com/@artiprox", icon: <YouTubeIcon color="warning" /> },
     { linkTo: "https://tiktok.com/@arti.prox", icon: <PhotoCameraFrontIcon color="warning" /> },

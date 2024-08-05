@@ -4,6 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { configureAxiosHeaders } from "App";
 import axios from "axios";
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,12 +23,7 @@ export const AfficherRole: FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/roles`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
-        });
+        const response = await axios.get(`${apiUrl}/roles`, configureAxiosHeaders(token ?? ""));
         dispatch(allUsersRoleConnect({ roleUserConnect: response.data.roles.data }));
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -49,22 +45,9 @@ export const AfficherRole: FC = () => {
       toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
       return;
     }
-    console.log(`${apiUrl}/roles/delete/${id}`);
     try {
-      await axios.delete(`${apiUrl}/roles/delete/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
-
-      const response = await axios.get(`${apiUrl}/roles`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
-
+      await axios.delete(`${apiUrl}/roles/delete/${id}`, configureAxiosHeaders(token ?? ""));
+      const response = await axios.get(`${apiUrl}/roles`, configureAxiosHeaders(token ?? ""));
       dispatch(allUsersRoleConnect({ roleUserConnect: response.data.roles.data }));
     } catch (error) {
       if (axios.isAxiosError(error)) {

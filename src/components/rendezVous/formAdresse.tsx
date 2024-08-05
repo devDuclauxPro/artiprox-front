@@ -43,7 +43,6 @@ export const FormAdresse: FC = () => {
         <OutlinedInput
           id="adresse"
           name="adresse"
-          type="text"
           placeholder="Pays, ville, commune, quartier, rue, etc."
           autoComplete="street-address"
           required
@@ -71,7 +70,6 @@ export const FormAdresse: FC = () => {
         <TextField
           id="description"
           name="description"
-          type="text"
           placeholder="Description de la tâche à faire"
           autoComplete="given-description"
           required

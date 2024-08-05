@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "reducerToolkitStore/store/store";
 import { colorBlack, colorBleuFonce } from "utils/color";
 
-// Composant DescriptionArtisan affichant des informations sur les résultats de recherche
 export const DescriptionArtisan: FC = () => {
   const { resultatArtisans, rechercheArtisan } = useSelector((state: RootState) => state.trouverArtisan);
   return (
@@ -32,12 +31,7 @@ export const DescriptionArtisan: FC = () => {
         </Typography>
         <Typography variant="body1" component="p" sx={{ fontSize: { xs: ".8rem", sm: "1.3rem" }, fontWeight: 300 }}>
           Professionnels disponibles :
-          <Typography
-            variant="h6"
-            component="span"
-            color={colorBlack}
-            sx={{ ml: 0.5 }} // Espacement entre le texte et le nombre
-          >
+          <Typography variant="h6" component="span" color={colorBlack} sx={{ ml: 0.5 }}>
             {resultatArtisans?.length}
           </Typography>
         </Typography>

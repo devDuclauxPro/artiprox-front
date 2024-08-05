@@ -10,10 +10,11 @@ export const ResultatArtisan = () => {
       {resultatArtisans?.map((artisan) => (
         <CardTrouver
           key={artisan.id}
-          id={artisan.id}
-          titre={`${artisan.nom} ${artisan.prenoms}`}
-          description={artisan.description as string}
-          numero={artisan.numero_telephone}
+          id={artisan?.id}
+          nom={artisan.nom}
+          prenoms={artisan.prenoms}
+          description={artisan.description}
+          numero_telephone={artisan.numero_telephone}
           notation={artisan.notation}
         />
       ))}

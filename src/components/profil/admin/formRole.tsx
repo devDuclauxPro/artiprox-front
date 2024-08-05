@@ -5,6 +5,7 @@ import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
 import { LoadingIndicator } from "animations/threeDots";
+import { configureAxiosHeaders } from "App";
 import axios from "axios";
 import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -46,12 +47,7 @@ export const FormRole: FC = () => {
         return;
       }
 
-      const response = await axios.post(`${apiUrl}/roles/create`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const response = await axios.post(`${apiUrl}/roles/create`, data, configureAxiosHeaders(token ?? ""));
       toast.success(response.data.categorie);
     } catch (error) {
       if (axios.isAxiosError(error)) {

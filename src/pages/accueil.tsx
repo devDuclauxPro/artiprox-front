@@ -23,7 +23,7 @@ export const Accueil: FC = () => {
         altText="logo du site"
         description="Arti-prox | les artisans près de chez moi"
         textColor={colorBleuFonce}
-        backgroundColor="#f0f0f0" // Couleur de fond personnalisée
+        backgroundColor="#f0f0f0"
       />
       {/* Section expliquant pourquoi faire appel aux services */}
       <MilieuPourquoiAccueil />

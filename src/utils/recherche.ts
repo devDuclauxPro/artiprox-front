@@ -228,7 +228,7 @@ export const pays = [{ label: "Côte d'Ivoire" }];
 //   { label: "Zimbabwe" }
 // ];
 
-export const profil = [
+export const profilOptions = [
   { id: "2", label: "Client" },
   { id: "3", label: "Artisan" }
 ];

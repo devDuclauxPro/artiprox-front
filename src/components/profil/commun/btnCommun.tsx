@@ -13,6 +13,10 @@ import {
 } from "reducerToolkitStore/features/visible";
 import { RootState } from "reducerToolkitStore/store/store";
 
+const ROLE_ADMIN = 1;
+const ROLE_USER = 2;
+const ROLE_ARTISAN = 3;
+
 export const BtnCommun = () => {
   const { user } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
@@ -22,69 +26,93 @@ export const BtnCommun = () => {
     dispatch(deconnexion());
     navigate("/connexion");
   };
-  const handleProfilModVisible = () => {
-    dispatch(setProfilModVisible({ visibleProfilModif: true }));
-    dispatch(setPassModVisible({ visiblePassModif: false }));
-    dispatch(setUserVisible({ visiblePassModif: false }));
-    dispatch(setHistVisible({ visibleHistorique: false }));
-    dispatch(setArticleVisible({ visibleArticle: false }));
-    dispatch(setArticleCategorie({ visibleCategorie: false }));
-    dispatch(setRoleVisible({ visibleRole: false }));
+
+  const setVisibilities = (visibilities: Record<string, boolean>) => {
+    dispatch(setProfilModVisible({ visibleProfilModif: visibilities.profilMod }));
+    dispatch(setPassModVisible({ visiblePassModif: visibilities.passMod }));
+    dispatch(setUserVisible({ visibleUser: visibilities.user }));
+    dispatch(setHistVisible({ visibleHistorique: visibilities.hist }));
+    dispatch(setArticleVisible({ visibleArticle: visibilities.article }));
+    dispatch(setArticleCategorie({ visibleCategorie: visibilities.articleCat }));
+    dispatch(setRoleVisible({ visibleRole: visibilities.role }));
   };
-  const handlePassModVisible = () => {
-    dispatch(setProfilModVisible({ visibleProfilModif: false }));
-    dispatch(setUserVisible({ visiblePassModif: false }));
-    dispatch(setPassModVisible({ visiblePassModif: true }));
-    dispatch(setHistVisible({ visibleHistorique: false }));
-    dispatch(setArticleVisible({ visibleArticle: false }));
-    dispatch(setArticleCategorie({ visibleCategorie: false }));
-    dispatch(setRoleVisible({ visibleRole: false }));
-  };
-  const handleUserVisible = () => {
-    dispatch(setUserVisible({ visibleUser: true }));
-    dispatch(setProfilModVisible({ visibleProfilModif: false }));
-    dispatch(setPassModVisible({ visiblePassModif: false }));
-    dispatch(setHistVisible({ visibleHistorique: false }));
-    dispatch(setArticleVisible({ visibleArticle: false }));
-    dispatch(setArticleCategorie({ visibleCategorie: false }));
-    dispatch(setRoleVisible({ visibleRole: false }));
-  };
-  const handleHistorique = () => {
-    dispatch(setHistVisible({ visibleHistorique: true }));
-    dispatch(setUserVisible({ visibleUser: false }));
-    dispatch(setProfilModVisible({ visibleProfilModif: false }));
-    dispatch(setPassModVisible({ visiblePassModif: false }));
-    dispatch(setArticleVisible({ visibleArticle: false }));
-    dispatch(setArticleCategorie({ visibleCategorie: false }));
-    dispatch(setRoleVisible({ visibleRole: false }));
-  };
-  const handleArticle = () => {
-    dispatch(setArticleVisible({ visibleArticle: true }));
-    dispatch(setHistVisible({ visibleHistorique: false }));
-    dispatch(setUserVisible({ visibleUser: false }));
-    dispatch(setProfilModVisible({ visibleProfilModif: false }));
-    dispatch(setPassModVisible({ visiblePassModif: false }));
-    dispatch(setArticleCategorie({ visibleCategorie: false }));
-    dispatch(setRoleVisible({ visibleRole: false }));
-  };
-  const handleArticleCategorie = () => {
-    dispatch(setArticleCategorie({ visibleCategorie: true }));
-    dispatch(setArticleVisible({ visibleArticle: false }));
-    dispatch(setHistVisible({ visibleHistorique: false }));
-    dispatch(setUserVisible({ visibleUser: false }));
-    dispatch(setProfilModVisible({ visibleProfilModif: false }));
-    dispatch(setPassModVisible({ visiblePassModif: false }));
-    dispatch(setRoleVisible({ visibleRole: false }));
-  };
-  const handleRoles = () => {
-    dispatch(setRoleVisible({ visibleRole: true }));
-    dispatch(setArticleCategorie({ visibleCategorie: false }));
-    dispatch(setArticleVisible({ visibleArticle: false }));
-    dispatch(setHistVisible({ visibleHistorique: false }));
-    dispatch(setUserVisible({ visibleUser: false }));
-    dispatch(setProfilModVisible({ visibleProfilModif: false }));
-    dispatch(setPassModVisible({ visiblePassModif: false }));
-  };
+
+  const handleProfilModVisible = () =>
+    setVisibilities({
+      profilMod: true,
+      passMod: false,
+      user: false,
+      hist: false,
+      article: false,
+      articleCat: false,
+      role: false
+    });
+
+  const handlePassModVisible = () =>
+    setVisibilities({
+      profilMod: false,
+      passMod: true,
+      user: false,
+      hist: false,
+      article: false,
+      articleCat: false,
+      role: false
+    });
+
+  const handleUserVisible = () =>
+    setVisibilities({
+      profilMod: false,
+      passMod: false,
+      user: true,
+      hist: false,
+      article: false,
+      articleCat: false,
+      role: false
+    });
+
+  const handleHistorique = () =>
+    setVisibilities({
+      profilMod: false,
+      passMod: false,
+      user: false,
+      hist: true,
+      article: false,
+      articleCat: false,
+      role: false
+    });
+
+  const handleArticle = () =>
+    setVisibilities({
+      profilMod: false,
+      passMod: false,
+      user: false,
+      hist: false,
+      article: true,
+      articleCat: false,
+      role: false
+    });
+
+  const handleArticleCategorie = () =>
+    setVisibilities({
+      profilMod: false,
+      passMod: false,
+      user: false,
+      hist: false,
+      article: false,
+      articleCat: true,
+      role: false
+    });
+
+  const handleRoles = () =>
+    setVisibilities({
+      profilMod: false,
+      passMod: false,
+      user: false,
+      hist: false,
+      article: false,
+      articleCat: false,
+      role: true
+    });
 
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" gap={1}>
@@ -101,7 +129,7 @@ export const BtnCommun = () => {
           </Button>
         </>
       )}
-      {user?.role_id === 1 && (
+      {user?.role_id === ROLE_ADMIN && (
         <>
           <Button variant="contained" color="warning" onClick={handleUserVisible}>
             Voir les utilisateurs
@@ -111,12 +139,12 @@ export const BtnCommun = () => {
           </Button>
         </>
       )}
-      {user?.role_id === 2 && (
+      {user?.role_id === ROLE_USER && (
         <Button variant="contained" onClick={handleHistorique}>
           Mon historique
         </Button>
       )}
-      {user?.role_id === 3 && (
+      {user?.role_id === ROLE_ARTISAN && (
         <>
           <Button variant="contained" color="secondary" onClick={handleHistorique}>
             Mon historique

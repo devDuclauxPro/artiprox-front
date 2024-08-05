@@ -4,6 +4,7 @@ import { Avatar, Box, Button, Container, FormControl, TextField, Typography } fr
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
+import { configureAxiosHeaders } from "App";
 import axios from "axios";
 import { FC } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -41,12 +42,7 @@ export const FormModPasse: FC = () => {
     }
 
     try {
-      await axios.put(`${apiUrl}/password/update`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      await axios.put(`${apiUrl}/password/update`, data, configureAxiosHeaders(token ?? ""));
       toast.success("Modification réussie !");
     } catch (error) {
       if (axios.isAxiosError(error)) {

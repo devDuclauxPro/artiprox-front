@@ -15,7 +15,7 @@ export const ErrorPage: FC = () => {
               width: { xs: 200, sm: 250, md: 350 },
               display: "block",
               cursor: "pointer",
-              margin: "0 auto" // Centrer l'image horizontalement
+              margin: "0 auto"
             }}
             alt="image d'erreur"
             src={error404}

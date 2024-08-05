@@ -13,6 +13,7 @@ import { Box } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { configureAxiosHeaders } from "App";
 import { colorRougeVif } from "utils/color";
 
 export const AfficherArticleCategorie: FC = () => {
@@ -23,12 +24,7 @@ export const AfficherArticleCategorie: FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/categories`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
-        });
+        const response = await axios.get(`${apiUrl}/categories`, configureAxiosHeaders(token ?? ""));
         dispatch(allArticlesCategorie({ articlesCartegories: response.data.categories.data }));
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -52,20 +48,8 @@ export const AfficherArticleCategorie: FC = () => {
     }
 
     try {
-      await axios.delete(`${apiUrl}/categories/delete/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
-
-      const response = await axios.get(`${apiUrl}/categories`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
-
+      await axios.delete(`${apiUrl}/categories/delete/${id}`, configureAxiosHeaders(token ?? ""));
+      const response = await axios.get(`${apiUrl}/categories`, configureAxiosHeaders(token ?? ""));
       dispatch(allArticlesCategorie({ articlesCartegories: response.data.categories.data }));
     } catch (error) {
       if (axios.isAxiosError(error)) {

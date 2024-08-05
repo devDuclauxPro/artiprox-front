@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RowData } from "components/profil/admin/tableListUser";
 
-interface User {
+interface IUser {
   id: string;
-  // profil: "Admin" | "Client" | "Artisan";
   role_id: 1 | 2 | 3; //"Admin" | "Client" | "Artisan";
   nom: string;
   prenoms: string;
@@ -19,15 +18,15 @@ interface User {
   confPassword: string;
 }
 
-interface UserState {
-  user?: User | null;
-  token?: string | null;
+interface IUserState {
+  user?: IUser;
+  token?: string;
   users?: RowData[];
 }
 
-const initialState: UserState = {
-  user: null,
-  token: null,
+const initialState: IUserState = {
+  user: undefined,
+  token: undefined,
   users: []
 };
 
@@ -35,20 +34,20 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    connexion(state, action: PayloadAction<UserState>) {
+    connexion(state, action: PayloadAction<IUserState>) {
       const { user, token } = action.payload;
       localStorage.setItem("user", JSON.stringify({ user, token }));
       state.user = user;
       state.token = token;
     },
-    allUsers(state, action: PayloadAction<UserState>) {
+    allUsers(state, action: PayloadAction<IUserState>) {
       state.users = action.payload.users;
     },
 
     deconnexion(state) {
       localStorage.clear();
-      state.user = null;
-      state.token = null;
+      state.user = undefined;
+      state.token = undefined;
     }
   }
 });

@@ -5,6 +5,7 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { LoadingIndicator } from "animations/threeDots";
+import { configureAxiosHeaders } from "App";
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -66,22 +67,9 @@ export const AfficherArticle: FC = () => {
     }
 
     try {
-      await axios.delete(`${apiUrl}/articles/delete/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
-
-      const response = await axios.get(`${apiUrl}/articles`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
-
+      await axios.delete(`${apiUrl}/articles/delete/${id}`, configureAxiosHeaders(token ?? ""));
+      const response = await axios.get(`${apiUrl}/articles`, configureAxiosHeaders(token ?? ""));
       dispatch(allArticles({ articles: response.data.articles.data }));
-
       toast.success("Suppression réussie !");
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -46,7 +46,6 @@ export const FormConnexion: FC = () => {
         return;
       }
       const response = await axios.post(`${apiUrl}/login`, data);
-      console.log(response);
       dispatch(
         connexion({
           user: response.data.user_info,

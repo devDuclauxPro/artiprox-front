@@ -5,15 +5,10 @@ import Stack from "@mui/material/Stack";
 import { Info } from "components/generic/info";
 import { InfoMobile } from "components/generic/infoMobile";
 import { FC } from "react";
+import { IArtisan } from "reducerToolkitStore/features/trouverArtisan";
 import { CardUnArtisan } from "./cardUnArtisan";
 
-interface AfficherProfilArtisanProps {
-  nom: string;
-  prenoms: string;
-  description: string;
-}
-
-export const AfficherProfilArtisan: FC<AfficherProfilArtisanProps> = ({ nom, prenoms, description }) => {
+export const AfficherProfilArtisan: FC<IArtisan> = ({ nom, prenoms, description }) => {
   return (
     <Box minHeight="80vh">
       <Grid container>

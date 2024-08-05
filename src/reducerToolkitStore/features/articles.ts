@@ -16,11 +16,11 @@ interface IArticle {
 }
 
 interface IArticleState {
-  articles?: IArticle[]; // Correction ici, articles ne devrait pas être optionnel
+  articles?: IArticle[];
 }
 
 const initialState: IArticleState = {
-  articles: [] // Correction ici
+  articles: []
 };
 
 export const articleSlice = createSlice({

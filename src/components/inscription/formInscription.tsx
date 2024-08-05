@@ -20,7 +20,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { colorBlue, colorVertNature } from "utils/color";
 import { apiUrl } from "utils/config";
-import { metiers, pays, sexe, villes } from "utils/recherche";
+import { metiers, pays, profilOptions, sexe, villes } from "utils/recherche";
 import { schemaInscription } from "utils/yupValidation";
 
 const FormGrid = styled(Grid)(() => ({
@@ -49,11 +49,6 @@ type ProfilOption = {
   label: string;
 };
 
-const profilOptions: ProfilOption[] = [
-  { id: "2", label: "Client" },
-  { id: "3", label: "Artisan" }
-];
-
 export const FormInscription: FC = () => {
   const {
     register,
@@ -74,8 +69,7 @@ export const FormInscription: FC = () => {
       return;
     }
     try {
-      const response = await axios.post(`${apiUrl}/register`, data);
-      console.log(response.data);
+      await axios.post(`${apiUrl}/register`, data);
       toast.success("Inscription réussie !");
     } catch (error) {
       const errorMessage = axios.isAxiosError(error)

@@ -5,7 +5,7 @@ import { RootState } from "reducerToolkitStore/store/store";
 import { colorBleuFonce } from "utils/color";
 
 export const InfoProfilCommun: FC = () => {
-  const user = useSelector((state: RootState) => state.user.user);
+  const { user } = useSelector((state: RootState) => state.user);
   return (
     <Box
       width="100%"
@@ -15,7 +15,7 @@ export const InfoProfilCommun: FC = () => {
       alignItems="center"
       gap={1}
       mb={2}
-      textAlign="center" // Ajouté pour centrer le texte
+      textAlign="center"
     >
       {user?.role_id === 3 && (
         <Typography gutterBottom variant="body2" color={colorBleuFonce}>

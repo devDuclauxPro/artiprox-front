@@ -4,6 +4,7 @@ import { Autocomplete, Avatar, Box, Button, Container, FormControl, TextField, T
 import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
+import { configureAxiosHeaders } from "App";
 import axios from "axios";
 import { FC, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -70,12 +71,7 @@ export const FormModifier: FC = () => {
     }
 
     try {
-      const response = await axios.put(`${apiUrl}/users/update`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const response = await axios.put(`${apiUrl}/users/update`, data, configureAxiosHeaders(token ?? ""));
       dispatch(
         connexion({
           user: response.data.data[0],

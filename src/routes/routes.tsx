@@ -11,7 +11,7 @@ import { PrivateRoute } from "pages/privateRoute";
 import { PublicRoute } from "pages/publicRoute";
 import { RendezVous } from "pages/rendezVous";
 import { Utilisateur } from "pages/utilisateur";
-import { createBrowserRouter } from "react-router-dom"; // Utilisation d'un index.js dans le dossier components
+import { createBrowserRouter } from "react-router-dom";
 
 // Définir les chemins
 const paths = {

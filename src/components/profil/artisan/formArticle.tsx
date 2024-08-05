@@ -5,6 +5,7 @@ import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
 import { LoadingIndicator } from "animations/threeDots";
+import { configureAxiosHeaders } from "App";
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -49,12 +50,7 @@ export const FormArticle: FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/categories`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json"
-          }
-        });
+        const response = await axios.get(`${apiUrl}/categories`, configureAxiosHeaders(token ?? ""));
         dispatch(allArticlesCategorie({ articlesCartegories: response.data.categories.data }));
       } catch (error) {
         if (axios.isAxiosError(error)) {
@@ -96,7 +92,7 @@ export const FormArticle: FC = () => {
         category_id: data.id_categorie,
         paramatres: "images_articles"
       };
-      console.log(newData);
+
       const response = await axios.post(`${apiUrl}/articles/create`, newData, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -163,7 +159,6 @@ export const FormArticle: FC = () => {
               <TextField
                 {...register("nom_article")}
                 id="nomArticle"
-                type="text"
                 placeholder="Ajouter un nom à la photo de l'article"
                 autoComplete="nom photo article"
                 error={!!errors.nom_article}
@@ -177,7 +172,6 @@ export const FormArticle: FC = () => {
               <TextField
                 {...register("prix_article")}
                 id="prixArticle"
-                type="text"
                 placeholder="Ajouter un prix à la photo de l'article"
                 autoComplete="prix photo article"
                 error={!!errors.prix_article}

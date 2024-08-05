@@ -5,25 +5,16 @@ import activite from "images/autres/activite.png";
 import { FC } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { IArtisan } from "reducerToolkitStore/features/trouverArtisan";
 import { RootState } from "reducerToolkitStore/store/store";
 import { colorGrisPale } from "utils/color";
 import { TextRating } from "./textRating";
 
-type TCardTrouver = {
-  id: string;
-  titre: string;
-  description: string;
-  numero: string;
-  notation: number;
-};
-
-// Composant pour afficher une carte d'un artisan avec informations et actions
-export const CardTrouver: FC<TCardTrouver> = ({ id, titre, description, numero, notation }) => {
+export const CardTrouver: FC<IArtisan> = ({ id, nom, prenoms, description, numero_telephone, notation }) => {
   const { user } = useSelector((state: RootState) => state.user);
   return (
     <Container maxWidth="lg" sx={{ mb: 2, py: 3 }}>
       <Grid container>
-        {/* Section image */}
         <Grid
           item
           xs={12}
@@ -32,12 +23,11 @@ export const CardTrouver: FC<TCardTrouver> = ({ id, titre, description, numero, 
         >
           <Box
             component="img"
-            sx={{ height: 150, width: 150, objectFit: "cover" }} // Utilisation de objectFit pour un meilleur ajustement
+            sx={{ height: 150, width: 150, objectFit: "cover" }}
             alt="Image de l'artisan"
             src={activite}
           />
         </Grid>
-        {/* Section contenu de la carte */}
         <Grid item xs={12} md={9}>
           <Card>
             <CardHeader
@@ -45,17 +35,19 @@ export const CardTrouver: FC<TCardTrouver> = ({ id, titre, description, numero, 
                 <Typography
                   variant="h6"
                   component={Link}
-                  to={`/espace-membre/trouver-un-artisan/${id}`} // Corrigé pour utiliser une template string correctement
-                  sx={{ textDecoration: "none", color: "inherit" }} // Styles pour le lien
+                  to={`/espace-membre/trouver-un-artisan/${id}`}
+                  sx={{ textDecoration: "none", color: "inherit" }}
                 >
-                  {titre}
+                  {nom} {prenoms}
                 </Typography>
               }
             />
             <CardContent sx={{ bgcolor: colorGrisPale }}>
               <Box display="flex" alignItems="center">
                 <WorkIcon color="warning" sx={{ mr: 1 }} />
-                <Typography variant="body2">Activités : {description}</Typography>
+                <Typography variant="body2" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  Activités : {description}
+                </Typography>
               </Box>
             </CardContent>
             <CardActions>
@@ -72,7 +64,7 @@ export const CardTrouver: FC<TCardTrouver> = ({ id, titre, description, numero, 
                   <Grid item xs={12} md={4} lg={3}>
                     <Button
                       component="a"
-                      href={`https://wa.me/${numero}`}
+                      href={`https://wa.me/${numero_telephone}`}
                       target="_blank"
                       variant="contained"
                       color="primary"
@@ -81,7 +73,7 @@ export const CardTrouver: FC<TCardTrouver> = ({ id, titre, description, numero, 
                       disableRipple
                       fullWidth
                     >
-                      {numero}
+                      {numero_telephone}
                     </Button>
                   </Grid>
                 )}

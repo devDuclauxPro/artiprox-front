@@ -5,6 +5,7 @@ import FormLabel from "@mui/material/FormLabel";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/system";
 import { LoadingIndicator } from "animations/threeDots";
+import { configureAxiosHeaders } from "App";
 import axios from "axios";
 import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -46,12 +47,7 @@ export const FormCategorie: FC = () => {
         return;
       }
 
-      const response = await axios.post(`${apiUrl}/categories/create`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const response = await axios.post(`${apiUrl}/categories/create`, data, configureAxiosHeaders(token ?? ""));
       toast.success(response.data.categorie);
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -84,7 +80,7 @@ export const FormCategorie: FC = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5" component="h1" textAlign="center" color={colorBlue}>
-            Formulaire de categorie d'article
+            Formulaire de catégorie d'article
           </Typography>
         </Grid>
       </Grid>
@@ -92,13 +88,12 @@ export const FormCategorie: FC = () => {
         <Grid container spacing={3}>
           <FormGrid item xs={12}>
             <FormControl fullWidth>
-              <FormLabel htmlFor="nomCategorie">Nom de categorie de l'article</FormLabel>
+              <FormLabel htmlFor="nomCategorie">Nom de catégorie</FormLabel>
               <TextField
                 {...register("nom_categorie")}
                 id="nomCategorie"
-                type="text"
-                placeholder="Ajouter un nom à la categorie de l'article"
-                autoComplete="nom categorie de l'article"
+                placeholder="Ajouter un nom à la catégorie de l'article"
+                autoComplete="nom catégorie de l'article"
                 error={!!errors.nom_categorie}
                 helperText={errors.nom_categorie?.message}
               />

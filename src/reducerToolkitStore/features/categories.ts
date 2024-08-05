@@ -9,11 +9,11 @@ export interface ICategorie {
 }
 
 interface ICategorieState {
-  articlesCartegories?: ICategorie[]; // Correction ici, articles ne devrait pas être optionnel
+  articlesCartegories?: ICategorie[];
 }
 
 const initialState: ICategorieState = {
-  articlesCartegories: [] // Correction ici
+  articlesCartegories: []
 };
 
 export const articleCategorieSlice = createSlice({

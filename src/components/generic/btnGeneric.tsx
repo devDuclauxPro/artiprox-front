@@ -4,23 +4,22 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import { IButtonGeneric } from "types/types";
 
-// Composant bouton générique qui peut être utilisé avec ou sans lien
 export const BtnGeneric: FC<IButtonGeneric> = ({
   btnLink,
   btnText,
-  btnColor = "success", // Valeur par défaut pour btnColor
-  btnVariant = "contained", // Valeur par défaut pour btnVariant
-  btnSize = "medium", // Valeur par défaut pour btnSize
-  btnZooInOutCard = zoomInOutGeneric // Valeur par défaut pour btnZooInOutCard
+  btnColor = "success",
+  btnVariant = "contained",
+  btnSize = "medium",
+  btnZooInOutCard = zoomInOutGeneric
 }) => {
   const buttonProps = {
-    disableRipple: true, // Supprime l'effet de clic par défaut
+    disableRipple: true,
     size: btnSize,
     variant: btnVariant,
     color: btnColor,
     sx: {
-      textTransform: "inherit", // Ne modifie pas la casse du texte
-      "&:hover": { animation: `${btnZooInOutCard} 1s infinite` } // Animation au survol
+      textTransform: "inherit",
+      "&:hover": { animation: `${btnZooInOutCard} 1s infinite` }
     }
   };
 

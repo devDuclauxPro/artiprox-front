@@ -1,11 +1,12 @@
 import { Autocomplete, Box, Button, Container, Grid, TextField, Typography } from "@mui/material";
 import { LoadingIndicator } from "animations/threeDots";
+import { configureAxiosHeaders } from "App";
 import axios from "axios";
 import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { setTrouverArtisan } from "reducerToolkitStore/features/trouverArtisan";
+import { IRechArtisan, setTrouverArtisan } from "reducerToolkitStore/features/trouverArtisan";
 import { RootState } from "reducerToolkitStore/store/store";
 import { colorBlue, colorGris2 } from "utils/color";
 import { apiUrl } from "utils/config";
@@ -13,18 +14,13 @@ import { metiers, villes } from "utils/recherche";
 import { DescriptionArtisan } from "./descriptionArtisan";
 import { ResultatArtisan } from "./resultatArtisan";
 
-type Inputs = {
-  metier: string;
-  ville: string;
-};
-
 export const HautRecherche: FC = () => {
   const { token } = useSelector((state: RootState) => state.user);
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<IRechArtisan>();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<IRechArtisan> = async (data) => {
     try {
       if (!apiUrl) {
         toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
@@ -32,12 +28,7 @@ export const HautRecherche: FC = () => {
       }
 
       setLoading(true);
-      const response = await axios.post(`${apiUrl}/search-artisan`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const response = await axios.post(`${apiUrl}/search-artisan`, data, configureAxiosHeaders(token ?? ""));
 
       dispatch(
         setTrouverArtisan({
@@ -45,7 +36,6 @@ export const HautRecherche: FC = () => {
           rechercheArtisan: data
         })
       );
-      console.log(response.data.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Erreur Axios:", error.response?.data?.error);

@@ -1,5 +1,5 @@
 import { Revoir } from "components/devisRdvCommun/revoir";
-import { FormAdresse } from "../devis/formAdresse";
+import { FormAdresse } from "./formAdresse";
 
 export const getStepContent = (step: number) => {
   switch (step) {

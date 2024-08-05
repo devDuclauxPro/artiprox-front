@@ -6,14 +6,21 @@ import { connexion, deconnexion } from "reducerToolkitStore/features/user";
 import { RootState } from "reducerToolkitStore/store/store";
 import { apiUrl } from "utils/config";
 
-// Composant principal de l'application
+export const getUserFromLocalStorage = () => JSON.parse(localStorage.getItem("user") || "{}");
+export const configureAxiosHeaders = (token: string) => ({
+  headers: {
+    Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json"
+  }
+});
+
 export const App: FC = () => {
   const { token } = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const user = getUserFromLocalStorage();
     if (user.token) {
       dispatch(connexion(user));
     } else {
@@ -28,19 +35,14 @@ export const App: FC = () => {
     }
 
     try {
-      await axios.get(`${apiUrl}/user`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
+      await axios.get(`${apiUrl}/user`, configureAxiosHeaders(token));
       navigate("/espace-membre");
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Erreur Axios:", error.response?.data?.error || error.message);
-      } else {
-        console.error("Erreur inconnue:", error);
-      }
+      console.error(
+        axios.isAxiosError(error)
+          ? `Erreur Axios: ${error.response?.data?.error || error.message}`
+          : `Erreur inconnue: ${error}`
+      );
       dispatch(deconnexion());
       navigate("/connexion");
     }

@@ -12,7 +12,7 @@ import { getStepContent } from "./getStepContent";
 
 export const Verifier: FC = () => {
   const { activeStep, handleNext, handleBack } = useStep();
-  const user = useSelector((state: RootState) => state.user.user);
+  const { user } = useSelector((state: RootState) => state.user);
   return (
     <Grid container>
       <Grid

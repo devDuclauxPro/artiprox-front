@@ -16,7 +16,6 @@ export const FormAdresse: FC = () => {
           <TextField
             id="adresse"
             name="adresse"
-            type="text"
             placeholder="Pays, ville, commune, quartier, rue, etc."
             autoComplete="street-address"
             required
@@ -30,7 +29,7 @@ export const FormAdresse: FC = () => {
             id="telephone"
             name="telephone"
             type="tel"
-            placeholder="+2250707070707"
+            placeholder="Numéro de mobile"
             autoComplete="tel"
             required
           />
@@ -55,13 +54,12 @@ export const FormAdresse: FC = () => {
           <TextField
             id="description"
             name="description"
-            type="text"
             placeholder="Description de la tâche à faire"
             autoComplete="given-description"
             required
             multiline
-            rows={4} // Ajustez le nombre de lignes selon vos besoins
-            variant="outlined" // Utilise l'outlined variant pour avoir le même style que OutlinedInput
+            rows={4}
+            variant="outlined"
           />
         </FormControl>
       </FormGrid>
