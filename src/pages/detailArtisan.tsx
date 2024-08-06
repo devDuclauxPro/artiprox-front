@@ -1,11 +1,11 @@
-import { AffichierUnArtisan } from "components/profil/artisan/affichierUnArtisan";
+import { AfficherProfilArtisan } from "components/artisan/afficherUnArtisan/afficherProfilArtisan";
 import { Layout } from "layouts/layout";
 import { FC } from "react";
 
 export const DetailArtisan: FC = () => {
   return (
     <Layout>
-      <AffichierUnArtisan />
+      <AfficherProfilArtisan />
     </Layout>
   );
 };

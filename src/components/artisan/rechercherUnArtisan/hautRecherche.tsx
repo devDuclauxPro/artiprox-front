@@ -2,7 +2,7 @@ import { Autocomplete, Box, Button, Container, Grid, TextField, Typography } fro
 import { LoadingIndicator } from "animations/threeDots";
 import { configureAxiosHeaders } from "App";
 import axios from "axios";
-import { FC, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -20,6 +20,40 @@ export const HautRecherche: FC = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState<boolean>(false);
 
+  // Fonction pour récupérer les données des artisans par défaut
+  const fetchDataArtisan = useCallback(async () => {
+    if (!apiUrl) {
+      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `${apiUrl}/search-artisan`,
+        { metier: "", ville: "" },
+        configureAxiosHeaders(token ?? "")
+      );
+
+      dispatch(
+        setTrouverArtisan({
+          resultatArtisans: response.data.data,
+          rechercheArtisan: { metier: "", ville: "" }
+        })
+      );
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("Erreur Axios:", error.response?.data?.error || error.message);
+      } else {
+        console.error("Erreur inconnue:", error);
+      }
+    }
+  }, [dispatch, token]);
+
+  // Utiliser useEffect pour récupérer les données des artisans au montage du composant
+  useEffect(() => {
+    fetchDataArtisan();
+  }, [fetchDataArtisan]);
+
+  // Fonction pour gérer la soumission du formulaire
   const onSubmit: SubmitHandler<IRechArtisan> = async (data) => {
     try {
       if (!apiUrl) {

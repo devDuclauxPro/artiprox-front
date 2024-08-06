@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import { FC, SyntheticEvent } from "react";
 
-const labels: { [index: string]: string } = {
+const labels: { [index: number]: string } = {
   0: "0/5",
   1: "1/5",
   2: "2/5",
@@ -12,9 +12,14 @@ const labels: { [index: string]: string } = {
   5: "5/5"
 };
 
-type TValeur = { valeur?: number; handleChange?: (event: SyntheticEvent, newValue: number | null) => void };
+type TValeur = {
+  valeur?: number;
+  handleChange?: (event: SyntheticEvent, newValue: number | null) => void;
+};
 
 export const TextRating: FC<TValeur> = ({ valeur = 1, handleChange }) => {
+  const currentValue = valeur ?? 1;
+  const currentLabel = labels[currentValue] || labels[0];
   return (
     <Box
       sx={{
@@ -25,11 +30,12 @@ export const TextRating: FC<TValeur> = ({ valeur = 1, handleChange }) => {
     >
       <Rating
         name="text-feedback"
-        value={valeur}
+        value={currentValue}
         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
         onChange={handleChange}
+        aria-label={`Évaluation: ${currentLabel}`}
       />
-      <Box sx={{ ml: 2 }}>{labels[valeur]}</Box>
+      <Box sx={{ ml: 2 }}>{currentLabel}</Box>
     </Box>
   );
 };

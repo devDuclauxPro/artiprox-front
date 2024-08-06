@@ -15,63 +15,80 @@ import { apiUrl } from "utils/config";
 import { listImage } from "utils/listImage";
 import { TextRating } from "../rechercherUnArtisan/textRating";
 
+interface INewArtisan extends IArtisan {
+  metier?: string;
+  user?: IArtisan;
+}
+
 export const CardUnArtisan: FC = () => {
   const [value, setValue] = useState<number>(1);
   const { user, token } = useSelector((state: RootState) => state.user);
-  const { resultatArtisans } = useSelector((state: RootState) => state.trouverArtisan);
   const { id } = useParams<{ id: string }>();
-  const [data, setData] = useState<IArtisan | undefined>(undefined);
+  const [data, setData] = useState<INewArtisan | undefined>();
+
+  const fetchDataArtisan = useCallback(async () => {
+    if (!apiUrl) {
+      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+      return;
+    }
+    try {
+      const response = await axios.post(
+        `${apiUrl}/artisans/show`,
+        { artisan_id: id },
+        configureAxiosHeaders(token ?? "")
+      );
+      setData(response.data.data);
+    } catch (error) {
+      const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error || error.message : "Erreur inconnue";
+      console.error("Erreur Axios:", errorMessage);
+    }
+  }, [id, token]);
 
   const fetchData = useCallback(async () => {
-    if (!id || !resultatArtisans) {
-      toast.error("ID manquant ou artisans non chargés");
-      return;
-    }
-
-    const artisan = resultatArtisans.find((resultat) => resultat.id === parseInt(id));
-    if (!artisan) {
-      toast.error(`Aucun artisan trouvé avec l'ID: ${id}`);
-      return;
-    }
-
-    setData(artisan);
-
     if (!apiUrl) {
       toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
       return;
     }
-  }, [id, resultatArtisans]);
+    try {
+      await axios.get(`${apiUrl}/notations`, configureAxiosHeaders(token ?? ""));
+    } catch (error) {
+      const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error || error.message : "Erreur inconnue";
+      console.error("Erreur Axios:", errorMessage);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    fetchDataArtisan();
+    fetchData();
+  }, [fetchData, fetchDataArtisan]);
 
   const handleChange = async (event: SyntheticEvent, newValue: number | null) => {
-    if (newValue === null) return;
-
-    setValue(newValue);
-
-    if (!apiUrl) {
-      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
-      return;
+    if (newValue !== null) {
+      setValue(newValue);
     }
-
     try {
+      if (!apiUrl) {
+        toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+        return;
+      }
+
       await axios.post(
         `${apiUrl}/notations/create`,
         {
-          note: newValue.toString(),
-          artisan_id: id ?? "",
-          client_id: user?.id.toString() ?? ""
+          note: newValue?.toString(),
+          artisan_id: id?.toString(),
+          client_id: user?.id.toString()
         },
         configureAxiosHeaders(token ?? "")
       );
     } catch (error) {
-      const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error : "Erreur inconnue";
+      const errorMessage = axios.isAxiosError(error)
+        ? error.response?.data?.error || "Erreur lors de la recherche."
+        : "Erreur inconnue lors de la recherche.";
       console.error("Erreur Axios:", errorMessage);
       toast.error(errorMessage);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
 
   return (
     <Container maxWidth="lg" sx={{ my: 2, py: 3 }}>
@@ -81,7 +98,7 @@ export const CardUnArtisan: FC = () => {
             <CardHeader
               title={
                 <Typography variant="h6">
-                  {data?.nom} {data?.prenoms}
+                  {data?.user?.nom} {data?.user?.prenoms}
                 </Typography>
               }
               sx={{ bgcolor: colorGrisPale }}
@@ -89,7 +106,9 @@ export const CardUnArtisan: FC = () => {
             <CardContent sx={{ bgcolor: colorGrisPale }}>
               <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
                 <WorkIcon color="warning" sx={{ mr: 1 }} />
-                <Typography variant="body2">Activités : {data?.description}</Typography>
+                <Typography variant="body2">
+                  {data?.metier} : {data?.description}
+                </Typography>
               </Box>
               <ImageSwiper listImage={listImage} />
             </CardContent>
@@ -107,7 +126,7 @@ export const CardUnArtisan: FC = () => {
                   <Grid item xs={12} lg={3}>
                     <Button
                       component="a"
-                      href={`https://wa.me/${data?.numero_telephone}`}
+                      href={`https://wa.me/${data?.user?.numero_telephone}`}
                       variant="contained"
                       color="primary"
                       startIcon={<WifiCalling3Icon />}
@@ -116,7 +135,7 @@ export const CardUnArtisan: FC = () => {
                       fullWidth
                       aria-label="Appeler l'artisan"
                     >
-                      {data?.numero_telephone}
+                      {data?.user?.numero_telephone}
                     </Button>
                   </Grid>
                 )}

@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IArtisan {
   id?: number;
+  id_artisan?: number;
   nom: string;
   prenoms: string;
   sexe?: string;
@@ -13,17 +14,23 @@ export interface IArtisan {
   numero_telephone?: string;
   notation?: number;
   email?: string;
+  user?: IArtisan;
 }
 
 export type IRechArtisan = Partial<Pick<IArtisan, "metier" | "ville">>;
 
-interface ITtrouverArtisan {
-  resultatArtisans: IArtisan[];
-  rechercheArtisan: IRechArtisan;
+export interface ITtrouverArtisan {
+  resultatArtisans?: IArtisan[];
+  resultatUnSeulArtisans?: IArtisan;
+  rechercheArtisan?: IRechArtisan;
 }
 
 const initialState: ITtrouverArtisan = {
   resultatArtisans: [],
+  resultatUnSeulArtisans: {
+    nom: "",
+    prenoms: ""
+  },
   rechercheArtisan: {
     metier: "",
     ville: ""
@@ -35,8 +42,19 @@ export const trouverArtisanSlice = createSlice({
   initialState,
   reducers: {
     setTrouverArtisan(state, action: PayloadAction<ITtrouverArtisan>) {
-      state.resultatArtisans = action.payload.resultatArtisans;
+      // Mise à jour des artisans
+      state.resultatArtisans = action.payload.resultatArtisans || [];
+
+      // Mise à jour de la recherche
       state.rechercheArtisan = { ...state.rechercheArtisan, ...action.payload.rechercheArtisan };
+
+      // Mise à jour d'un seul artisan
+      if (action.payload.resultatUnSeulArtisans) {
+        state.resultatUnSeulArtisans = {
+          ...state.resultatUnSeulArtisans,
+          ...action.payload.resultatUnSeulArtisans
+        };
+      }
     }
   }
 });

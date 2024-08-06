@@ -4,8 +4,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "reducerToolkitStore/store/store";
 import { colorBleuFonce } from "utils/color";
 
+// Fonction utilitaire pour obtenir une valeur avec un message par défaut
+const getValueOrDefault = (value: string | undefined, defaultMessage: string) => {
+  return value || defaultMessage;
+};
+
 export const InfoProfilCommun: FC = () => {
   const { user } = useSelector((state: RootState) => state.user);
+
   return (
     <Box
       width="100%"
@@ -17,29 +23,34 @@ export const InfoProfilCommun: FC = () => {
       mb={2}
       textAlign="center"
     >
-      {user?.role_id === 3 && (
-        <Typography gutterBottom variant="body2" color={colorBleuFonce}>
-          {user?.metier || "Le metier n'a pas encore été renseigné"}
-        </Typography>
-      )}
       <Typography gutterBottom variant="body2" color={colorBleuFonce}>
-        {user?.sexe || "Le sexe n'a pas encore été renseigné"}
+        {getValueOrDefault(user?.metier, "Le métier n'a pas encore été renseigné")}
       </Typography>
+
       <Typography gutterBottom variant="body2" color={colorBleuFonce}>
-        {user?.email || "L'email' n'a pas encore été renseigné"}
+        {getValueOrDefault(user?.sexe, "Le sexe n'a pas encore été renseigné")}
       </Typography>
-      <Typography variant="body2" color={colorBleuFonce}>
-        {user?.numero_telephone || "Le n° tel n'a pas encore été renseigné"}
-      </Typography>
-      <Typography variant="body2" color={colorBleuFonce}>
-        {user?.pays || "Le pays n'a pas encore été renseigné"}
-      </Typography>
-      <Typography variant="body2" color={colorBleuFonce}>
-        {user?.ville || "La ville n'a pas encore été renseignée"}
-      </Typography>
+
       <Typography gutterBottom variant="body2" color={colorBleuFonce}>
-        {user?.adresse || "L'adresse n'a pas encore été renseignée"}
+        {getValueOrDefault(user?.email, "L'email n'a pas encore été renseigné")}
       </Typography>
+
+      <Typography gutterBottom variant="body2" color={colorBleuFonce}>
+        {getValueOrDefault(user?.numero_telephone, "Le numéro de téléphone n'a pas encore été renseigné")}
+      </Typography>
+
+      <Typography gutterBottom variant="body2" color={colorBleuFonce}>
+        {getValueOrDefault(user?.pays, "Le pays n'a pas encore été renseigné")}
+      </Typography>
+
+      <Typography gutterBottom variant="body2" color={colorBleuFonce}>
+        {getValueOrDefault(user?.ville, "La ville n'a pas encore été renseignée")}
+      </Typography>
+
+      <Typography gutterBottom variant="body2" color={colorBleuFonce}>
+        {getValueOrDefault(user?.adresse, "L'adresse n'a pas encore été renseignée")}
+      </Typography>
+
       <Typography variant="body2" color={colorBleuFonce}>
         3 rendez-vous
       </Typography>

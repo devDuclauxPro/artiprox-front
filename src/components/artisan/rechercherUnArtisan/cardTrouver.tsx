@@ -72,6 +72,7 @@ export const CardTrouver: FC<IArtisan> = ({ id, nom, prenoms, description, numer
                       size="small"
                       disableRipple
                       fullWidth
+                      aria-label="Appeler l'artisan"
                     >
                       {numero_telephone}
                     </Button>
@@ -86,6 +87,7 @@ export const CardTrouver: FC<IArtisan> = ({ id, nom, prenoms, description, numer
                     size="small"
                     disableRipple
                     fullWidth
+                    aria-label="Obtenir un rendez-vous"
                   >
                     Rendez-vous
                   </Button>
@@ -99,6 +101,7 @@ export const CardTrouver: FC<IArtisan> = ({ id, nom, prenoms, description, numer
                     size="small"
                     disableRipple
                     fullWidth
+                    aria-label="Demander un devis"
                   >
                     Demander un devis
                   </Button>

@@ -18,83 +18,59 @@ import { TextRating } from "../rechercherUnArtisan/textRating";
 export const CardUnArtisan: FC = () => {
   const [value, setValue] = useState<number>(1);
   const { user, token } = useSelector((state: RootState) => state.user);
+  const { resultatArtisans } = useSelector((state: RootState) => state.trouverArtisan);
   const { id } = useParams<{ id: string }>();
-  const [data, setData] = useState<IArtisan | undefined>();
+  const [data, setData] = useState<IArtisan | undefined>(undefined);
 
-  const fetchDataArtisan = useCallback(async () => {
-    if (!apiUrl) {
-      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+  const fetchData = useCallback(() => {
+    if (!id || !resultatArtisans) {
+      toast.error("ID manquant ou artisans non chargés");
       return;
     }
-    console.log(id);
-    try {
-      const response = await axios.post(
-        `${apiUrl}/artisans/show`,
-        { artisan_id: id },
-        configureAxiosHeaders(token ?? "")
-      );
-      console.log(response.data.data);
-      setData(response.data.data);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Erreur Axios:", error.response?.data?.error || error.message);
-      } else {
-        console.error("Erreur inconnue:", error);
-      }
-    }
-  }, [id, token]);
 
-  const fetchData = useCallback(async () => {
-    if (!apiUrl) {
-      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+    const artisan = resultatArtisans.find((resultat) => resultat.id === parseInt(id));
+    if (!artisan) {
+      toast.error(`Aucun artisan trouvé avec l'ID: ${id}`);
       return;
     }
-    try {
-      await axios.get(`${apiUrl}/notations`, configureAxiosHeaders(token ?? ""));
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Erreur Axios:", error.response?.data?.error || error.message);
-      } else {
-        console.error("Erreur inconnue:", error);
-      }
-    }
-  }, [token]);
 
-  useEffect(() => {
-    fetchDataArtisan();
-    fetchData();
-  }, [fetchData, fetchDataArtisan]);
+    setData(artisan);
+
+    if (!apiUrl) {
+      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+    }
+  }, [id, resultatArtisans]);
 
   const handleChange = async (event: SyntheticEvent, newValue: number | null) => {
-    if (newValue !== null) {
-      setValue(newValue);
-    }
-    try {
-      if (!apiUrl) {
-        toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
-        return;
-      }
+    if (newValue === null) return;
 
-      const response = await axios.post(
+    setValue(newValue);
+
+    if (!apiUrl) {
+      toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
+      return;
+    }
+
+    try {
+      await axios.post(
         `${apiUrl}/notations/create`,
         {
-          note: newValue?.toString(),
-          artisan_id: id?.toString(),
-          client_id: user?.id.toString()
+          note: newValue.toString(),
+          artisan_id: id ?? "",
+          client_id: user?.id.toString() ?? ""
         },
         configureAxiosHeaders(token ?? "")
       );
-      console.log(response);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("Erreur Axios:", error.response?.data?.error);
-        toast.error(error.response?.data?.error || "Erreur lors de la recherche.");
-      } else {
-        console.error("Erreur inconnue:", error);
-        toast.error("Erreur inconnue lors de la recherche.");
-      }
+      const errorMessage = axios.isAxiosError(error) ? error.response?.data?.error : "Erreur inconnue";
+      console.error("Erreur Axios:", errorMessage);
+      toast.error(errorMessage);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <Container maxWidth="lg" sx={{ my: 2, py: 3 }}>
@@ -107,14 +83,12 @@ export const CardUnArtisan: FC = () => {
                   {data?.nom} {data?.prenoms}
                 </Typography>
               }
-              sx={{ bgcolor: colorGrisPale }} // Optionnel : ajouter une couleur de fond
+              sx={{ bgcolor: colorGrisPale }}
             />
             <CardContent sx={{ bgcolor: colorGrisPale }}>
               <Box display="flex" alignItems="center" sx={{ mb: 2 }}>
                 <WorkIcon color="warning" sx={{ mr: 1 }} />
-                <Typography variant="body2" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                  Activités : {data?.description}
-                </Typography>
+                <Typography variant="body2">Activités : {data?.description}</Typography>
               </Box>
               <ImageSwiper listImage={listImage} />
             </CardContent>
@@ -145,7 +119,6 @@ export const CardUnArtisan: FC = () => {
                     </Button>
                   </Grid>
                 )}
-
                 <Grid item xs={12} md={6} lg={3}>
                   <Button
                     component={Link}
