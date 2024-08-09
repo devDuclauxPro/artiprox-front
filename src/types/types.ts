@@ -14,12 +14,13 @@ export type TListItemSocialNet = {
 
 // Type utilisé dans le swiper d'image du composant homeFooter et dans le filtre
 export type TListItem = {
-  name: string;
+  images_article?: string;
 };
 
 // Type utilisé pour le paramètre du composant de l'image
 export type TImageSwiperProps = {
-  listImage: TListItem[];
+  listImage?: TListItem[];
+  artisanImage?: boolean;
 };
 
 // Type utilisé pour les breakpoints de l'application
@@ -42,6 +43,7 @@ export type TGenericCardComponent = {
   btnZooInOutCard?: string;
 };
 
+// Type utilisé pour définir les propriétés d'un bouton générique
 export type IButtonGeneric = {
   btnText: string;
   btnLink?: string;
@@ -51,21 +53,20 @@ export type IButtonGeneric = {
   btnZooInOutCard?: string;
 };
 
+// Type utilisé pour définir les informations sur un artisan
 export type TInfoProps = {
   nomArtisan: string;
   photoArtisan?: string;
 };
+
+// Type utilisé pour définir des informations communes sur un utilisateur
 export type TInfoUserCommun = {
   nom: string;
   prenoms: string;
   photoUser?: string;
 };
-export type TInfoPropsClient = {
-  nomClient: string;
-  photoClient?: string;
-};
 
-// types.ts
+// Type utilisé pour définir un élément d'information
 export type TInfoItem = {
   src: string;
   alt: string;
@@ -73,6 +74,7 @@ export type TInfoItem = {
   description: string;
 };
 
+// Type utilisé pour définir les propriétés du composant MilieuGauchePourquoi
 export type TMilieuGauchePourquoiProps = {
   title: string;
   subtitle: string;
@@ -81,6 +83,7 @@ export type TMilieuGauchePourquoiProps = {
   items: TInfoItem[];
 };
 
+// Type utilisé pour définir les propriétés du composant MilieuDroitPourquoi
 export type TMilieuDroitPourquoiProps = {
   items: { img: string; title: string }[];
   cols: number;
@@ -88,6 +91,7 @@ export type TMilieuDroitPourquoiProps = {
   width: string;
 };
 
+// Type utilisé pour définir les données d'une ligne dans un tableau
 export type TRowData = {
   id: number;
   fullName: string;

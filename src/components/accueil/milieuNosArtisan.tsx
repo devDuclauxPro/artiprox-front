@@ -3,7 +3,7 @@ import { zoomInOutGenericOne } from "animations/animation";
 import { BtnGeneric } from "components/generic/btnGeneric";
 import { FC } from "react";
 import { colorGris } from "utils/color";
-import { listImage } from "utils/listImage";
+import { listImage } from "utils/imageList";
 import { ImageSwiper } from "../../animations/imageSwiper";
 
 // Styles extraits pour réutilisation

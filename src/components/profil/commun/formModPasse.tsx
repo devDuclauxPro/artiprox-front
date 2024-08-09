@@ -42,7 +42,11 @@ export const FormModPasse: FC = () => {
     }
 
     try {
-      await axios.put(`${apiUrl}/password/update`, data, configureAxiosHeaders(token ?? ""));
+      await axios.put(
+        `${apiUrl}/users/update/password`,
+        { password: data.nouveauPassword },
+        configureAxiosHeaders(token ?? "")
+      );
       toast.success("Modification réussie !");
     } catch (error) {
       if (axios.isAxiosError(error)) {

@@ -14,7 +14,7 @@ import { connexion } from "reducerToolkitStore/features/user";
 import { RootState } from "reducerToolkitStore/store/store";
 import { colorBlue, colorVertNature } from "utils/color";
 import { apiUrl } from "utils/config";
-import { metiers, pays, sexe, villes } from "utils/recherche";
+import { metiers, pays, sexe, villes } from "utils/searchData";
 import { schemaModifInfo } from "utils/yupValidation";
 
 const FormGrid = styled(Grid)(() => ({
@@ -74,11 +74,10 @@ export const FormModifier: FC = () => {
       const response = await axios.put(`${apiUrl}/users/update`, data, configureAxiosHeaders(token ?? ""));
       dispatch(
         connexion({
-          user: response.data.data[0],
+          user: response.data.data,
           token: token
         })
       );
-
       toast.success("Modification réussie !");
     } catch (error) {
       if (axios.isAxiosError(error)) {

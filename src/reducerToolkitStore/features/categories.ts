@@ -26,5 +26,8 @@ export const articleCategorieSlice = createSlice({
   }
 });
 
+// Exportation des actions pour être utilisées dans les composants
 export const { allArticlesCategorie } = articleCategorieSlice.actions;
+
+// Exportation du reducer pour l'intégrer dans le store Redux
 export default articleCategorieSlice.reducer;

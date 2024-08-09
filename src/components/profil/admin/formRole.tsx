@@ -46,8 +46,7 @@ export const FormRole: FC = () => {
         toast.error("L'URL de l'API est manquante dans les variables d'environnement.");
         return;
       }
-
-      const response = await axios.post(`${apiUrl}/roles/create`, data, configureAxiosHeaders(token ?? ""));
+      const response = await axios.post(`${apiUrl}/roles`, { ...data }, configureAxiosHeaders(token ?? ""));
       toast.success(response.data.categorie);
     } catch (error) {
       if (axios.isAxiosError(error)) {

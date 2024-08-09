@@ -52,5 +52,8 @@ export const userSlice = createSlice({
   }
 });
 
+// Exportation des actions pour être utilisées dans les composants
 export const { connexion, deconnexion, allUsers } = userSlice.actions;
+
+// Exportation du reducer pour l'intégrer dans le store Redux
 export default userSlice.reducer;

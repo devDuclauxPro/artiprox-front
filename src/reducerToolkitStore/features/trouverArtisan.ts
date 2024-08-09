@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TListItem } from "types/types";
 
 export interface IArtisan {
   id?: number;
@@ -12,7 +13,15 @@ export interface IArtisan {
   ville?: string;
   adresse?: string;
   numero_telephone?: string;
-  notation?: number;
+  articles?: TListItem[];
+  note?: {
+    note?: number;
+    artisan_id?: number;
+  }[];
+  notations?: {
+    note?: number;
+    artisan_id?: number;
+  }[];
   email?: string;
   user?: IArtisan;
 }
@@ -59,5 +68,8 @@ export const trouverArtisanSlice = createSlice({
   }
 });
 
+// Exportation des actions pour être utilisées dans les composants
 export const { setTrouverArtisan } = trouverArtisanSlice.actions;
+
+// Exportation du reducer pour l'intégrer dans le store Redux
 export default trouverArtisanSlice.reducer;

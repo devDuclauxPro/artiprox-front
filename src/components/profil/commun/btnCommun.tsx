@@ -27,92 +27,29 @@ export const BtnCommun = () => {
     navigate("/connexion");
   };
 
-  const setVisibilities = (visibilities: Record<string, boolean>) => {
-    dispatch(setProfilModVisible({ visibleProfilModif: visibilities.profilMod }));
-    dispatch(setPassModVisible({ visiblePassModif: visibilities.passMod }));
-    dispatch(setUserVisible({ visibleUser: visibilities.user }));
-    dispatch(setHistVisible({ visibleHistorique: visibilities.hist }));
-    dispatch(setArticleVisible({ visibleArticle: visibilities.article }));
-    dispatch(setArticleCategorie({ visibleCategorie: visibilities.articleCat }));
-    dispatch(setRoleVisible({ visibleRole: visibilities.role }));
+  // Fonction pour définir les visibilités des différents éléments
+  const setVisibilities = (visibilities: Partial<Record<string, boolean>>) => {
+    dispatch(setProfilModVisible({ visibleProfilModif: visibilities.profilMod ?? false }));
+    dispatch(setPassModVisible({ visiblePassModif: visibilities.passMod ?? false }));
+    dispatch(setUserVisible({ visibleUser: visibilities.user ?? false }));
+    dispatch(setHistVisible({ visibleHistorique: visibilities.hist ?? false }));
+    dispatch(setArticleVisible({ visibleArticle: visibilities.article ?? false }));
+    dispatch(setArticleCategorie({ visibleCategorie: visibilities.articleCat ?? false }));
+    dispatch(setRoleVisible({ visibleRole: visibilities.role ?? false }));
   };
 
-  const handleProfilModVisible = () =>
+  // Fonctions pour gérer la visibilité des différentes sections
+  const handleVisibilityChange = (section: string) => () => {
     setVisibilities({
-      profilMod: true,
-      passMod: false,
-      user: false,
-      hist: false,
-      article: false,
-      articleCat: false,
-      role: false
+      profilMod: section === "profilMod",
+      passMod: section === "passMod",
+      user: section === "user",
+      hist: section === "hist",
+      article: section === "article",
+      articleCat: section === "articleCat",
+      role: section === "role"
     });
-
-  const handlePassModVisible = () =>
-    setVisibilities({
-      profilMod: false,
-      passMod: true,
-      user: false,
-      hist: false,
-      article: false,
-      articleCat: false,
-      role: false
-    });
-
-  const handleUserVisible = () =>
-    setVisibilities({
-      profilMod: false,
-      passMod: false,
-      user: true,
-      hist: false,
-      article: false,
-      articleCat: false,
-      role: false
-    });
-
-  const handleHistorique = () =>
-    setVisibilities({
-      profilMod: false,
-      passMod: false,
-      user: false,
-      hist: true,
-      article: false,
-      articleCat: false,
-      role: false
-    });
-
-  const handleArticle = () =>
-    setVisibilities({
-      profilMod: false,
-      passMod: false,
-      user: false,
-      hist: false,
-      article: true,
-      articleCat: false,
-      role: false
-    });
-
-  const handleArticleCategorie = () =>
-    setVisibilities({
-      profilMod: false,
-      passMod: false,
-      user: false,
-      hist: false,
-      article: false,
-      articleCat: true,
-      role: false
-    });
-
-  const handleRoles = () =>
-    setVisibilities({
-      profilMod: false,
-      passMod: false,
-      user: false,
-      hist: false,
-      article: false,
-      articleCat: false,
-      role: true
-    });
+  };
 
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" gap={1}>
@@ -121,38 +58,38 @@ export const BtnCommun = () => {
           <Button variant="contained" color="error" onClick={handleDeconnexion}>
             Se déconnecter
           </Button>
-          <Button variant="contained" color="info" onClick={handleProfilModVisible}>
+          <Button variant="contained" color="info" onClick={handleVisibilityChange("profilMod")}>
             Modifier mon profil
           </Button>
-          <Button variant="contained" color="info" onClick={handlePassModVisible}>
+          <Button variant="contained" color="info" onClick={handleVisibilityChange("passMod")}>
             Modifier mon mot de passe
           </Button>
         </>
       )}
       {user?.role_id === ROLE_ADMIN && (
         <>
-          <Button variant="contained" color="warning" onClick={handleUserVisible}>
+          <Button variant="contained" color="warning" onClick={handleVisibilityChange("user")}>
             Voir les utilisateurs
           </Button>
-          <Button variant="contained" color="warning" onClick={handleRoles}>
+          <Button variant="contained" color="warning" onClick={handleVisibilityChange("role")}>
             Ajouter les rôles
           </Button>
         </>
       )}
       {user?.role_id === ROLE_USER && (
-        <Button variant="contained" onClick={handleHistorique}>
+        <Button variant="contained" onClick={handleVisibilityChange("hist")}>
           Mon historique
         </Button>
       )}
       {user?.role_id === ROLE_ARTISAN && (
         <>
-          <Button variant="contained" color="secondary" onClick={handleHistorique}>
+          <Button variant="contained" color="secondary" onClick={handleVisibilityChange("hist")}>
             Mon historique
           </Button>
-          <Button variant="contained" color="secondary" onClick={handleArticle}>
+          <Button variant="contained" color="secondary" onClick={handleVisibilityChange("article")}>
             Ajouter des articles
           </Button>
-          <Button variant="contained" color="secondary" onClick={handleArticleCategorie}>
+          <Button variant="contained" color="secondary" onClick={handleVisibilityChange("articleCat")}>
             Ajouter des catégories d'articles
           </Button>
         </>

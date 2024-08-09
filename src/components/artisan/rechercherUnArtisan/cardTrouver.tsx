@@ -10,7 +10,7 @@ import { RootState } from "reducerToolkitStore/store/store";
 import { colorGrisPale } from "utils/color";
 import { TextRating } from "./textRating";
 
-export const CardTrouver: FC<IArtisan> = ({ id, nom, prenoms, description, numero_telephone, notation }) => {
+export const CardTrouver: FC<IArtisan> = ({ id, nom, prenoms, description, numero_telephone, notations, metier }) => {
   const { user } = useSelector((state: RootState) => state.user);
   return (
     <Container maxWidth="lg" sx={{ mb: 2, py: 3 }}>
@@ -35,7 +35,7 @@ export const CardTrouver: FC<IArtisan> = ({ id, nom, prenoms, description, numer
                 <Typography
                   variant="h6"
                   component={Link}
-                  to={`/espace-membre/trouver-un-artisan/${id}`}
+                  to={`/trouver-un-artisan/${id}`}
                   sx={{ textDecoration: "none", color: "inherit" }}
                 >
                   {nom} {prenoms}
@@ -46,22 +46,17 @@ export const CardTrouver: FC<IArtisan> = ({ id, nom, prenoms, description, numer
               <Box display="flex" alignItems="center">
                 <WorkIcon color="warning" sx={{ mr: 1 }} />
                 <Typography variant="body2" sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                  Activités : {description}
+                  {metier} : {description}
                 </Typography>
               </Box>
             </CardContent>
             <CardActions>
               <Grid container spacing={1}>
-                <Grid
-                  item
-                  xs={12}
-                  lg={3}
-                  sx={{ display: { xs: "flex", lg: "block" }, justifyContent: "center", alignItems: "center" }}
-                >
-                  <TextRating valeur={notation} />
+                <Grid item xs={12} sx={{ display: { xs: "flex" }, justifyContent: "center", alignItems: "center" }}>
+                  <TextRating valeur={notations?.[notations?.length - 1]?.note || 0} />
                 </Grid>
                 {user?.role_id && (
-                  <Grid item xs={12} md={4} lg={3}>
+                  <Grid item xs={12} md={6}>
                     <Button
                       component="a"
                       href={`https://wa.me/${numero_telephone}`}
@@ -78,24 +73,10 @@ export const CardTrouver: FC<IArtisan> = ({ id, nom, prenoms, description, numer
                     </Button>
                   </Grid>
                 )}
-                <Grid item xs={12} sm={6} md={4} lg={3}>
+                <Grid item xs={12} md={6}>
                   <Button
                     component={Link}
-                    to="/espace-membre/obtenir-un-rendez-vous"
-                    variant="contained"
-                    color="warning"
-                    size="small"
-                    disableRipple
-                    fullWidth
-                    aria-label="Obtenir un rendez-vous"
-                  >
-                    Rendez-vous
-                  </Button>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <Button
-                    component={Link}
-                    to="/espace-membre/obtenir-un-devis"
+                    to={`/obtenir-un-devis/${id}`}
                     variant="outlined"
                     color="success"
                     size="small"

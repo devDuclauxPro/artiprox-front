@@ -3,6 +3,7 @@ import { AfficherProfilCommun } from "components/profil/commun/afficherProfilCom
 import { Layout } from "layouts/layout";
 import { FC } from "react";
 
+// Composant Utilisateur qui rend la page Utilisateur avec tous les sections
 export const Utilisateur: FC = () => {
   return (
     <Layout>

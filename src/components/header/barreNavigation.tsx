@@ -27,7 +27,7 @@ export const BarreNavigation: FC = () => {
             variant="regular"
             sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexShrink: 0 }}
           >
-            <Box component={Link} to="/espace-membre" sx={{ flexGrow: 1 }}>
+            <Box component={Link} to="/" sx={{ flexGrow: 1 }}>
               <img src={logo} style={logoStyle} alt="logo de l'entreprise 70" color="#fff" />
             </Box>
 
@@ -37,7 +37,7 @@ export const BarreNavigation: FC = () => {
                 <MenuItem key={id}>
                   <Typography variant="subtitle2" color="text.primary">
                     {/* Lien avec mise en forme différente pour le dernier élément */}
-                    {list.link === "/espace-membre/profil" ? (
+                    {list.link === "/profil" ? (
                       <Link
                         to={list.link}
                         style={{ textDecoration: "none", color: "white", backgroundColor: "#4d8e4d", padding: 5 }}
@@ -103,7 +103,7 @@ export const BarreNavigation: FC = () => {
               <MenuItem key={id}>
                 <Typography variant="subtitle2" color="text.primary">
                   {/* Lien avec mise en forme différente pour le dernier élément */}
-                  {list.link === "/espace-membre" ? (
+                  {list.link === "/profil" ? (
                     <Link
                       to={list.link}
                       style={{ textDecoration: "none", color: "white", backgroundColor: "#4d8e4d", padding: 5 }}

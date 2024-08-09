@@ -20,7 +20,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { colorBlue, colorVertNature } from "utils/color";
 import { apiUrl } from "utils/config";
-import { metiers, pays, profilOptions, sexe, villes } from "utils/recherche";
+import { metiers, pays, profilOptions, sexe, villes } from "utils/searchData";
 import { schemaInscription } from "utils/yupValidation";
 
 const FormGrid = styled(Grid)(() => ({

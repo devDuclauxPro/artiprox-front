@@ -1,5 +1,10 @@
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { Box } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { configureAxiosHeaders } from "App";
 import axios from "axios";
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,14 +12,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { allArticlesCategorie } from "reducerToolkitStore/features/categories";
 import { RootState } from "reducerToolkitStore/store/store";
-import { apiUrl } from "utils/config";
-
-import { Box } from "@mui/material";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import { configureAxiosHeaders } from "App";
 import { colorRougeVif } from "utils/color";
+import { apiUrl } from "utils/config";
 
 export const AfficherArticleCategorie: FC = () => {
   const { token } = useSelector((state: RootState) => state.user);

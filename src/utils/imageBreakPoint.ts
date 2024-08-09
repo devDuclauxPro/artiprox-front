@@ -1,7 +1,6 @@
 import { TBreakpoints } from "types/types";
 
 // Objet de configuration des breakpoints pour la page d'accueil
-// Détermine le nombre de diapositives visibles et l'espace entre elles en fonction de la largeur de la fenêtre
 export const listBreakPoint: TBreakpoints = {
   // Pour les largeurs d'écran >= 0px (xs)
   0: {

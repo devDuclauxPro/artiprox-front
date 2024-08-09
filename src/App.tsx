@@ -6,7 +6,14 @@ import { connexion, deconnexion } from "reducerToolkitStore/features/user";
 import { RootState } from "reducerToolkitStore/store/store";
 import { apiUrl } from "utils/config";
 
-export const getUserFromLocalStorage = () => JSON.parse(localStorage.getItem("user") || "{}");
+// Typage de la fonction pour récupérer l'utilisateur du localStorage
+type User = {
+  token?: string;
+  user_info?: any;
+};
+
+const getUserFromLocalStorage = (): User => JSON.parse(localStorage.getItem("user") || "{}");
+
 export const configureAxiosHeaders = (token: string) => ({
   headers: {
     Authorization: `Bearer ${token}`,
@@ -35,8 +42,8 @@ export const App: FC = () => {
     }
 
     try {
-      await axios.get(`${apiUrl}/user`, configureAxiosHeaders(token));
-      navigate("/espace-membre");
+      const response = await axios.get(`${apiUrl}/user`, configureAxiosHeaders(token));
+      dispatch(connexion({ user: response.data.user_info, token }));
     } catch (error) {
       console.error(
         axios.isAxiosError(error)

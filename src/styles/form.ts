@@ -1,5 +1,6 @@
 import { colorBlack, colorWhite } from "utils/color";
 
+// Style utilisé pour le composant Autocomplete dans les formulaires.
 export const formAutocompleteStyle = {
   backgroundColor: colorWhite,
   "& .MuiInputBase-root": {

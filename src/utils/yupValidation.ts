@@ -34,7 +34,7 @@ const emailValidation = yup.string().required("L'email est obligatoire").email("
 export const imageValidation = yup.object().shape({
   nom_article: yup.string().optional(),
   images_article: yup
-    .mixed<FileList>() // Changed to FileList
+    .mixed<FileList>()
     .required("L'image est obligatoire")
     .test("fileType", "Le fichier doit être une image", (value) => {
       if (!value || value.length === 0) return false;
@@ -100,4 +100,12 @@ export const categorieValidation = yup.object().shape({
 });
 export const roleValidation = yup.object().shape({
   nom_role: yup.string().required("Le nom du rôle est obligatoire")
+});
+
+export const schemaRDV = yup.object().shape({
+  date: yup.string().optional(),
+  description: yup.string().optional(),
+  payment: yup.string().optional(),
+  adresse: adresseValidation,
+  numero_telephone: telephoneValidation
 });

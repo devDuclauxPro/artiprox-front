@@ -10,7 +10,7 @@ import { IRechArtisan, setTrouverArtisan } from "reducerToolkitStore/features/tr
 import { RootState } from "reducerToolkitStore/store/store";
 import { colorBlue, colorGris2 } from "utils/color";
 import { apiUrl } from "utils/config";
-import { metiers, villes } from "utils/recherche";
+import { metiers, villes } from "utils/searchData";
 import { DescriptionArtisan } from "./descriptionArtisan";
 import { ResultatArtisan } from "./resultatArtisan";
 
@@ -32,7 +32,6 @@ export const HautRecherche: FC = () => {
         { metier: "", ville: "" },
         configureAxiosHeaders(token ?? "")
       );
-
       dispatch(
         setTrouverArtisan({
           resultatArtisans: response.data.data,

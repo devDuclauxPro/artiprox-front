@@ -5,7 +5,6 @@ import { CardTrouver } from "./cardTrouver";
 
 export const ResultatArtisan = () => {
   const { resultatArtisans } = useSelector((state: RootState) => state.trouverArtisan);
-
   // Gestion des cas où aucun artisan n'est trouvé
   if (resultatArtisans === undefined) {
     return (
@@ -31,11 +30,12 @@ export const ResultatArtisan = () => {
         <CardTrouver
           key={artisan?.id_artisan}
           id={artisan?.id_artisan}
-          nom={artisan.nom}
-          prenoms={artisan.prenoms}
-          description={artisan.description}
-          numero_telephone={artisan.numero_telephone}
-          notation={artisan.notation}
+          nom={artisan?.user?.nom as string}
+          metier={artisan?.metier}
+          prenoms={artisan?.user?.prenoms as string}
+          description={artisan?.description}
+          numero_telephone={artisan?.user?.numero_telephone}
+          notations={artisan?.notations}
         />
       ))}
     </>

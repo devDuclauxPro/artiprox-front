@@ -25,5 +25,8 @@ export const usersRoleSlice = createSlice({
   }
 });
 
+// Exportation des actions pour être utilisées dans les composants
 export const { allUsersRoleConnect } = usersRoleSlice.actions;
+
+// Exportation du reducer pour l'intégrer dans le store Redux
 export default usersRoleSlice.reducer;

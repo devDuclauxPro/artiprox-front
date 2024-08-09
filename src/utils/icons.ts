@@ -6,12 +6,7 @@ import iconeRelation from "images/home/icone-relation-client-min.png";
 import iconeSimplicite from "images/home/icone-simplicite.png";
 
 export const iconItems = [
-  {
-    src: iconeQualite,
-    alt: "Image qualité",
-    title: "Qualité",
-    description: "Artisans certifiés par un label qualité"
-  },
+  { src: iconeQualite, alt: "Image qualité", title: "Qualité", description: "Artisans certifiés par un label qualité" },
   {
     src: iconeGratuite,
     alt: "Image gratuite",

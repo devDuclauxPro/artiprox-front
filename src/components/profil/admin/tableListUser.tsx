@@ -1,6 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Chip } from "@mui/material";
 import { DataGrid, GridColDef, GridRenderCellParams, GridTreeNodeWithRender } from "@mui/x-data-grid";
+import { configureAxiosHeaders } from "App";
 import axios from "axios";
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -65,25 +66,9 @@ export const ListTable: FC<{ rows: RowData[] }> = ({ rows }) => {
     }
 
     try {
-      await axios.delete(`${apiUrl}/user/delete/${params.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
-
-      const response = await axios.get(`${apiUrl}/users`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json"
-        }
-      });
-      dispatch(
-        allUsers({
-          users: response.data.users
-        })
-      );
-
+      await axios.delete(`${apiUrl}/user/delete/${params.id}`, configureAxiosHeaders(token ?? ""));
+      const response = await axios.get(`${apiUrl}/users`, configureAxiosHeaders(token ?? ""));
+      dispatch(allUsers({ users: response.data.users }));
       toast.success("Suppresssion réussie !");
     } catch (error) {
       if (axios.isAxiosError(error)) {

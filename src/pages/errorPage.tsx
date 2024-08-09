@@ -4,6 +4,7 @@ import { Layout } from "layouts/layout";
 import { FC } from "react";
 import { colorBlue } from "utils/color";
 
+// Composant ErrorPage qui rend la page ErrorPage avec tous les sections
 export const ErrorPage: FC = () => {
   return (
     <Layout>

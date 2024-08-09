@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+// Interface définissant la structure de l'état de visibilité des composants
 interface IVisible {
   visibleProfilModif?: boolean;
   visiblePassModif?: boolean;
@@ -10,6 +11,7 @@ interface IVisible {
   visibleRole?: boolean;
 }
 
+// État initial définissant la visibilité par défaut pour chaque composant
 const initialState: IVisible = {
   visibleProfilModif: true,
   visiblePassModif: false,
@@ -20,6 +22,7 @@ const initialState: IVisible = {
   visibleRole: false
 };
 
+// Création du slice Redux pour gérer la visibilité des différents composants
 export const visibleSlice = createSlice({
   name: "visible",
   initialState,
@@ -48,6 +51,7 @@ export const visibleSlice = createSlice({
   }
 });
 
+// Exportation des actions pour être utilisées dans les composants
 export const {
   setProfilModVisible,
   setHistVisible,
@@ -57,4 +61,6 @@ export const {
   setArticleCategorie,
   setRoleVisible
 } = visibleSlice.actions;
+
+// Exportation du reducer pour l'intégrer dans le store Redux
 export default visibleSlice.reducer;

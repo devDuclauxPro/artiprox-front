@@ -24,7 +24,7 @@ export const AfficherRole: FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${apiUrl}/roles`, configureAxiosHeaders(token ?? ""));
-        dispatch(allUsersRoleConnect({ roleUserConnect: response.data.roles.data }));
+        dispatch(allUsersRoleConnect({ roleUserConnect: response.data }));
       } catch (error) {
         if (axios.isAxiosError(error)) {
           console.error("Erreur Axios:", error.response?.data?.error || error.message);
@@ -46,9 +46,9 @@ export const AfficherRole: FC = () => {
       return;
     }
     try {
-      await axios.delete(`${apiUrl}/roles/delete/${id}`, configureAxiosHeaders(token ?? ""));
+      await axios.delete(`${apiUrl}/roles/${id}`, configureAxiosHeaders(token ?? ""));
       const response = await axios.get(`${apiUrl}/roles`, configureAxiosHeaders(token ?? ""));
-      dispatch(allUsersRoleConnect({ roleUserConnect: response.data.roles.data }));
+      dispatch(allUsersRoleConnect({ roleUserConnect: response.data }));
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const errorMessage = error.response?.data?.message || "Une erreur est survenue.";

@@ -1,10 +1,9 @@
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-
-import CloseIcon from "@mui/icons-material/Close";
-import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { FC, useState } from "react";
 import { TInfoUserCommun } from "types/types";
 import { Info } from "./info";

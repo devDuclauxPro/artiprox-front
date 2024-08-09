@@ -1,7 +1,7 @@
 import { Container, Grid } from "@mui/material";
 import { FC } from "react";
-import { itemsLeft } from "utils/data";
-import { itemMilieuDroitPourquoi } from "utils/menuList";
+import { itemsLeft } from "utils/icons";
+import { itemMilieuDroitPourquoi } from "utils/imageList";
 import { MilieuDroitPourquoi } from "./milieuDroitPourquoi";
 import { MilieuGauchePourquoi } from "./milieuGauchePourquoi";
 

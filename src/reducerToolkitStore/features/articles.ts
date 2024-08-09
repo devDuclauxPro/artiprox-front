@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+// Interface représentant un article
 interface IArticle {
   id: number;
   nom_article: string;
@@ -15,14 +16,17 @@ interface IArticle {
   updated_at: string;
 }
 
+// Interface représentant l'état des articles
 interface IArticleState {
   articles?: IArticle[];
 }
 
+// État initial pour les articles
 const initialState: IArticleState = {
   articles: []
 };
 
+// Création du slice Redux pour gérer les articless
 export const articleSlice = createSlice({
   name: "article",
   initialState,
@@ -33,5 +37,8 @@ export const articleSlice = createSlice({
   }
 });
 
+// Exportation des actions pour être utilisées dans les composants
 export const { allArticles } = articleSlice.actions;
+
+// Exportation du reducer pour l'intégrer dans le store Redux
 export default articleSlice.reducer;

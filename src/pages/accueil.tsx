@@ -7,7 +7,7 @@ import logo from "images/barre/logo.jpeg";
 import { Layout } from "layouts/layout";
 import { FC } from "react";
 import { colorBleuFonce, colorGris } from "utils/color";
-import { iconItems } from "utils/data";
+import { iconItems } from "utils/icons";
 
 // Composant Accueil qui rend la page d'accueil avec tous les sections
 export const Accueil: FC = () => {
