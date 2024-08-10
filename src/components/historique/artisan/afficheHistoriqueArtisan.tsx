@@ -6,8 +6,8 @@ const historiques = [
   {
     nRDV: "#0001",
     dateRDV: "01/01/2024",
-    nomClient: "Mr Kouadio Ali",
-    adresseClient: "Rue Washington, Cocody, Abidjan, Côte d'Ivoire",
+    nomClient: "Mr exemple",
+    adresseClient: "Rue exemple, Côte d'Ivoire",
     paymentClient: "Payement Orange Money",
     devis: "Devis établi",
     descriptionTacheClient: "Réparation de mon robinet"
@@ -15,8 +15,8 @@ const historiques = [
   {
     nRDV: "#0002",
     dateRDV: "01/01/2024",
-    nomClient: "Mr Kouadio Ali",
-    adresseClient: "Rue Washington, Cocody, Abidjan, Côte d'Ivoire",
+    nomClient: "Mr exemple",
+    adresseClient: "Rue exemple, Côte d'Ivoire",
     paymentClient: "Payement Orange Money",
     devis: "Pas de devis demandé",
     descriptionTacheClient: "Réparation de mon robinet"
